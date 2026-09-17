@@ -183,7 +183,8 @@ a:hover{background:var(--bowl-soft)}
 /* ── 단계 패널 ────────────────────────────────────────── */
 [role=tabpanel]:focus:not(:focus-visible){outline:none}
 .stage{background:var(--surface);border-bottom:1px solid var(--line);padding-block:30px 40px}
-.stage-head{display:flex;gap:22px;align-items:flex-start}
+.stage-head{display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap}
+@media (max-width:420px){.stage-head{gap:16px}.gauge{flex-basis:58px}.gauge-vessel{height:104px}}
 
 .gauge{flex:0 0 74px;padding-top:4px}
 .gauge-vessel{
@@ -202,12 +203,8 @@ a:hover{background:var(--bowl-soft)}
   margin-top:9px;font-family:var(--fm);font-size:10.5px;letter-spacing:.12em;
   text-transform:uppercase;color:var(--ink-3);text-align:center;
 }
-.gauge-empty{
-  position:absolute;inset:0;display:grid;place-items:center;
-  font-size:11.5px;color:var(--ink-3);text-align:center;padding:0 6px;line-height:1.4;
-}
 
-.stage-title{flex:1 1 auto;min-width:0}
+.stage-title{flex:1 1 0;min-width:0}
 .stage-title .age{font-family:var(--fm);font-size:12px;letter-spacing:.1em;color:var(--bowl)}
 .stage-title h2{font-size:clamp(23px,5vw,33px);margin-top:7px}
 .stage-title .sum{margin-top:12px;font-size:16.5px;color:var(--ink-2);max-width:46ch}
@@ -220,13 +217,17 @@ a:hover{background:var(--bowl-soft)}
 .depth span{font-family:var(--fm);font-size:12.5px;color:var(--ink-2)}
 
 .facts{
-  margin-top:26px;display:grid;gap:1px;background:var(--line-2);
+  margin-top:26px;display:grid;background:var(--surface);
   border:1px solid var(--line-2);
+  grid-template-columns:repeat(auto-fit,minmax(186px,1fr));
 }
-.fact{background:var(--surface);padding:13px 15px}
+/* 칸 경계는 셀이 직접 그린다 — 열 수가 바뀌어도 빈 칸이 남지 않는다 */
+.fact{
+  padding:13px 15px;margin:-1px 0 0 -1px;
+  border-left:1px solid var(--line-2);border-top:1px solid var(--line-2);
+}
 .fact dt{font-family:var(--fm);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3)}
-.fact dd{margin:5px 0 0;font-size:15px;font-weight:500}
-@media (min-width:560px){.facts{grid-template-columns:repeat(3,1fr)}}
+.fact dd{margin:5px 0 0;font-size:15px;font-weight:500;overflow-wrap:break-word}
 
 .block{margin-top:30px}
 .block h3{
@@ -235,18 +236,23 @@ a:hover{background:var(--bowl-soft)}
 }
 .block h3 em{font-style:normal;color:var(--ink-3);font-weight:500;font-family:var(--fm);font-size:11px;letter-spacing:.1em;margin-left:8px}
 .steps{counter-reset:s;margin-top:16px;display:grid;gap:13px}
-.steps li{counter-increment:s;display:grid;grid-template-columns:26px 1fr;gap:12px;font-size:15.5px;color:var(--ink-2)}
+.steps li{
+  counter-increment:s;position:relative;padding-left:38px;
+  font-size:15.5px;color:var(--ink-2);
+}
 .steps li::before{
-  content:counter(s);font-family:var(--fm);font-size:12px;color:var(--bowl);
-  padding-top:4px;letter-spacing:.05em;
+  content:counter(s);position:absolute;left:0;top:4px;width:26px;
+  font-family:var(--fm);font-size:12px;color:var(--bowl);letter-spacing:.05em;
 }
 .steps li strong{color:var(--ink)}
 .plain{margin-top:16px;display:grid;gap:11px}
-.plain li{display:grid;grid-template-columns:16px 1fr;gap:12px;font-size:15.5px;color:var(--ink-2)}
-.plain li::before{content:"";width:7px;height:7px;margin-top:11px;background:var(--bowl-bright)}
+.plain li{position:relative;padding-left:28px;font-size:15.5px;color:var(--ink-2)}
+.plain li::before{
+  content:"";position:absolute;left:0;top:11px;
+  width:7px;height:7px;background:var(--bowl-bright);
+}
 .plain li strong{color:var(--ink)}
-.dont li::before{background:none;border-top:2px solid var(--heat);width:12px;margin-top:14px}
-.dont li{color:var(--ink-2)}
+.dont li::before{background:none;border-top:2px solid var(--heat);width:12px;height:0;top:14px}
 .dont li strong{color:var(--heat)}
 
 .callout{
@@ -262,8 +268,8 @@ a:hover{background:var(--bowl-soft)}
 .always{background:var(--ground);padding-block:40px 44px}
 .always h2{font-size:clamp(22px,4.6vw,30px)}
 .always .sub{margin-top:11px;color:var(--ink-2);font-size:15.5px;max-width:52ch}
-.three{margin-top:28px;display:grid;gap:18px}
-@media (min-width:700px){.three{grid-template-columns:repeat(3,1fr)}}
+.three{margin-top:28px;display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(248px,1fr))}
+.three li{min-width:0}
 .three li{background:var(--surface);border:1px solid var(--line-2);padding:20px 19px 22px}
 .three .n{font-family:var(--fm);font-size:11px;letter-spacing:.14em;color:var(--bowl)}
 .three h4{margin-top:11px;font-size:17px}
@@ -275,7 +281,7 @@ a:hover{background:var(--bowl-soft)}
 .why>.wrap>.sub{margin-top:11px;color:var(--ink-2);font-size:15.5px;max-width:56ch}
 .ev{margin-top:34px;display:grid;gap:30px}
 .ev-item{display:grid;gap:14px}
-@media (min-width:760px){.ev-item{grid-template-columns:172px 1fr;gap:26px}}
+@media (min-width:760px){.ev-item{grid-template-columns:minmax(150px,172px) minmax(0,1fr);gap:26px}}
 .ev-stat{border-top:2px solid var(--ink);padding-top:11px}
 .ev-stat b{display:block;font-family:var(--fm);font-size:31px;font-weight:500;line-height:1.1;letter-spacing:-.02em}
 .ev-stat span{display:block;font-size:12.5px;color:var(--ink-2);margin-top:6px;line-height:1.5}
@@ -290,7 +296,7 @@ a:hover{background:var(--bowl-soft)}
 .forks .sub{margin-top:11px;color:var(--ink-2);font-size:15.5px;max-width:54ch}
 .fork{margin-top:26px;border-top:1px solid var(--line)}
 .fork-row{padding:19px 0;border-bottom:1px solid var(--line-2);display:grid;gap:9px}
-@media (min-width:700px){.fork-row{grid-template-columns:260px 1fr;gap:28px;align-items:start}}
+@media (min-width:700px){.fork-row{grid-template-columns:minmax(190px,260px) minmax(0,1fr);gap:28px;align-items:start}}
 .fork-q{font-weight:700;font-size:15.5px}
 .fork-a{font-size:15px;color:var(--ink-2)}
 .fork-a b{color:var(--ink)}
@@ -393,7 +399,6 @@ a:hover{background:var(--bowl-soft)}
     <div class="stage-head">
       <aside class="gauge" aria-hidden="true">
         <div class="gauge-vessel">
-          <div class="gauge-empty" id="gaugeEmpty">담그지<br>않음</div>
           <div class="gauge-water" id="gaugeWater" style="--fill:0%"></div>
           <div class="gauge-grad"><i style="top:16.6%"></i><i style="top:33.3%"></i><i style="top:50%"></i><i style="top:66.6%"></i><i style="top:83.3%"></i></div>
         </div>
@@ -406,7 +411,7 @@ a:hover{background:var(--bowl-soft)}
           <p class="age">0–2주 · 탯줄이 남아 있는 시기</p>
           <h2>물에 담그지 않는다</h2>
           <p class="sum">탯줄이 떨어지고 배꼽이 아물 때까지, 보통 <strong>1~2주</strong>. 대야에 받은 물과 거즈로 닦습니다.</p>
-          <p class="depth"><b>물 깊이</b> <span>해당 없음 — 담그지 않음</span></p>
+          <p class="depth"><b>담그기 시작</b> <span>배꼽이 마르고 딱지가 떨어진 뒤</span></p>
         </div>
         <!-- 2 -->
         <div class="stage-hd" id="h2p" hidden>
@@ -839,7 +844,6 @@ a:hover{background:var(--bowl-soft)}
   var panels=tabs.map(function(t){return document.getElementById(t.getAttribute('aria-controls'));});
   var water=document.getElementById('gaugeWater');
   var cap=document.getElementById('gaugeCap');
-  var empty=document.getElementById('gaugeEmpty');
 
   function show(i){
     tabs.forEach(function(t,n){
@@ -850,7 +854,6 @@ a:hover{background:var(--bowl-soft)}
     var fill=tabs[i].dataset.fill, cm=tabs[i].dataset.cm;
     water.style.setProperty('--fill',fill);
     cap.textContent=cm;
-    empty.hidden=fill!=='0';
     try{sessionStorage.setItem('bath-stage',String(i));}catch(e){}
   }
 
