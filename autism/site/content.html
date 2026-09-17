@@ -1,0 +1,960 @@
+<title>월령별 자폐 조기 신호</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
+<style>
+/* ── tokens ───────────────────────────────────────────── */
+:root{
+  --ground:#EDF1F0;
+  --surface:#FBFDFC;
+  --surface-2:#F3F7F5;
+  --ink:#131F1E;
+  --ink-2:#44564F;
+  --ink-3:#6C7E78;
+  --line:#D3DDD9;
+  --line-2:#E3EAE7;
+  --accent:#0E5C63;
+  --accent-soft:#D6E6E6;
+  --watch:#9A5017;
+  --watch-soft:#F2E3D4;
+  --clear:#2F6B4F;
+  --clear-soft:#DCEADF;
+  --focus:#0E5C63;
+  --shadow:0 1px 2px rgba(19,31,30,.05);
+  --fd:'Hahmlet','Apple SD Gothic Neo','Malgun Gothic',serif;
+  --fb:'IBM Plex Sans KR','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
+  --fm:'IBM Plex Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1615;
+    --surface:#161F1E;
+    --surface-2:#1C2725;
+    --ink:#E4EDEA;
+    --ink-2:#AFC0BA;
+    --ink-3:#849690;
+    --line:#2C3A37;
+    --line-2:#243130;
+    --accent:#58BEBC;
+    --accent-soft:#1E3A3B;
+    --watch:#DFA164;
+    --watch-soft:#33261A;
+    --clear:#79BC96;
+    --clear-soft:#1B2E24;
+    --focus:#58BEBC;
+    --shadow:0 1px 2px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1615;
+  --surface:#161F1E;
+  --surface-2:#1C2725;
+  --ink:#E4EDEA;
+  --ink-2:#AFC0BA;
+  --ink-3:#849690;
+  --line:#2C3A37;
+  --line-2:#243130;
+  --accent:#58BEBC;
+  --accent-soft:#1E3A3B;
+  --watch:#DFA164;
+  --watch-soft:#33261A;
+  --clear:#79BC96;
+  --clear-soft:#1B2E24;
+  --focus:#58BEBC;
+  --shadow:0 1px 2px rgba(0,0,0,.3);
+}
+
+/* ── base ─────────────────────────────────────────────── */
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--fb);
+  font-size:16px;
+  line-height:1.78;
+  word-break:keep-all;
+  overflow-wrap:break-word;
+  -webkit-text-size-adjust:100%;
+}
+h1,h2,h3,h4{font-family:var(--fd);font-weight:600;line-height:1.35;text-wrap:balance;margin:0}
+p{margin:0}
+a{color:var(--accent);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:2px}
+::selection{background:var(--accent-soft);color:var(--ink)}
+
+.wrap{max-width:820px;margin:0 auto;padding-inline:18px}
+
+/* ── masthead ─────────────────────────────────────────── */
+.mast{padding-block:34px 22px;border-bottom:1px solid var(--line)}
+.eyebrow{
+  font-family:var(--fm);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:14px;
+}
+.mast h1{font-size:clamp(28px,6vw,40px);letter-spacing:-.015em}
+.mast .lede{
+  margin-top:14px;max-width:60ch;color:var(--ink-2);font-size:16.5px;
+}
+.mast .lede strong{color:var(--ink);font-weight:600}
+.mast .mast-meta{
+  margin-top:18px;max-width:none;display:flex;flex-wrap:wrap;gap:8px 18px;
+  font-family:var(--fm);font-size:11.5px;color:var(--ink-3);
+}
+
+/* ── ruler nav ────────────────────────────────────────── */
+.rulerwrap{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:20;
+  background:var(--ground);border-bottom:1px solid var(--line);
+}
+.ruler{
+  display:flex;gap:0;overflow-x:auto;scroll-snap-type:x proximity;
+  scrollbar-width:none;-ms-overflow-style:none;
+}
+.ruler::-webkit-scrollbar{display:none}
+.seg{
+  scroll-snap-align:start;
+  flex:1 1 auto;min-width:104px;
+  display:flex;flex-direction:column;align-items:flex-start;gap:1px;
+  padding:13px 12px 0;
+  background:none;border:0;border-left:1px solid var(--line-2);
+  font-family:var(--fb);text-align:left;cursor:pointer;color:var(--ink-3);
+  transition:color .15s ease,background .15s ease;
+}
+.seg:first-child{border-left:0}
+.seg:hover{background:var(--surface-2);color:var(--ink-2)}
+.seg[aria-selected="true"]{color:var(--ink);background:var(--surface)}
+.seg-n{
+  font-family:var(--fm);font-size:15px;font-weight:500;font-variant-numeric:tabular-nums;
+  letter-spacing:-.02em;white-space:nowrap;
+}
+.seg-n .u{font-size:10.5px;letter-spacing:.06em;margin-left:3px;color:var(--ink-3)}
+.seg-name{font-size:12px;line-height:1.4;white-space:nowrap}
+.seg[aria-selected="true"] .seg-name{color:var(--ink-2)}
+.seg-band{width:100%;height:4px;margin-top:10px;position:relative}
+.seg-band i{position:absolute;inset:0;display:block}
+.band-flat{background:var(--line)}
+.band-low{
+  background:repeating-linear-gradient(90deg,var(--ink-3) 0 2px,transparent 2px 6px);
+  opacity:.5;height:2px;top:1px;
+}
+.band-rise{background:linear-gradient(90deg,var(--ink-3) 0%,var(--accent) 34%,var(--accent) 100%);opacity:.75}
+.band-high{background:var(--accent);opacity:.85}
+.seg[aria-selected="true"] .seg-band i{opacity:1}
+.tick14{
+  position:absolute;left:16.7%;bottom:0;width:1px;height:12px;
+  background:var(--accent);opacity:.9;
+}
+.rulerlegend{
+  display:flex;gap:10px;align-items:baseline;
+  padding:9px 0 11px;font-size:12.5px;color:var(--ink-3);line-height:1.6;
+}
+.rulerlegend b{font-weight:500;color:var(--ink-2)}
+
+/* ── panels ───────────────────────────────────────────── */
+.panel{padding-block:30px 72px;animation:rise .22s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+.panel > * + *{margin-top:26px}
+
+.thesis{
+  font-family:var(--fd);font-size:clamp(19px,3.6vw,23px);line-height:1.55;
+  letter-spacing:-.01em;max-width:28ch;
+}
+.thesis + .thesis-sub{margin-top:12px;color:var(--ink-2);max-width:62ch;font-size:15.5px}
+
+h2.sec{
+  font-size:13px;font-family:var(--fb);font-weight:600;letter-spacing:.06em;
+  color:var(--ink-3);display:flex;align-items:center;gap:10px;margin-top:40px;
+}
+h2.sec::after{content:"";flex:1;height:1px;background:var(--line)}
+h3{font-size:17.5px;margin-top:26px}
+h4{font-family:var(--fb);font-size:14px;font-weight:600;color:var(--ink-2);margin-top:22px}
+.panel p{max-width:64ch;margin-top:12px}
+.muted{color:var(--ink-2);font-size:15px}
+
+/* ── observation blocks ───────────────────────────────── */
+.block{
+  background:var(--surface);border:1px solid var(--line-2);border-left:3px solid var(--line);
+  padding:18px 20px 20px;box-shadow:var(--shadow);
+}
+.block.watch{border-left-color:var(--watch)}
+.block.clear{border-left-color:var(--clear)}
+.block.normal{
+  background:none;border:1px dashed var(--line);border-left:1px dashed var(--line);
+  box-shadow:none;
+}
+.block-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;margin-bottom:4px}
+.block-head h3{font-family:var(--fb);font-size:15.5px;font-weight:600;margin:0}
+.block.watch .block-head h3{color:var(--watch)}
+.block.clear .block-head h3{color:var(--clear)}
+.block .block-note{font-size:12.5px;color:var(--ink-3);line-height:1.5;margin-top:0;max-width:48ch}
+.marked{
+  font-family:var(--fm);font-size:11px;color:var(--ink-3);
+  margin-left:auto;white-space:nowrap;
+}
+.marked[hidden]{display:none!important}
+
+ul.obs{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:2px}
+ul.obs li{margin:0}
+ul.obs label{
+  display:grid;grid-template-columns:auto 1fr;gap:11px;align-items:start;
+  padding:7px 8px 7px 6px;margin-left:-6px;border-radius:3px;cursor:pointer;
+  font-size:15.2px;line-height:1.65;
+}
+ul.obs label:hover{background:var(--surface-2)}
+ul.obs input{
+  appearance:none;-webkit-appearance:none;
+  width:15px;height:15px;margin:5px 0 0;flex:none;
+  border:1.5px solid var(--line);border-radius:2px;background:var(--surface);
+  cursor:pointer;position:relative;transition:border-color .12s,background .12s;
+}
+ul.obs input:hover{border-color:var(--ink-3)}
+.block.watch ul.obs input:checked{background:var(--watch);border-color:var(--watch)}
+.block.clear ul.obs input:checked{background:var(--clear);border-color:var(--clear)}
+ul.obs input:checked::after{
+  content:"";position:absolute;left:4px;top:1px;width:4px;height:8px;
+  border:solid var(--surface);border-width:0 1.6px 1.6px 0;transform:rotate(42deg);
+}
+ul.obs input:checked + span{color:var(--ink-2)}
+ul.obs .age{
+  font-family:var(--fm);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-3);margin-right:6px;
+}
+ul.obs em{font-style:normal;font-weight:600}
+
+/* plain bullet list */
+ul.plain{margin:14px 0 0;padding-left:1.1em;display:flex;flex-direction:column;gap:7px;font-size:15.2px}
+ul.plain li{margin:0}
+ul.plain li::marker{color:var(--ink-3)}
+
+/* ── callouts ─────────────────────────────────────────── */
+.call{
+  background:var(--surface-2);border:1px solid var(--line-2);
+  padding:16px 18px;font-size:15px;line-height:1.7;
+}
+.call strong{font-weight:600}
+.call.urgent{background:var(--watch-soft);border-color:transparent}
+.call.calm{background:var(--clear-soft);border-color:transparent}
+.call h4{margin-top:0;font-size:13.5px;letter-spacing:.02em}
+.call h4 + p,.call h4 + ul{margin-top:9px}
+.call p{max-width:62ch}
+
+/* ── tables ───────────────────────────────────────────── */
+.tablewrap{overflow-x:auto;border:1px solid var(--line-2);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:480px;font-size:14.2px;line-height:1.6}
+th,td{padding:11px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line-2)}
+thead th{
+  font-size:11.5px;font-weight:600;letter-spacing:.05em;color:var(--ink-3);
+  background:var(--surface-2);white-space:nowrap;
+}
+tbody tr:last-child td,tbody tr:last-child th{border-bottom:0}
+tbody th{font-weight:600;white-space:nowrap;color:var(--ink)}
+td.num{font-family:var(--fm);font-variant-numeric:tabular-nums;white-space:nowrap}
+.t-watch{color:var(--watch)}
+.t-clear{color:var(--clear)}
+
+/* ── evidence disclosure ──────────────────────────────── */
+details.ev{
+  border-top:1px solid var(--line);padding-top:4px;margin-top:30px;
+}
+details.ev summary{
+  cursor:pointer;list-style:none;padding:11px 0;
+  font-family:var(--fm);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-3);display:flex;align-items:center;gap:9px;
+}
+details.ev summary::-webkit-details-marker{display:none}
+details.ev summary::before{content:"+";font-size:14px;line-height:1;width:10px}
+details.ev[open] summary::before{content:"–"}
+details.ev summary:hover{color:var(--ink-2)}
+details.ev .evbody{padding-bottom:20px}
+details.ev .evbody > * + *{margin-top:16px}
+details.ev p,details.ev li{font-size:14.2px;line-height:1.72}
+.cite{font-family:var(--fm);font-size:11.5px;color:var(--ink-3)}
+
+/* ── big answer ───────────────────────────────────────── */
+.answer{
+  border:1px solid var(--line);background:var(--surface);padding:24px 22px;box-shadow:var(--shadow);
+}
+.answer .q{
+  font-family:var(--fm);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:12px;
+}
+.answer .a{font-family:var(--fd);font-size:clamp(19px,3.8vw,24px);line-height:1.5;letter-spacing:-.01em}
+.answer p{font-size:15px}
+
+/* ── reference list ───────────────────────────────────── */
+.refs{display:flex;flex-direction:column;gap:0;margin-top:14px}
+.ref{
+  display:grid;grid-template-columns:auto 1fr;gap:4px 14px;
+  padding:13px 0;border-bottom:1px solid var(--line-2);font-size:14.4px;line-height:1.6;
+}
+.ref:last-child{border-bottom:0}
+.ref .yr{
+  font-family:var(--fm);font-size:12px;font-variant-numeric:tabular-nums;
+  color:var(--ink-3);padding-top:2px;
+}
+.ref .t{margin:0}
+.ref .src{grid-column:2;font-size:12.5px;color:var(--ink-3)}
+
+/* ── footer ───────────────────────────────────────────── */
+.foot{
+  border-top:1px solid var(--line);padding-block:24px 40px;
+  display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;justify-content:space-between;
+  font-size:13px;color:var(--ink-3);
+}
+.reset{
+  font-family:var(--fb);font-size:12.5px;color:var(--ink-3);
+  background:none;border:1px solid var(--line);padding:6px 13px;border-radius:3px;cursor:pointer;
+}
+.reset:hover{color:var(--ink-2);border-color:var(--ink-3)}
+
+@media (max-width:560px){
+  body{font-size:15.5px}
+  .wrap{padding-inline:16px}
+  .block{padding:16px 15px 18px}
+  .seg{min-width:92px;padding:11px 10px 0}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+</style>
+
+<header class="rulerwrap">
+  <div class="wrap">
+    <nav class="ruler" role="tablist" aria-label="연령 구간">
+      <button class="seg" role="tab" id="t-how" aria-controls="p-how" aria-selected="true" data-k="how">
+        <span class="seg-n">먼저</span>
+        <span class="seg-name">읽는 법</span>
+        <span class="seg-band"><i class="band-flat"></i></span>
+      </button>
+      <button class="seg" role="tab" id="t-a1" aria-controls="p-a1" aria-selected="false" tabindex="-1" data-k="a1">
+        <span class="seg-n">6–12<span class="u">개월</span></span>
+        <span class="seg-name">추적을 시작</span>
+        <span class="seg-band"><i class="band-low"></i></span>
+      </button>
+      <button class="seg" role="tab" id="t-a2" aria-controls="p-a2" aria-selected="false" tabindex="-1" data-k="a2">
+        <span class="seg-n">12–24<span class="u">개월</span></span>
+        <span class="seg-name">판단이 가능해짐</span>
+        <span class="seg-band"><i class="band-rise"></i><i class="tick14"></i></span>
+      </button>
+      <button class="seg" role="tab" id="t-a3" aria-controls="p-a3" aria-selected="false" tabindex="-1" data-k="a3">
+        <span class="seg-n">2–4<span class="u">세</span></span>
+        <span class="seg-name">확진이 안정적</span>
+        <span class="seg-band"><i class="band-high"></i></span>
+      </button>
+      <button class="seg" role="tab" id="t-a4" aria-controls="p-a4" aria-selected="false" tabindex="-1" data-k="a4">
+        <span class="seg-n">4–8<span class="u">세</span></span>
+        <span class="seg-name">가려지기 시작</span>
+        <span class="seg-band"><i class="band-high"></i></span>
+      </button>
+      <button class="seg" role="tab" id="t-lab" aria-controls="p-lab" aria-selected="false" tabindex="-1" data-k="lab">
+        <span class="seg-n">검사</span>
+        <span class="seg-name">혈액·유전·자료</span>
+        <span class="seg-band"><i class="band-flat"></i></span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <p class="rulerlegend">
+    <b>띠</b>
+    <span>탭 아래 띠는 <b>그 나이에서 판단이 얼마나 믿을 만한지</b>입니다. 점선은 “아직 모른다”, 실선은 “판단 가능”. 띠가 진해지는 지점이 <b>생후 14개월</b>입니다.</span>
+  </p>
+</div>
+
+<main class="wrap">
+
+<!-- ═══════════════ 읽는 법 ═══════════════ -->
+<section class="panel" role="tabpanel" id="p-how" aria-labelledby="t-how" tabindex="0">
+  <div class="mast" style="padding-top:0;border-bottom:0">
+    <p class="eyebrow">6개월 – 만 8세 · 2022–2026 문헌</p>
+    <h1>월령별 자폐 조기 신호</h1>
+    <p class="lede">
+      아이 나이에 해당하는 탭을 열고 <strong>무엇을 보면 되는지</strong>만 확인하세요.
+      항목 개수를 세는 문서가 아닙니다. 지켜볼 것과 괜찮다는 신호를 같은 무게로 실었습니다.
+    </p>
+    <p class="mast-meta"><span>정리 2026-09-17</span><span>연구 요약 · 진단 도구 아님</span><span>체크는 이 브라우저에만 저장됩니다</span></p>
+  </div>
+
+  <h2 class="sec">읽기 전에 알아야 할 다섯 가지</h2>
+
+  <div class="block">
+    <div class="block-head"><h3>신호는 ‘있다·없다’가 아니라 ‘변해간다’</h3></div>
+    <p class="muted">눈을 마주치는 정도는 생후 2개월에는 정상이다가 <em>2–6개월에 걸쳐 서서히 줄어듭니다</em>. 그래서 한 번의 관찰보다 <strong>3–6개월 간격의 변화 방향</strong>이 훨씬 많은 것을 말해줍니다. 오늘 찍은 사진 한 장이 아니라, 지난 계절과 비교하세요.</p>
+    <p class="cite" style="margin-top:12px">Cleary et al. 2023, 생후 6개월 체계적 문헌고찰 · Jones &amp; Klin</p>
+  </div>
+
+  <div class="block">
+    <div class="block-head"><h3>행동 하나로는 알 수 없습니다</h3></div>
+    <p class="muted">손 흔들기, 까치발, 장난감 줄 세우기는 <strong>정상 발달 아이에게도 흔합니다</strong>. 판단의 단위는 행동 하나가 아니라 <em>조합 × 지속성 × 빈도 × 맥락</em>입니다.</p>
+    <p class="cite" style="margin-top:12px">Ahmad et al. 2026 — “어떤 단일 지표도 신뢰할 만한 예측에 충분하지 않다”</p>
+  </div>
+
+  <div class="block watch">
+    <div class="block-head"><h3>돌 이전의 “괜찮아 보인다”는 아직 모른다는 뜻입니다</h3></div>
+    <p class="muted">고위험 영아 256명을 36개월까지 추적한 연구에서, 12개월 검사에 걸린 아이의 <strong>95%</strong>는 실제로 발달 문제가 확인됐습니다. 그런데 36개월에 발달 문제가 확인된 아이 중 <strong>그때 걸렸던 건 26%뿐</strong>이었습니다. 자폐로 최종 진단받는 아이의 약 40%만 18개월에 기준을 충족합니다.</p>
+    <p class="muted" style="margin-top:12px"><em>걸리면 강한 신호, 안 걸려도 배제는 불가</em> — 이 구간의 결과를 이렇게 읽으세요.</p>
+    <p class="cite" style="margin-top:12px">Talbott, Young &amp; Ozonoff 2025</p>
+  </div>
+
+  <div class="block clear">
+    <div class="block-head"><h3>14개월부터는 ‘아니다’라고 말할 수 있게 됩니다</h3></div>
+    <p class="muted">전문가 진단의 안정성은 12–13개월에 0.50이다가 <strong>14개월 0.79, 16개월 0.83</strong>으로 올라갑니다. 선별검사도 마찬가지로, 음성이면 실제로 아닐 확률이 95–99%에 이릅니다.</p>
+    <p class="muted" style="margin-top:12px">이 문서에서 <em>괜찮다는 신호</em>가 실질적 의미를 갖는 것은 18개월 이후입니다. 그전까지 정확한 상태는 “아직 모른다”입니다.</p>
+    <p class="cite" style="margin-top:12px">Pierce et al. 2019, JAMA Pediatrics (n=1,269)</p>
+  </div>
+
+  <div class="block">
+    <div class="block-head"><h3>형제가 있으면 확률의 출발점이 다릅니다</h3></div>
+    <div class="tablewrap" style="margin-top:14px">
+      <table><tbody>
+        <tr><th>일반 인구</th><td class="num">1–3%</td><td>—</td></tr>
+        <tr><th>손위 형제가 자폐</th><td class="num">20.2%</td><td>1,605명 · 18개 연구기관</td></tr>
+        <tr><th style="padding-left:28px">그중 남아</th><td class="num">25.3%</td><td rowspan="2">같은 행동이라도 사후 확률이 크게 달라집니다</td></tr>
+        <tr><th style="padding-left:28px">그중 여아</th><td class="num">13.1%</td></tr>
+      </tbody></table>
+    </div>
+    <p class="cite" style="margin-top:12px">Ozonoff et al. 2024, Pediatrics — Baby Siblings Research Consortium</p>
+  </div>
+
+  <h2 class="sec">한눈에 보기</h2>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>나이</th><th class="t-watch">가장 눈여겨볼 것</th><th class="t-clear">가장 안심되는 신호</th><th>판단 신뢰도</th></tr></thead>
+      <tbody>
+        <tr>
+          <th>6–12개월</th>
+          <td>9·12개월 호명 반응 실패, 시선이 줄어드는 흐름, 시선 떼기 지연</td>
+          <td>일관된 호명 반응, 사람↔사물 시선 왕복, 옹알이 주고받기</td>
+          <td>낮음</td>
+        </tr>
+        <tr>
+          <th>12–24개월</th>
+          <td>14개월에 <em>보여주려는</em> 가리키기 없음, 18개월에 흉내놀이 없음, 하던 것의 상실·정체</td>
+          <td>가리키기 + 눈맞춤 + 소리가 한 번에, 물건 가져와 보여주기</td>
+          <td>급상승</td>
+        </tr>
+        <tr>
+          <th>2–4세</th>
+          <td>또래에 무관심, 반향어·대명사 뒤집기, 똑같음에 대한 집착</td>
+          <td>또래와 역할놀이, 자발적으로 경험 공유, 3–4번 오가는 대화</td>
+          <td>높음</td>
+        </tr>
+        <tr>
+          <th>4–8세</th>
+          <td>우정의 일방성, 비유·농담 이해 곤란, 학교에선 참고 집에서 무너짐</td>
+          <td>상호적 우정 유지, 상대가 모르는 걸 알아서 설명, 새 환경 적응</td>
+          <td>높음(가려지면 놓침)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="call calm">
+    <h4>걱정될 때 기억할 것</h4>
+    <p>전문가가 만든 선별검사조차 양성의 절반 이상이 위양성입니다. 이 문서의 항목 개수로 결론을 내리지 마세요. 마음에 걸리면 소아청소년과·발달전문의에게 가는 것이, 목록을 다시 세는 것보다 언제나 빠릅니다. 확진을 기다리지 않고도 언어·놀이 중심 개입은 시작할 수 있습니다.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ 6–12개월 ═══════════════ -->
+<section class="panel" role="tabpanel" id="p-a1" aria-labelledby="t-a1" tabindex="0" hidden>
+  <p class="thesis">이 나이의 목표는 판별이 아니라 추적을 시작하는 것입니다.</p>
+  <p class="thesis-sub">대부분의 신호는 이 구간의 <strong>끝(9–12개월)</strong>에서야 갈리기 시작합니다. 지금 아무 문제가 없어 보여도 그것은 좋은 소식이지 결론은 아닙니다.</p>
+
+  <div class="block watch" data-count>
+    <div class="block-head">
+      <h3>지켜볼 것</h3>
+      <span class="marked" hidden></span>
+      <p class="block-note">여러 개가 <em>함께</em>, <em>몇 달째</em> 보일 때 의미가 있습니다.</p>
+    </div>
+    <ul class="obs">
+      <li><label><input type="checkbox" id="a1w1"><span><span class="age">9·12개월</span>이름을 불러도 잘 돌아보지 않는다 — 12개월에도 계속 그러면 특히 의미가 큽니다</span></label></li>
+      <li><label><input type="checkbox" id="a1w2"><span>사람 얼굴보다 사물·배경을 본다. 양육자 얼굴로 시선이 되돌아오는 횟수가 적다</span></label></li>
+      <li><label><input type="checkbox" id="a1w3"><span>한 가지에 붙들려 시선을 떼지 못한다(다음 것으로 옮겨가는 데 오래 걸림)</span></label></li>
+      <li><label><input type="checkbox" id="a1w4"><span><span class="age">6개월</span>누워 있다 손을 잡아 당겨 앉힐 때 머리가 뒤로 처진다</span></label></li>
+      <li><label><input type="checkbox" id="a1w5"><span>몸에 힘이 없고, 뒤집기·앉기 같은 큰 동작이 또래보다 늦다</span></label></li>
+      <li><label><input type="checkbox" id="a1w6"><span>“바바·다다” 같은 자음이 섞인 옹알이가 적거나 늦다. 높은 톤의 소리만 낸다</span></label></li>
+      <li><label><input type="checkbox" id="a1w7"><span>표정이나 소리를 따라 하지 않는다</span></label></li>
+      <li><label><input type="checkbox" id="a1w8"><span>필요할 때 손은 뻗지만, <em>같이 보자고</em> 하는 몸짓이 없다</span></label></li>
+      <li><label><input type="checkbox" id="a1w9"><span>소리·촉감에 지나치게 예민하거나 반대로 거의 반응하지 않는다(이름엔 무반응인데 작은 소리엔 놀라는 식의 불일치)</span></label></li>
+      <li><label><input type="checkbox" id="a1w10"><span>수면 문제가 일찍 시작되어 계속된다</span></label></li>
+      <li><label><input type="checkbox" id="a1w11"><span><span class="age">12개월</span>머리를 박거나 자기를 때리거나 무는 행동</span></label></li>
+      <li><label><input type="checkbox" id="a1w12"><span><span class="age">12개월</span>물건을 돌리고 회전시키고, 눈 옆으로 비껴 보며 살핀다</span></label></li>
+    </ul>
+  </div>
+
+  <div class="block clear" data-count>
+    <div class="block-head">
+      <h3>괜찮다는 신호</h3>
+      <span class="marked" hidden></span>
+      <p class="block-note">이 나이에는 <em>안심의 근거로는 아직 약합니다.</em> 위의 세 번째 원칙을 함께 읽으세요.</p>
+    </div>
+    <ul class="obs">
+      <li><label><input type="checkbox" id="a1c1"><span>이름을 부르면 <em>일관되게</em> 돌아본다 — 부르는 사람이나 장소가 달라져도</span></label></li>
+      <li><label><input type="checkbox" id="a1c2"><span>사람을 향해 웃고, 웃음이 오간다</span></label></li>
+      <li><label><input type="checkbox" id="a1c3"><span>어른이 말하면 멈추고, 끝나면 소리를 낸다(옹알이 차례 지키기)</span></label></li>
+      <li><label><input type="checkbox" id="a1c4"><span>양육자 얼굴과 사물 사이로 시선이 오간다</span></label></li>
+      <li><label><input type="checkbox" id="a1c5"><span><span class="age">12개월쯤</span>어른이 보는 쪽을 따라 본다</span></label></li>
+      <li><label><input type="checkbox" id="a1c6"><span><span class="age">7–10개월</span>자음이 섞인 옹알이가 나오고 소리의 종류가 다양하다</span></label></li>
+      <li><label><input type="checkbox" id="a1c7"><span>까꿍·짝짜꿍 같은 놀이에서 다음을 기대하고 즐거워한다</span></label></li>
+      <li><label><input type="checkbox" id="a1c8"><span><span class="age">8–10개월</span>낯가림과 분리불안이 나타난다 — 애착이 자라고 있다는 뜻입니다</span></label></li>
+      <li><label><input type="checkbox" id="a1c9"><span>속상할 때 안아주면 진정되고, 눈으로 위로를 구한다</span></label></li>
+    </ul>
+  </div>
+
+  <div class="block normal">
+    <div class="block-head"><h3>흔히 오해하는 것</h3></div>
+    <ul class="plain">
+      <li><strong>가끔</strong> 나오는 손 흔들기, 몸 흔들기 — 정상 발달 영아도 반복 동작을 합니다</li>
+      <li>잠깐 물건에 몰두하거나 바퀴를 몇 번 굴리는 것</li>
+      <li>옹알이는 늦지만 <strong>시선과 상호작용은 정상</strong> — 이때는 자폐보다 <em>청력 검사가 먼저</em>입니다</li>
+      <li>낯가림이 심하거나 까다로운 기질, 잘 웃지 않는 기질</li>
+    </ul>
+  </div>
+
+  <div class="call">
+    <h4>손위 형제가 자폐라면</h4>
+    <p>확률의 출발점이 20.2%입니다(남아 25.3%·여아 13.1%). 이 경우 “선별”이 아니라 <strong>정기적인 추적 관찰</strong> 대상이고, 6·9·12·18·24개월에 발달을 기록해 두면 나중에 변화의 방향을 읽을 수 있습니다.</p>
+  </div>
+
+  <details class="ev">
+    <summary>근거와 숫자</summary>
+    <div class="evbody">
+      <p><strong>이 구간의 예측력.</strong> 고위험 형제 영아 256명 대상 연구에서 12개월 AOSI+MSEL 조합은 PPV 0.95 / 특이도 0.99였지만 <strong>민감도는 0.26</strong>이었습니다. 6·9개월 조합은 PPV 0.62–0.83, 민감도 0.08–0.26.<br><span class="cite">Talbott, Young &amp; Ozonoff 2025, Autism</span></p>
+      <p><strong>호명 반응.</strong> 9개월부터 집단 차이가 시작되고, 12개월에도 지속되는 실패는 자폐에 대해 “highly specific”이며 3세 수용언어 저하도 예측했습니다.<br><span class="cite">Miller et al. 2017</span></p>
+      <p><strong>사물 탐색.</strong> 12개월 영아 66명 전향 연구에서 회전·돌리기·비정상적 시각 검사가 유의하게 많았고 36개월 결과와 연관되었습니다.<br><span class="cite">Ozonoff et al. 2008</span></p>
+      <p><strong>자해 행동.</strong> 12개월의 머리 박기·자기 때리기는 낮은 발달 수준과 함께 24개월 진단의 강건한 예측인자였습니다.<br><span class="cite">Dimian et al. 2017</span></p>
+      <p><strong>수면·운동.</strong> 조기에 시작해 지속되는 수면 문제는 3세 자폐 위험을 높였고(Kikuchi 2024), 움직임 궤적의 차이는 사회적 증상 이전인 6–12개월에 이미 관찰됩니다(Patterson 2022).</p>
+      <p><strong>이 구간의 도구.</strong> AOSI, CSBS DP(6–24개월), POEMS(부모 관찰), 한국 <em>영유아 건강검진 3차(생후 9개월)</em>의 K-DST.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ═══════════════ 12–24개월 ═══════════════ -->
+<section class="panel" role="tabpanel" id="p-a2" aria-labelledby="t-a2" tabindex="0" hidden>
+  <p class="thesis">여기서부터 판단이 급격히 정확해집니다.</p>
+  <p class="thesis-sub">선별과 진단의 정확도가 가장 크게 올라가는 구간입니다. 미국소아과학회는 <strong>18개월과 24개월</strong>에 자폐 특화 선별을 권고합니다.</p>
+
+  <div class="call urgent">
+    <h4>이 중 하나라도 해당하면 지켜보지 말고 평가받으세요</h4>
+    <div class="tablewrap" style="margin-top:10px;border:0;background:none">
+      <table style="min-width:360px">
+        <tbody>
+          <tr><th style="background:none">12개월</th><td>옹알이가 없다 · 가리키기·손 흔들기·보여주기가 없다 · 이름에 반응이 없다</td></tr>
+          <tr><th style="background:none">14개월</th><td><em>관심을 나누려는</em> 가리키기가 없다</td></tr>
+          <tr><th style="background:none">16개월</th><td>의미 있는 단어가 없다</td></tr>
+          <tr><th style="background:none">18개월</th><td>흉내놀이(인형 먹이기, 전화 놀이)가 없다</td></tr>
+          <tr><th style="background:none">24개월</th><td>스스로 만든 두 단어 조합이 없다</td></tr>
+          <tr><th style="background:none">모든 나이</th><td>하던 말·사회적 행동을 <em>잃거나, 더 늘지 않고 멈춘다</em></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="block watch" data-count>
+    <div class="block-head">
+      <h3>지켜볼 것</h3>
+      <span class="marked" hidden></span>
+    </div>
+    <ul class="obs">
+      <li><label><input type="checkbox" id="a2w1"><span><em>필요할 때 가리키기는 하는데, 신기한 걸 보고 “같이 보자”고 가리키지는 않는다</em> — 이 조합이 특히 특징적입니다</span></label></li>
+      <li><label><input type="checkbox" id="a2w2"><span>어른이 가리키는 쪽을 따라 보지 않는다. 자기가 흥미로운 것을 어른에게 알리지 않는다</span></label></li>
+      <li><label><input type="checkbox" id="a2w3"><span><span class="age">15–19개월</span>몸짓과 눈맞춤이 따로 논다 — 가리키면서 쳐다보지 않는다</span></label></li>
+      <li><label><input type="checkbox" id="a2w4"><span>말 대신 들은 것을 그대로 따라 한다(광고·영상 대사 통째로)</span></label></li>
+      <li><label><input type="checkbox" id="a2w5"><span>손 펄럭이기, 몸 흔들기, 까치발, 특이한 자세가 여러 상황에서 반복된다</span></label></li>
+      <li><label><input type="checkbox" id="a2w6"><span>장난감을 가지고 놀기보다 줄 세우고 분류한다. 바퀴·라벨 같은 부분에 집착한다</span></label></li>
+      <li><label><input type="checkbox" id="a2w7"><span>돌아가는 것, 반짝이는 것, 기하학적 무늬를 오래 들여다본다</span></label></li>
+      <li><label><input type="checkbox" id="a2w8"><span>특정 소리·촉감·냄새를 심하게 피하거나, 반대로 계속 찾는다</span></label></li>
+      <li><label><input type="checkbox" id="a2w9"><span>같은 길·같은 컵·같은 순서를 고집하고, 바뀌면 크게 무너진다</span></label></li>
+      <li><label><input type="checkbox" id="a2w10"><span>심하게 예민하고 잘 달래지지 않는다</span></label></li>
+      <li><label><input type="checkbox" id="a2w11"><span><span class="age">18–24개월</span>걷기·균형 같은 큰 동작이 오히려 뒷걸음질친다</span></label></li>
+    </ul>
+  </div>
+
+  <div class="call">
+    <h4>“퇴행”은 갑자기 잃는 것만이 아닙니다</h4>
+    <p>전향 연구에서 검사자 평정으로는 자폐 아동의 <strong>88%</strong>가 사회적 관여의 감소를 보였지만, 부모에게 “아이가 기술을 잃었나요?”라고 물으면 <strong>47%</strong>만 그렇다고 답했습니다. 실제로는 급격한 상실보다 <em>서서히 줄거나, 늘지 않고 멈추는</em> 형태가 훨씬 많습니다.</p>
+    <p style="margin-top:10px">그래서 <strong>“갑자기 잃은 적은 없어요”는 퇴행을 배제하는 근거가 되지 못합니다.</strong> 정체도 퇴행입니다.</p>
+    <p class="cite" style="margin-top:10px">Ozonoff et al. 2018</p>
+  </div>
+
+  <div class="block clear" data-count>
+    <div class="block-head">
+      <h3>괜찮다는 신호</h3>
+      <span class="marked" hidden></span>
+      <p class="block-note">이 구간부터 실제로 의미가 있습니다.</p>
+    </div>
+    <ul class="obs">
+      <li><label><input type="checkbox" id="a2c1"><span><em>가리키고 → 엄마·아빠 얼굴을 확인하고 → 소리를 낸다.</em> 이 세 가지가 한 번에 일어나면 가장 강한 신호입니다</span></label></li>
+      <li><label><input type="checkbox" id="a2c2"><span>달라고가 아니라 <em>보여주려고</em> 물건을 가져오거나 건넨다</span></label></li>
+      <li><label><input type="checkbox" id="a2c3"><span>낯선 것 앞에서 부모 표정을 확인한 뒤 행동을 정한다</span></label></li>
+      <li><label><input type="checkbox" id="a2c4"><span><span class="age">18–24개월</span>인형에게 밥을 먹이거나 블록을 전화기처럼 쓰는 흉내놀이를 스스로 한다</span></label></li>
+      <li><label><input type="checkbox" id="a2c5"><span>시키지 않아도 본 행동을 따라 한다</span></label></li>
+      <li><label><input type="checkbox" id="a2c6"><span>이름에 일관되게 반응하고, 주고받는 상호작용이 여러 번 이어진다</span></label></li>
+      <li><label><input type="checkbox" id="a2c7"><span><span class="age">16개월</span>다양한 몸짓을 쓴다 — 가리키기, 손 흔들기, 고개 젓기, 하이파이브, 박수, 안아달라고 팔 벌리기 등</span></label></li>
+    </ul>
+  </div>
+
+  <h2 class="sec">말만 늦는 아이와 어떻게 다른가</h2>
+  <p class="muted">가장 자주 혼동되는 지점입니다. 핵심은 말이 아니라 <strong>말 이외의 소통</strong>이 살아 있는지입니다.</p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th></th><th class="t-watch">자폐</th><th class="t-clear">단순 언어지연</th></tr></thead>
+      <tbody>
+        <tr><th>몸짓</th><td>적고, 눈맞춤과 따로 논다</td><td>풍부하다. 말 대신 적극적으로 쓴다</td></tr>
+        <tr><th>눈맞춤</th><td>불안정하거나 피한다</td><td>정상</td></tr>
+        <tr><th>같이 보기</th><td>잘 안 된다</td><td>보존된다</td></tr>
+        <tr><th>이름 반응</th><td>일관되지 않다</td><td>일관된다</td></tr>
+        <tr><th>흉내놀이</th><td>없거나 같은 장면만 반복</td><td>스스로 하거나, <em>유도하면 나온다</em></td></tr>
+        <tr><th>사회적 관심</th><td>낮다</td><td>높다 — 말을 못해도 같이 놀고 싶어 한다</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <details class="ev">
+    <summary>선별검사를 받는다면 알아둘 숫자</summary>
+    <div class="evbody">
+      <p><strong>M-CHAT-R/F</strong>(16–30개월, 무료). 최신 체계적 문헌고찰(6개 연구 · 12,633명)에서 민감도 0.36–1.00으로 편차가 매우 크고, <strong>PPV 0.31–0.42</strong>(양성의 과반은 위양성), <strong>NPV는 일관되게 높음</strong>. 16–30개월 밖에서는 정확도가 뚜렷이 떨어집니다.<br><span class="cite">Tsen et al. 2026 · 2026 대규모 검증연구: 민감도 49.2% / 특이도 94.2% / PPV 28.9% / NPV 97.5%</span></p>
+      <p><strong>꼭 2단계까지.</strong> 1차 문항만 하고 <em>후속 질문(Follow-up)</em>을 생략하면 PPV가 크게 떨어집니다. <a href="https://mchatscreen.com/" target="_blank" rel="noopener">mchatscreen.com</a>에서 무료로 받을 수 있습니다.</p>
+      <p><strong>한 번의 음성으로 끝내지 마세요.</strong> Pierce 2019에서 처음 평가에서 자폐로 분류되지 않았던 아이의 <strong>24%</strong>가 이후 자폐로 확인되었습니다.</p>
+      <p><strong>기기·앱.</strong> 안구추적 <em>EarliPoint</em>는 16–30개월 대상으로 2023년 6월 미국 FDA 허가를 받은 보조 진단 기기입니다(JAMA n=499, JAMA Netw Open n=1,089). 태블릿 앱 <em>SenseToKnow</em>는 민감도 87.8% / 특이도 80.8% / PPV 40.6%로 보고되었습니다(Nature Medicine 2023).</p>
+      <p><strong>퇴행의 규모.</strong> 자폐 아동의 20–40%가 퇴행 궤적을 보이며, 사회적 관여도는 6개월에는 비자폐군과 비슷하다가 <strong>12개월에 유의하게 낮아지고 24–36개월까지 계속 하락</strong>합니다.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ═══════════════ 2–4세 ═══════════════ -->
+<section class="panel" role="tabpanel" id="p-a3" aria-labelledby="t-a3" tabindex="0" hidden>
+  <p class="thesis">확진이 가장 안정적으로 이루어지는 구간입니다.</p>
+  <p class="thesis-sub">또래와 노는 장면이 생기면서 차이가 분명해집니다. 이 나이에는 <strong>말의 유무보다 대화가 오가는지</strong>, 놀이가 있는지보다 <strong>같이 노는지</strong>를 보세요.</p>
+
+  <div class="block watch" data-count>
+    <div class="block-head">
+      <h3>지켜볼 것</h3>
+      <span class="marked" hidden></span>
+    </div>
+    <h4 style="margin-top:14px">사람과의 관계</h4>
+    <ul class="obs">
+      <li><label><input type="checkbox" id="a3w1"><span>또래에게 관심이 없다. 옆에서 따로 놀 뿐 같이 놀지 않는다</span></label></li>
+      <li><label><input type="checkbox" id="a3w2"><span>좋은 걸 발견해도 <em>돌아보며 알리지 않는다</em></span></label></li>
+      <li><label><input type="checkbox" id="a3w3"><span>다른 사람이 아파하거나 울어도 반응하지 않는다</span></label></li>
+      <li><label><input type="checkbox" id="a3w4"><span>표정이 빈약하거나 상황과 어긋난다. 말·표정·몸짓이 함께 가지 않는다</span></label></li>
+    </ul>
+    <h4>말</h4>
+    <ul class="obs">
+      <li><label><input type="checkbox" id="a3w5"><span>들은 말을 그대로 되풀이한다(바로, 또는 며칠 뒤에)</span></label></li>
+      <li><label><input type="checkbox" id="a3w6"><span>“나” 대신 “너”라고 하거나 자기를 이름으로 부른다</span></label></li>
+      <li><label><input type="checkbox" id="a3w7"><span>필요할 때만 말하고, 이야기를 나누려고 말하지는 않는다</span></label></li>
+      <li><label><input type="checkbox" id="a3w8"><span>질문에 동문서답하고, 대화가 한두 번 만에 끊긴다</span></label></li>
+      <li><label><input type="checkbox" id="a3w9"><span>억양이 평탄하거나 노래하듯 특이하다</span></label></li>
+    </ul>
+    <h4>놀이와 반복</h4>
+    <ul class="obs">
+      <li><label><input type="checkbox" id="a3w10"><span>상상놀이가 없거나, 본 것을 그대로 재연할 뿐 바뀌지 않는다. 누가 끼어들면 무너진다</span></label></li>
+      <li><label><input type="checkbox" id="a3w11"><span>같은 길·같은 순서를 고집한다. 다음 활동으로 넘어갈 때마다 힘들어한다</span></label></li>
+      <li><label><input type="checkbox" id="a3w12"><span>특정 소리·촉감·냄새를 피하거나 계속 찾는다. 편식이 심하다</span></label></li>
+      <li><label><input type="checkbox" id="a3w13"><span>손 펄럭이기·까치발·빙글빙글 돌기가 여러 상황에서 계속된다</span></label></li>
+    </ul>
+  </div>
+
+  <div class="block clear" data-count>
+    <div class="block-head">
+      <h3>괜찮다는 신호</h3>
+      <span class="marked" hidden></span>
+    </div>
+    <ul class="obs">
+      <li><label><input type="checkbox" id="a3c1"><span>또래와 <em>같이</em> 상상놀이를 한다 — 역할을 나누고 바꾼다</span></label></li>
+      <li><label><input type="checkbox" id="a3c2"><span>“엄마 이거 봐!” 하고 스스로 경험을 나눈다. 그린 그림을 들고 온다</span></label></li>
+      <li><label><input type="checkbox" id="a3c3"><span>한 주제로 세 번 네 번 말이 오간다</span></label></li>
+      <li><label><input type="checkbox" id="a3c4"><span>낯선 상황에서 부모 표정을 확인하고 행동을 조절한다</span></label></li>
+      <li><label><input type="checkbox" id="a3c5"><span>계획이 바뀌면 속상해하지만 <em>설명하면 받아들이고 회복한다</em></span></label></li>
+      <li><label><input type="checkbox" id="a3c6"><span>장난에 웃고, 남을 놀리거나 일부러 웃기려 한다</span></label></li>
+      <li><label><input type="checkbox" id="a3c7"><span>어린이집에서 유행하는 놀이·말투를 자연스럽게 가져온다</span></label></li>
+    </ul>
+  </div>
+
+  <h2 class="sec">비슷해 보이는 다른 것들</h2>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th></th><th>겹치는 부분</th><th>구분되는 지점</th></tr></thead>
+      <tbody>
+        <tr><th>발달성 언어장애</th><td>말이 늦다</td><td>사회적 관심·몸짓·같이 보기가 <em>보존된다</em></td></tr>
+        <tr><th>전반적 발달지연</th><td>전반적으로 느리다</td><td>사회성이 발달 수준에 <em>비례해서</em> 자란다</td></tr>
+        <tr><th>ADHD</th><td>시선이 불안정, 또래 갈등</td><td>사회적 <em>동기는 있다</em>. 다만 자폐와 함께 있는 경우가 매우 흔하다</td></tr>
+        <tr><th>선택적 함구증</th><td>특정 장소에서 말을 안 한다</td><td>집에서는 정상적으로 소통한다</td></tr>
+        <tr><th>사회불안</th><td>피한다</td><td>하고 싶은데 <em>두려워서</em> 못 한다</td></tr>
+        <tr><th>난청</th><td>불러도 안 돌아본다, 말이 늦다</td><td><strong>모든 경우에 청력검사가 먼저</strong></td></tr>
+        <tr><th>상동운동장애</th><td>반복 동작</td><td>사회적 소통은 정상이다</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <details class="ev">
+    <summary>이 나이의 평가 도구</summary>
+    <div class="evbody">
+      <p><strong>확진용.</strong> ADOS-2(모듈 1–2), ADI-R, K-CARS(3–21세), K-GARS-2(3–22세). 여기에 인지·언어·적응행동(Vineland) 평가가 함께 이루어집니다.</p>
+      <p><strong>2차 선별.</strong> SCQ는 <em>만 4세 이상</em>에서 정확도가 좋습니다(AUC 0.92 vs 4세 미만 0.77). 30–60개월에서는 한국 연구 기준 <em>K-SCQ 또는 K-SRS-2 중 하나라도 양성</em>을 기준으로 삼으면 민감도 83.3–94.9%, 특이도 58.1–90.9%였습니다.</p>
+      <p><strong>반복 행동의 발달.</strong> 2·4세 자폐 아동 143명 연구에서 “똑같음에 대한 고집”이나 “한정된 관심” 같은 고차 반복행동은 <em>연령과 발달 수준이 올라갈수록 증가</em>하는 반면, 손 펄럭이기 같은 감각·운동 반복행동은 그렇지 않았습니다.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ═══════════════ 4–8세 ═══════════════ -->
+<section class="panel" role="tabpanel" id="p-a4" aria-labelledby="t-a4" tabindex="0" hidden>
+  <p class="thesis">이 나이의 문제는 신호가 없는 게 아니라 가려진다는 것입니다.</p>
+  <p class="thesis-sub">말이 유창하고 머리가 좋은 아이, 특히 여자아이는 또래를 관찰하고 흉내 내며 학교에서는 “문제 없음”으로 지나갑니다. 그 대가가 집에서 나타납니다.</p>
+
+  <div class="block watch" data-count>
+    <div class="block-head">
+      <h3>지켜볼 것</h3>
+      <span class="marked" hidden></span>
+    </div>
+    <h4 style="margin-top:14px">친구 관계</h4>
+    <ul class="obs">
+      <li><label><input type="checkbox" id="a4w1"><span>친구가 있다고 말하지만 관계가 <em>일방적</em>이다 — 상대는 친구라고 생각하지 않는다</span></label></li>
+      <li><label><input type="checkbox" id="a4w2"><span>여럿이 놀 때 흐름을 못 따라가고, 다툼을 풀지 못한다</span></label></li>
+      <li><label><input type="checkbox" id="a4w3"><span>규칙에 지나치게 엄격하고, 남이 어기면 견디지 못한다</span></label></li>
+      <li><label><input type="checkbox" id="a4w4"><span>자기 각본대로 놀이를 주도하려 하거나, 아예 주변에만 머문다</span></label></li>
+    </ul>
+    <h4>말은 잘하는데 대화가 안 되는 것</h4>
+    <ul class="obs">
+      <li><label><input type="checkbox" id="a4w5"><span>상대의 관심과 무관하게 자기 이야기를 길게 한다</span></label></li>
+      <li><label><input type="checkbox" id="a4w6"><span>말을 그대로 받아들인다. 비유·농담·빈정거림을 놓친다</span></label></li>
+      <li><label><input type="checkbox" id="a4w7"><span>지나치게 어른스럽고 격식 있는 말투를 쓴다</span></label></li>
+      <li><label><input type="checkbox" id="a4w8"><span>상대가 모르는 배경을 빼고 이야기해서 알아듣기 어렵다</span></label></li>
+      <li><label><input type="checkbox" id="a4w9"><span>표정·말투·눈치 같은 신호를 잘 읽지 못한다</span></label></li>
+    </ul>
+    <h4>관심·융통성·감각</h4>
+    <ul class="obs">
+      <li><label><input type="checkbox" id="a4w10"><span>관심의 <em>내용</em>은 나이에 맞아 보이지만(동물, 아이돌, 책) 강도와 경직성이 남다르다</span></label></li>
+      <li><label><input type="checkbox" id="a4w11"><span>변화·패배·일정 변경에 크게 무너진다</span></label></li>
+      <li><label><input type="checkbox" id="a4w12"><span>교실 소음, 급식 냄새, 옷 촉감, 조명 때문에 피하거나 무너진다</span></label></li>
+    </ul>
+    <h4>가려짐의 신호</h4>
+    <ul class="obs">
+      <li><label><input type="checkbox" id="a4w13"><span><em>학교에서는 참고 집에 와서 폭발한다</em> — 집과 학교의 행동 차이가 크다</span></label></li>
+      <li><label><input type="checkbox" id="a4w14"><span>대화를 대본처럼 외우거나, 특정 친구를 그대로 따라 한다</span></label></li>
+      <li><label><input type="checkbox" id="a4w15"><span>불안·복통·두통·등교 거부가 먼저 나타난다</span></label></li>
+      <li><label><input type="checkbox" id="a4w16"><span>불안장애나 ADHD로 치료 중인데 좀처럼 나아지지 않는다</span></label></li>
+    </ul>
+  </div>
+
+  <div class="block clear" data-count>
+    <div class="block-head">
+      <h3>괜찮다는 신호</h3>
+      <span class="marked" hidden></span>
+    </div>
+    <ul class="obs">
+      <li><label><input type="checkbox" id="a4c1"><span>친구 관계가 상호적이다 — 상대도 먼저 찾고, 다툰 뒤에도 회복된다</span></label></li>
+      <li><label><input type="checkbox" id="a4c2"><span>상대의 관심에 맞춰 화제를 옮기고, <em>상대가 모르는 것을 알아서 설명한다</em></span></label></li>
+      <li><label><input type="checkbox" id="a4c3"><span>농담·비꼬기를 알아듣고, 상황에 맞게 눈치껏 말한다</span></label></li>
+      <li><label><input type="checkbox" id="a4c4"><span>전학·담임 교체 같은 변화에 몇 주 안에 적응한다</span></label></li>
+      <li><label><input type="checkbox" id="a4c5"><span>놀이의 암묵적 규칙을 가르쳐주지 않아도 익힌다</span></label></li>
+      <li><label><input type="checkbox" id="a4c6"><span>또래와 있는 것을 스스로 즐거워하고 찾아 나선다</span></label></li>
+      <li><label><input type="checkbox" id="a4c7"><span>어른, 또래, 동생 모두와 균형 잡힌 관계를 맺는다</span></label></li>
+      <li><label><input type="checkbox" id="a4c8"><span>집에서의 모습과 학교에서의 모습이 크게 다르지 않다</span></label></li>
+    </ul>
+  </div>
+
+  <div class="call">
+    <h4>여자아이가 늦게 발견되는 이유</h4>
+    <p>또래를 관찰해 흉내 내고 대화를 외우는 <strong>위장(camouflaging)</strong>이 여자아이에게 더 흔합니다. 관심사가 동물·책·아이돌처럼 겉보기에 평범해서 “한정된 관심”으로 보이지 않기도 합니다. 그 결과 소아기 기준으로 남자아이보다 평균 <strong>약 1.5년</strong> 늦게 진단됩니다(성인은 평균 5년 차이). 위장은 단기적으로는 적응을 돕지만 불안·우울과 이어집니다.</p>
+    <p class="cite" style="margin-top:10px">Milner et al. 2024, Autism Research</p>
+  </div>
+
+  <details class="ev">
+    <summary>이 나이의 평가 도구</summary>
+    <div class="evbody">
+      <p><strong>SRS-2</strong>(4–18세): 65문항 중 53개가 사회적 의사소통을 다루며 자폐 특성의 정도를 차원적으로 측정합니다. <strong>SCQ</strong>(만 4세 이상): 민감도 .45–.96, 특이도 .52–.92로 연구 간 편차가 큽니다. <strong>CCC-2</strong>: 말은 유창한데 대화가 안 되는 화용언어 문제를 잡아냅니다. <strong>ADOS-2 모듈 3</strong>: 언어가 유창한 아동용.</p>
+      <p><strong>동반 상태를 함께 봅니다.</strong> 불안, ADHD, 학습 문제, 수면장애, 위장 문제, 틱, 뇌전증. 영국 지역정신건강서비스 자료에서 미진단 자폐 아동의 주 호소는 사회적 의사소통 문제 77.3%, 감각 과·저반응 63.6%, <em>불안 61.4%</em>였습니다.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ═══════════════ 검사·자료 ═══════════════ -->
+<section class="panel" role="tabpanel" id="p-lab" aria-labelledby="t-lab" tabindex="0" hidden>
+  <div class="answer">
+    <p class="q">혈액검사로 알 수 있나요</p>
+    <p class="a">2026년 현재, 자폐를 진단하는 혈액검사는 없습니다. 진단은 전적으로 행동 관찰에 기반합니다.</p>
+    <p class="muted" style="margin-top:16px">가장 큰 규모의 바이오마커 연구 컨소시엄(ABC-CT, EU-AIMS LEAP)의 2026년 총평은 “임상적으로 쓸 수 있는 바이오마커는 여전히 요원하다”였습니다. 집단 수준의 차이는 재현되지만 임상 특성과의 상관은 최대 r=.36으로, <strong>개인을 판정하는 데는 쓸 수 없습니다.</strong></p>
+    <p class="cite" style="margin-top:12px">Griffin et al. 2026, Biological Psychiatry</p>
+  </div>
+
+  <h2 class="sec">그럼 실제로 하는 검사는</h2>
+  <p class="muted">진단을 <em>붙이는</em> 검사가 아니라 진단 <em>이후</em>에 원인을 찾고, 함께 살펴야 할 것을 정하고, 형제의 재발 위험을 상담하기 위한 검사들입니다.</p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>검사</th><th>누구에게</th><th>원인이 밝혀지는 비율</th></tr></thead>
+      <tbody>
+        <tr><th>염색체 마이크로어레이(CMA)</th><td>진단받은 <em>모든</em> 아동</td><td class="num">약 3–10%</td></tr>
+        <tr><th>취약X 증후군(FMR1)</th><td>모든 아동, 특히 지적장애·가족력</td><td class="num">약 1–2%</td></tr>
+        <tr><th>엑솜·전장유전체(ES/GS)</th><td>1차 또는 2차 검사로 고려</td><td class="num">약 10–20%</td></tr>
+        <tr><th>MECP2 (레트증후군)</th><td>특히 여아, 퇴행 동반 시</td><td>—</td></tr>
+        <tr><th>PTEN</th><td>머리 둘레가 클 때</td><td>—</td></tr>
+        <tr><th>청력검사</th><td><strong>모든 아동 필수</strong></td><td>—</td></tr>
+        <tr><th>뇌파(EEG)</th><td>경련이 의심되거나 퇴행이 있을 때</td><td>—</td></tr>
+        <tr><th>뇌 MRI</th><td>신경학적 이상 소견이 있을 때만</td><td>—</td></tr>
+        <tr><th>대사검사</th><td>임상적 이유가 있을 때만(일상 권고 아님)</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="cite" style="margin-top:12px">AAP 2020 임상보고서 · ACMG 2021 엑솜·전장유전체 가이드라인 · AAP 2025 유전평가 지침 · Eom 2026(한국)</p>
+
+  <h2 class="sec">연구 단계에 있는 것들</h2>
+  <ul class="plain">
+    <li><strong>안구추적(EarliPoint)</strong> — 규제 승인을 받은 유일한 기기형 보조 진단. 미국 FDA, 2023년 6월, 16–30개월</li>
+    <li><strong>뇌파 N170 얼굴 반응</strong> — FDA 바이오마커 인증 프로그램에 등재. 아직 구체적 사용 맥락은 입증되지 않음</li>
+    <li><strong>혈장 대사체</strong> — 최적 조합으로 18–48개월 자폐의 53%를 특이도 91%로 검출. 나머지 47%는 놓칩니다</li>
+    <li><strong>혈장 단백질 당화·산화 지표</strong> — 5–12세 대상 국제 다기관 검증까지 진행(Molecular Psychiatry 2024)</li>
+    <li><strong>타액 miRNA, 장내 미생물, 망막 사진 AI, MRI 딥러닝</strong> — 연구 단계</li>
+  </ul>
+  <div class="call urgent" style="margin-top:18px">
+    <p>시중에서 직접 구매하는 <strong>“자폐 혈액·타액 검사” 상품은 어떤 주요 진료지침에서도 권고되지 않습니다.</strong> 위 대사체 연구의 저자들조차 “어떤 종류의 바이오마커도 확정 진단을 제공할 수 없다”고 명시합니다.</p>
+  </div>
+
+  <h2 class="sec">한국에서는</h2>
+  <ul class="plain">
+    <li><strong>영유아 건강검진</strong> — 생후 14일, 4·9·18·30·42·54·66개월 (8차) + 구강검진</li>
+    <li><strong>K-DST</strong>(한국 영유아 발달선별검사) — <em>3차(생후 9개월)부터</em>. 대근육·소근육·인지·언어·사회성·자조 6개 영역 + 신경발달장애를 살피는 <em>추가 질문</em></li>
+    <li><strong>판정</strong> — 빠른 수준 / 또래 수준 / 추적검사 요망 / 심화평가 권고. 심화평가 권고가 나오면 정밀평가 기관으로 의뢰됩니다</li>
+    <li><strong>한계</strong> — K-DST는 일반 발달 선별 도구여서 자폐 특이 민감도가 부족합니다. 자폐가 의심되면 <strong>M-CHAT-R/F 한국어판, K-SCQ, K-SRS-2를 따로</strong> 받아야 합니다</li>
+    <li><strong>확진</strong> — 발달장애 전문기관에서 ADOS-2 / ADI-R / K-CARS / K-GARS-2 + 인지·언어·적응행동 평가. 소아과·소아정신과·임상심리·언어재활·작업치료 다학제 팀</li>
+  </ul>
+  <p class="cite" style="margin-top:12px">Eom TH 2026, Annals of Child Neurology — M-CHAT을 도입하면 의사의 자폐 탐지 민감도가 24%에서 90% 이상으로 올라간다고 보고</p>
+
+  <h2 class="sec">지켜보지 말고 평가받아야 할 때</h2>
+  <div class="call urgent">
+    <p><strong>“지켜보자”는 현재 권고되지 않습니다.</strong> 확진 전에도 조기개입은 시작할 수 있습니다.</p>
+    <ul class="plain" style="margin-top:12px">
+      <li>나이와 무관하게, 하던 말·사회적 행동을 잃거나 더 늘지 않고 멈출 때</li>
+      <li>12개월: 옹알이·몸짓·이름 반응이 없을 때</li>
+      <li>14개월: 같이 보자는 가리키기가 없을 때</li>
+      <li>16개월: 의미 있는 단어가 없을 때</li>
+      <li>18개월: 흉내놀이가 없을 때</li>
+      <li>24개월: 스스로 만든 두 단어 조합이 없을 때</li>
+      <li>손위 형제가 자폐일 때 — 선별이 아니라 추적 관찰 대상입니다</li>
+      <li><strong>부모가 걱정될 때</strong> — 12·18개월에서 부모의 보고가 짧은 진료실 관찰보다 변별력이 높다는 보고가 반복됩니다</li>
+    </ul>
+  </div>
+
+  <h2 class="sec">참고 자료</h2>
+  <h4>핵심 논문</h4>
+  <div class="refs">
+    <div class="ref"><span class="yr">2026</span><p class="t"><a href="https://www.frontiersin.org/journals/pediatrics/articles/10.3389/fped.2026.1788230/full" target="_blank" rel="noopener">영아기 자폐의 전구 행동 지표와 발달 궤적</a></p><span class="src">Fang &amp; Zhao, Frontiers in Pediatrics — 연령대별 정리가 가장 잘 된 최신 리뷰</span></div>
+    <div class="ref"><span class="yr">2026</span><p class="t"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC13091174/" target="_blank" rel="noopener">36개월 미만 비언어 행동 지표 체계적 문헌고찰</a></p><span class="src">Ahmad et al., Cureus</span></div>
+    <div class="ref"><span class="yr">2026</span><p class="t"><a href="https://www.annchildneurol.org/journal/view.php?doi=10.26815/acn.2025.01067" target="_blank" rel="noopener">자폐스펙트럼장애: 선별에서 조기 진단과 개입까지</a></p><span class="src">Eom TH, Annals of Child Neurology — 한국 상황 반영</span></div>
+    <div class="ref"><span class="yr">2026</span><p class="t"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC13528301/" target="_blank" rel="noopener">대규모 바이오마커 컨소시엄의 진전과 앞으로의 길</a></p><span class="src">Griffin et al., Biological Psychiatry</span></div>
+    <div class="ref"><span class="yr">2026</span><p class="t"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC13264941/" target="_blank" rel="noopener">M-CHAT-R/F 선별 정확도 비교 체계적 문헌고찰</a></p><span class="src">Tsen et al.</span></div>
+    <div class="ref"><span class="yr">2025</span><p class="t"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11816472/" target="_blank" rel="noopener">생후 1년 행동 도구를 조합하면 식별이 나아지는가</a></p><span class="src">Talbott, Young &amp; Ozonoff, Autism</span></div>
+    <div class="ref"><span class="yr">2024</span><p class="t"><a href="https://publications.aap.org/pediatrics/article/154/2/e2023065297/197777/Familial-Recurrence-of-Autism-Updates-From-the" target="_blank" rel="noopener">자폐의 가족 내 재발률</a></p><span class="src">Ozonoff et al., Pediatrics — Baby Siblings Research Consortium</span></div>
+    <div class="ref"><span class="yr">2024</span><p class="t"><a href="https://onlinelibrary.wiley.com/doi/10.1002/aur.3059" target="_blank" rel="noopener">위장은 자폐 진단 연령을 예측하는가</a></p><span class="src">Milner et al., Autism Research</span></div>
+    <div class="ref"><span class="yr">2023</span><p class="t"><a href="https://www.sciencedirect.com/science/article/pii/S0149763423002737" target="_blank" rel="noopener">생후 6개월: 이후 자폐와 연관된 초기 지표 체계적 문헌고찰</a></p><span class="src">Cleary, Maybery, Green &amp; Whitehouse, Neurosci Biobehav Rev</span></div>
+    <div class="ref"><span class="yr">2023</span><p class="t"><a href="https://www.nature.com/articles/s41591-023-02574-3" target="_blank" rel="noopener">디지털 행동 표현형을 이용한 자폐 조기 발견</a></p><span class="src">Perochon et al., Nature Medicine</span></div>
+    <div class="ref"><span class="yr">2022</span><p class="t"><a href="https://pubmed.ncbi.nlm.nih.gov/36427512/" target="_blank" rel="noopener">영아기 자폐 예측: 진전과 과제</a></p><span class="src">Dawson, Rieder &amp; Johnson, Lancet Neurology</span></div>
+    <div class="ref"><span class="yr">2021</span><p class="t"><a href="https://www.gimjournal.org/article/S1098-3600(21)05168-6/fulltext" target="_blank" rel="noopener">선천성 기형·지적장애 소아의 엑솜·전장유전체 검사 지침</a></p><span class="src">ACMG, Genetics in Medicine</span></div>
+    <div class="ref"><span class="yr">2020</span><p class="t"><a href="https://publications.aap.org/pediatrics/article/145/1/e20193447/36917/Identification-Evaluation-and-Management-of" target="_blank" rel="noopener">자폐 아동의 식별·평가·관리 임상보고서</a></p><span class="src">Hyman, Levy, Myers &amp; AAP, Pediatrics</span></div>
+    <div class="ref"><span class="yr">2019</span><p class="t"><a href="https://jamanetwork.com/journals/jamapediatrics/fullarticle/2732144" target="_blank" rel="noopener">12개월부터의 자폐 표현형 진단 안정성 평가</a></p><span class="src">Pierce et al., JAMA Pediatrics</span></div>
+  </div>
+
+  <h4>부모용 온라인 자료</h4>
+  <ul class="plain">
+    <li><a href="https://mchatscreen.com/" target="_blank" rel="noopener">M-CHAT-R/F 공식 사이트</a> — 무료. 후속 질문까지 2단계로 해야 합니다</li>
+    <li><a href="https://www.cdc.gov/act-early/" target="_blank" rel="noopener">CDC “Learn the Signs. Act Early.”</a> — 2022년 개정 이정표 체크리스트와 무료 앱. 75퍼센타일 기준</li>
+    <li><a href="https://www.healthychildren.org/English/health-issues/conditions/Autism/" target="_blank" rel="noopener">AAP HealthyChildren</a> — 미국소아과학회의 보호자용 설명</li>
+    <li><a href="https://www.thetransmitter.org/" target="_blank" rel="noopener">The Transmitter</a> — 자폐 연구 동향 요약. 신뢰도 높음</li>
+    <li>Autism Navigator / Baby Navigator — “16개월까지의 16가지 몸짓”을 실제 영상으로 비교</li>
+  </ul>
+
+  <h4>기술·데이터 쪽 자료</h4>
+  <ul class="plain">
+    <li>arXiv <span class="cite">2606.27484</span> — 짧은 가정 영상으로 임상의 수준의 행동 채점을 하는 멀티모달 LLM 미세조정</li>
+    <li>arXiv <span class="cite">2408.15077</span> — MMASD+, 프라이버시 보존 행동 분석 데이터셋</li>
+    <li>arXiv <span class="cite">2303.03577</span> — 자폐의 신경정신 표현형에 대한 데이터과학·머신러닝 로드맵</li>
+    <li>공개 데이터셋: ABIDE(뇌영상), MMASD+(행동 비디오)</li>
+    <li class="muted">GitHub의 “ASD detection” 저장소 상당수는 소규모 설문 데이터셋에 분류기를 얹은 것으로 <strong>임상 타당도가 없습니다.</strong> 코드 참고용으로만 보세요</li>
+  </ul>
+
+  <h4>부모 커뮤니티</h4>
+  <p class="muted">Reddit r/Autism_Parenting, r/ScienceBasedParenting 등은 정서적 지지와 실생활 요령에는 유용하지만, <strong>판단의 근거로 쓰지 마세요.</strong> 이런 공간에는 이미 진단받은 아이의 부모와 걱정 중인 부모만 모여 있어 표본이 크게 치우쳐 있습니다.</p>
+</section>
+
+<div class="foot">
+  <p>표시한 항목은 이 브라우저에만 저장되며, 이 페이지를 공유받은 사람에게는 보이지 않습니다.</p>
+  <button class="reset" id="resetMarks" type="button">표시 모두 지우기</button>
+</div>
+</main>
+
+<script>
+(function(){
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  var panels = tabs.map(function(t){ return document.getElementById(t.getAttribute('aria-controls')); });
+
+  function select(i, focus){
+    tabs.forEach(function(t, j){
+      var on = j === i;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      panels[j].hidden = !on;
+    });
+    if (focus) tabs[i].focus();
+    try { history.replaceState(null, '', '#' + tabs[i].dataset.k); } catch(e){}
+    tabs[i].scrollIntoView({block:'nearest', inline:'nearest'});
+    window.scrollTo({top:0, behavior: focus ? 'auto' : 'auto'});
+  }
+
+  tabs.forEach(function(t, i){
+    t.addEventListener('click', function(){ select(i, false); });
+    t.addEventListener('keydown', function(e){
+      var n = null;
+      if (e.key === 'ArrowRight') n = (i + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft') n = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === 'Home') n = 0;
+      else if (e.key === 'End') n = tabs.length - 1;
+      if (n !== null){ e.preventDefault(); select(n, true); }
+    });
+  });
+
+  var hash = (location.hash || '').replace('#','');
+  var start = tabs.findIndex(function(t){ return t.dataset.k === hash; });
+  if (start > 0) select(start, false);
+
+  /* ── marks: per-viewer only, localStorage ── */
+  var KEY = 'asd-marks-v1';
+  function load(){
+    try { return JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch(e){ return {}; }
+  }
+  function save(state){
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){}
+  }
+  var state = load();
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('ul.obs input[type="checkbox"]'));
+
+  function refreshCounts(){
+    document.querySelectorAll('[data-count]').forEach(function(block){
+      var tag = block.querySelector('.marked');
+      if (!tag) return;
+      var n = block.querySelectorAll('ul.obs input:checked').length;
+      if (n > 0){ tag.textContent = '표시 ' + n; tag.hidden = false; }
+      else { tag.hidden = true; }
+    });
+  }
+
+  boxes.forEach(function(b){
+    if (state[b.id]) b.checked = true;
+    b.addEventListener('change', function(){
+      if (b.checked) state[b.id] = 1; else delete state[b.id];
+      save(state);
+      refreshCounts();
+    });
+  });
+  refreshCounts();
+
+  document.getElementById('resetMarks').addEventListener('click', function(){
+    boxes.forEach(function(b){ b.checked = false; });
+    state = {};
+    save(state);
+    refreshCounts();
+  });
+})();
+</script>
