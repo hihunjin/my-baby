@@ -1,0 +1,965 @@
+<title>세면대가 아기를 못 따라간다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gothic+A1:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap">
+<style>
+/* ══ tokens ════════════════════════════════════════════════
+   설비 도면의 어휘. 색은 욕실 수전의 실제 표식에서 가져왔다.
+   온수=적색, 냉수=청색. 바탕은 도기 유약과 줄눈.        */
+:root{
+  --ground:#DEDAD1;
+  --surface:#F7F5F0;
+  --surface-2:#EFEBE3;
+  --ink:#17191A;
+  --ink-2:#4A5052;
+  --ink-3:#7C8386;
+  --line:#C7C2B7;
+  --line-2:#DCD7CC;
+  --hot:#B8402F;
+  --hot-soft:#F0DED9;
+  --cold:#1F5FA8;
+  --cold-soft:#DBE5F1;
+  --focus:#1F5FA8;
+
+  --fd:'Black Han Sans','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --fb:'Gothic A1','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
+  --fm:'Space Mono','Nanum Gothic Coding',ui-monospace,'SFMono-Regular',Menlo,monospace;
+
+  --gut:clamp(18px,5vw,40px);
+  --col:70ch;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#15161A;
+    --surface:#1C1E22;
+    --surface-2:#23262B;
+    --ink:#E9E6DF;
+    --ink-2:#B0ADA5;
+    --ink-3:#85837C;
+    --line:#35383E;
+    --line-2:#2A2D32;
+    --hot:#E5735E;
+    --hot-soft:#3A241F;
+    --cold:#74A9E8;
+    --cold-soft:#1C2B3D;
+    --focus:#74A9E8;
+  }
+}
+
+/* ══ reset / base ════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--fb);
+  font-weight:400;
+  font-size:clamp(15.5px,.42vw + 14.6px,17px);
+  line-height:1.78;
+  word-break:keep-all;
+  overflow-wrap:anywhere;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{text-decoration-color:var(--cold)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:2px}
+strong{font-weight:700}
+/* 강조는 히어로의 한 곳에만 칠한다. 본문에서는 밑줄로 조용히 */
+em{font-style:normal;box-shadow:inset 0 -1px 0 var(--cold)}
+
+/* ══ shell ═══════════════════════════════════════════════ */
+.wrap{max-width:calc(var(--col) + var(--gut)*2);margin:0 auto;padding:0 var(--gut)}
+.sheet{background:var(--surface);border-left:1px solid var(--line-2);border-right:1px solid var(--line-2);max-width:calc(var(--col) + var(--gut)*2 + 2px);margin:0 auto}
+@media (max-width:640px){.sheet{border-left:0;border-right:0}}
+
+/* ══ 치수 기입 시스템 — 이 페이지의 구조 장치 ══════════════
+   숫자는 장식이 아니라 내용이다. 모든 구획은 치수로 표시된다. */
+.dimtag{
+  font-family:var(--fm);font-size:.7rem;font-weight:700;
+  letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-3);
+  display:flex;align-items:center;gap:.7em;
+  margin:0 0 .9em;
+}
+.dimtag::after{content:"";flex:1;height:1px;background:var(--line);min-width:14px}
+.dimtag b{color:var(--hot);font-weight:700}
+
+/* ══ hero ════════════════════════════════════════════════ */
+.hero{padding:clamp(52px,11vw,104px) 0 clamp(40px,7vw,64px);border-bottom:1px solid var(--line)}
+.kicker{
+  font-family:var(--fm);font-size:.72rem;font-weight:700;letter-spacing:.14em;
+  color:var(--ink-3);text-transform:uppercase;margin:0 0 1.6em;
+  display:flex;flex-wrap:wrap;gap:.5em 1.1em;align-items:baseline;
+}
+.kicker span{white-space:nowrap}
+.kicker .hot{color:var(--hot)}
+h1{
+  font-family:var(--fd);font-weight:400;
+  font-size:clamp(2.6rem,10.5vw,5.3rem);
+  line-height:.98;letter-spacing:-.022em;
+  margin:0 0 .5em;
+  color:var(--ink);
+}
+h1 .b{display:block}
+h1 .u{
+  background:linear-gradient(transparent 72%,var(--hot-soft) 72%);
+  box-shadow:inset 0 -3px 0 var(--hot);
+}
+.lede{font-size:clamp(1.02rem,.5vw + .95rem,1.2rem);line-height:1.68;color:var(--ink-2);margin:0 0 1.1em;max-width:46ch}
+.lede strong{color:var(--ink)}
+
+/* ══ 게이지 — 세면대 스펙 vs 아기 스펙 ════════════════════ */
+.gauge{margin:clamp(30px,6vw,46px) 0 0;padding:0}
+.g-cap{
+  font-family:var(--fm);font-size:.68rem;letter-spacing:.08em;
+  color:var(--ink-3);text-transform:uppercase;margin:0 0 1.15em;
+}
+.g-row{display:grid;grid-template-columns:minmax(74px,auto) 1fr;gap:0 12px;align-items:center;margin-bottom:12px}
+.g-row:last-child{margin-bottom:0}
+.g-name{font-family:var(--fm);font-size:.72rem;font-weight:700;letter-spacing:.03em;color:var(--ink-2);text-align:right;line-height:1.3}
+.g-track{position:relative;height:26px;background:var(--surface-2);border:1px solid var(--line-2)}
+.g-bar{position:absolute;inset:0 auto 0 0;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;transform-origin:left}
+.g-bar.fixture{background:var(--cold-soft);border-right:2px solid var(--cold)}
+.g-bar.body{background:var(--surface);border:1px solid var(--line);border-right:2px solid var(--ink)}
+.g-bar.over{
+  background:repeating-linear-gradient(-45deg,var(--hot-soft) 0 5px,transparent 5px 10px);
+  border:1px solid var(--hot);border-right:2px solid var(--hot);
+  left:auto;
+}
+.g-num{font-family:var(--fm);font-size:.7rem;font-weight:700;color:var(--ink-2);white-space:nowrap}
+.g-bar.fixture .g-num{color:var(--cold)}
+.g-bar.over .g-num{color:var(--hot)}
+.g-verdict{
+  grid-column:2;font-family:var(--fm);font-size:.7rem;font-weight:700;
+  color:var(--hot);letter-spacing:.03em;margin:7px 0 0;
+}
+/* 한계선 */
+.g-limit{position:absolute;top:-6px;bottom:-6px;width:1px;background:var(--cold);opacity:.55}
+
+@media (prefers-reduced-motion:no-preference){
+  .g-bar{animation:grow .9s cubic-bezier(.22,.9,.3,1) both}
+  .g-row:nth-child(3) .g-bar{animation-delay:.14s}
+  .g-row:nth-child(4) .g-bar{animation-delay:.28s}
+  @keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+}
+
+/* ══ section ═════════════════════════════════════════════ */
+.sec{padding:clamp(46px,8vw,76px) 0;border-bottom:1px solid var(--line)}
+.sec:last-of-type{border-bottom:0}
+h2{
+  font-family:var(--fd);font-weight:400;
+  font-size:clamp(1.7rem,4.6vw,2.5rem);
+  line-height:1.14;letter-spacing:-.015em;
+  margin:0 0 .6em;
+}
+h3{
+  font-family:var(--fb);font-weight:700;
+  font-size:clamp(1.06rem,1vw + .9rem,1.24rem);
+  line-height:1.4;letter-spacing:-.01em;
+  margin:2.4em 0 .7em;
+}
+h4{font-family:var(--fb);font-weight:700;font-size:1rem;margin:0 0 .45em;line-height:1.45}
+p{margin:0 0 1.1em}
+/* .sec 의 직계 자식은 .wrap 하나뿐이다. 꼬리 여백은 .wrap 안에서 턴다 */
+.wrap > :last-child{margin-bottom:0}
+.note{color:var(--ink-2);font-size:.95em}
+
+/* ══ lists ═══════════════════════════════════════════════ */
+ul.plain,ol.steps{margin:0 0 1.3em;padding:0;list-style:none}
+ul.plain li{position:relative;padding-left:1.15em;margin-bottom:.5em}
+ul.plain li::before{content:"";position:absolute;left:0;top:.82em;width:5px;height:1px;background:var(--ink-3)}
+ul.plain li:last-child{margin-bottom:0}
+
+/* 순서가 실제로 의미 있는 곳에서만 번호를 쓴다 */
+ol.steps{counter-reset:s}
+ol.steps li{counter-increment:s;position:relative;padding-left:2.5em;margin-bottom:1.05em}
+ol.steps li::before{
+  content:counter(s);position:absolute;left:0;top:.14em;
+  font-family:var(--fm);font-size:.78rem;font-weight:700;color:var(--hot);
+  width:1.7em;height:1.7em;display:grid;place-items:center;
+  border:1px solid var(--hot);border-radius:50%;
+}
+ol.steps li:last-child{margin-bottom:0}
+
+/* ══ tables ══════════════════════════════════════════════ */
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 0 1.4em;border:1px solid var(--line-2);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:480px;font-size:.9rem;line-height:1.6}
+/* 열이 6개인 표는 480px 안에서 읽히지 않는다 */
+.tw.wide table{min-width:620px}
+caption{text-align:left;font-family:var(--fm);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);padding:10px 12px;border-bottom:1px solid var(--line-2)}
+th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line-2)}
+thead th{
+  font-family:var(--fm);font-size:.66rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--ink-3);background:var(--surface-2);white-space:nowrap;
+  border-bottom:1px solid var(--line);
+}
+tbody th{font-weight:700;white-space:nowrap;background:var(--surface-2);font-size:.86rem}
+tbody tr:last-child th,tbody tr:last-child td{border-bottom:0}
+td .num,th .num{font-family:var(--fm);font-size:.82em;font-weight:700}
+
+/* ══ stage — 스펙 시트 ═══════════════════════════════════ */
+.stage{border:1px solid var(--line);background:var(--surface);margin:0 0 18px}
+.stage.now{border-color:var(--hot);border-width:2px}
+.stage-hd{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;padding:13px 16px;border-bottom:1px solid var(--line-2);background:var(--surface-2)}
+.stage-age{font-family:var(--fm);font-size:1.02rem;font-weight:700;letter-spacing:.02em}
+.stage-ttl{font-weight:700;font-size:.95rem}
+.stage.now .stage-age{color:var(--hot)}
+.flag{
+  font-family:var(--fm);font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--surface);background:var(--hot);padding:3px 7px;margin-left:auto;white-space:nowrap;
+}
+.stage-bd{padding:16px}
+.stage-bd > :last-child{margin-bottom:0}
+/* 스펙 행 */
+.spec{display:grid;grid-template-columns:minmax(58px,max-content) 1fr;gap:5px 14px;margin:0 0 1.1em;font-size:.9rem}
+.spec dt{font-family:var(--fm);font-size:.64rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);padding-top:.42em}
+.spec dd{margin:0}
+.spec dd .num{font-family:var(--fm);font-weight:700;font-size:.92em}
+
+/* ══ callouts ════════════════════════════════════════════ */
+.call{border-left:3px solid var(--cold);background:var(--cold-soft);padding:15px 17px;margin:0 0 1.4em}
+.call.warn{border-left-color:var(--hot);background:var(--hot-soft)}
+.call > :last-child{margin-bottom:0}
+.call h4{font-size:.96rem}
+
+/* ══ 프로토콜 타임라인 ═══════════════════════════════════ */
+.proto{margin:0 0 1.4em;border-top:1px solid var(--line)}
+.step{display:grid;grid-template-columns:minmax(66px,auto) 1fr;gap:4px 16px;padding:15px 0;border-bottom:1px solid var(--line-2)}
+.step-t{font-family:var(--fm);font-size:.72rem;font-weight:700;color:var(--hot);letter-spacing:.03em;padding-top:.28em}
+.step-b > :last-child{margin-bottom:0}
+.step-b h4{margin-bottom:.35em}
+.step-b ul.plain{margin-bottom:0;font-size:.95em}
+
+/* ══ 규칙 블록 (물티슈 판정) ═════════════════════════════ */
+.rule{border:1px solid var(--line);background:var(--surface-2);margin:0 0 1.4em}
+.rule-row{display:grid;grid-template-columns:minmax(96px,auto) 1fr;gap:3px 14px;padding:12px 16px;border-bottom:1px solid var(--line-2);align-items:baseline}
+.rule-row:last-child{border-bottom:0}
+.rule-k{font-family:var(--fm);font-size:.72rem;font-weight:700;letter-spacing:.03em;color:var(--ink-2)}
+.rule-v{font-size:.92rem;line-height:1.6}
+.rule-v b{color:var(--hot)}
+
+/* ══ 우선순위 카드 ═══════════════════════════════════════ */
+.buy{border:1px solid var(--line);background:var(--surface);padding:16px;margin:0 0 14px}
+.buy-hd{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;margin-bottom:.6em}
+.buy-rank{font-family:var(--fm);font-size:.64rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--surface);background:var(--ink);padding:3px 7px}
+.buy.first .buy-rank{background:var(--hot)}
+.buy-name{font-weight:700;font-size:1.02rem}
+.buy-price{font-family:var(--fm);font-size:.76rem;font-weight:700;color:var(--ink-3);margin-left:auto;white-space:nowrap}
+.buy > :last-child{margin-bottom:0}
+
+/* ══ 하지 말 것 ══════════════════════════════════════════ */
+ul.dont{list-style:none;margin:0 0 1.3em;padding:0}
+ul.dont li{position:relative;padding-left:1.7em;margin-bottom:.72em}
+ul.dont li::before{
+  content:"\00d7";position:absolute;left:.15em;top:-.02em;
+  color:var(--hot);font-weight:700;font-size:1.1em;font-family:var(--fm);
+}
+ul.dont li:last-child{margin-bottom:0}
+
+/* ══ 안전 ════════════════════════════════════════════════ */
+ul.safe{list-style:none;margin:0 0 1.3em;padding:0}
+ul.safe li{padding:11px 0 11px 1.5em;border-bottom:1px solid var(--line-2);position:relative;font-size:.95rem}
+ul.safe li::before{content:"!";position:absolute;left:0;top:11px;font-family:var(--fm);font-weight:700;color:var(--hot)}
+ul.safe li:last-child{border-bottom:0}
+
+/* ══ 출처 ════════════════════════════════════════════════ */
+.srcgrp{margin:0 0 1.9em}
+.srcgrp h3{margin-top:0;font-size:.96rem}
+ul.src{list-style:none;margin:0;padding:0;font-size:.855rem;line-height:1.62}
+ul.src li{padding:7px 0;border-bottom:1px solid var(--line-2)}
+ul.src li:last-child{border-bottom:0}
+ul.src .meta{font-family:var(--fm);font-size:.68rem;color:var(--ink-3);letter-spacing:.02em;display:block;margin-top:2px}
+
+/* ══ footer ══════════════════════════════════════════════ */
+.foot{padding:clamp(34px,6vw,54px) 0 clamp(46px,9vw,80px);border-top:1px solid var(--line);color:var(--ink-2);font-size:.86rem;line-height:1.7}
+.foot p{margin:0 0 .8em}
+.foot p:last-child{margin-bottom:0}
+.foot .stamp{font-family:var(--fm);font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
+
+@media (max-width:520px){
+  table{min-width:420px}
+  .spec{grid-template-columns:1fr;gap:1px 0}
+  .spec dt{padding-top:.7em}
+  .step{grid-template-columns:1fr;gap:5px 0}
+  .rule-row{grid-template-columns:1fr;gap:3px 0}
+  .g-row{grid-template-columns:1fr;gap:4px 0}
+  .g-name{text-align:left}
+  .g-verdict{grid-column:1}
+}
+</style>
+
+<div class="sheet">
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">
+      <span>아기 대변 세정</span>
+      <span>월령 · 키 기준</span>
+      <span class="hot">2026.09</span>
+    </p>
+
+    <h1>
+      <span class="b">세면대가</span>
+      <span class="b">아기를 <span class="u">못 따라간다</span></span>
+    </h1>
+
+    <p class="lede">
+      신생아 때 쓰던 방식이 어느 날부터 힘들어지는 건 요령이 부족해서가 아닙니다.
+      <strong>세면대 볼의 치수가 아기 몸을 더 이상 담지 못하는 것</strong>이고, 그건 연습으로 해결되지 않습니다.
+    </p>
+    <p class="lede note">
+      아래는 피부과 무작위배정 임상시험, NHS·미국소아과학회 가이드라인, 국내 육아 커뮤니티의 실사용 경험을 한데 놓고
+      월령과 키 기준으로 정리한 것입니다.
+    </p>
+
+    <figure class="gauge">
+      <figcaption class="g-cap">치수 대조 — 세면대 볼 vs 아기 전장</figcaption>
+
+      <div class="g-row">
+        <span class="g-name">세면대 볼<br>(일반)</span>
+        <div class="g-track">
+          <div class="g-bar fixture" style="width:48.4%"><span class="g-num">46 cm</span></div>
+          <span class="g-limit" style="left:48.4%"></span>
+        </div>
+      </div>
+
+      <div class="g-row">
+        <span class="g-name">6개월<br>아기</span>
+        <div class="g-track">
+          <div class="g-bar body" style="width:71.6%"><span class="g-num">68 cm</span></div>
+          <span class="g-limit" style="left:48.4%"></span>
+        </div>
+      </div>
+
+      <div class="g-row">
+        <span class="g-name">18개월<br>아기</span>
+        <div class="g-track">
+          <div class="g-bar body" style="width:48.4%"></div>
+          <div class="g-bar over" style="left:48.4%;width:36.9%"><span class="g-num">+35 cm 초과</span></div>
+          <span class="g-limit" style="left:48.4%"></span>
+        </div>
+        <p class="g-verdict">→ 눕히는 방식은 여기서 끝난다</p>
+      </div>
+    </figure>
+  </div>
+</header>
+
+<!-- ═══════════════ 문제의 정체 ═══════════════ -->
+<section class="sec">
+  <div class="wrap">
+    <p class="dimtag">진단 <b>불편 6가지 → 원인 1개</b></p>
+    <h2>겪는 불편은 여섯 가지지만<br>원인은 하나다</h2>
+
+    <p>세면대 세정에서 나오는 불만을 모아보면, 서로 다른 문제처럼 보이지만 전부 같은 곳으로 수렴합니다.</p>
+
+    <div class="tw">
+      <table>
+        <caption>겪는 증상과 그 실제 원인</caption>
+        <thead>
+          <tr><th scope="col">겪는 불편</th><th scope="col">진짜 원인</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">세면대가 작다</th>
+            <td>세면대 볼 폭은 보통 <span class="num">40–50cm</span>. 12개월 아기 전장은 <span class="num">75–80cm</span> — 구조적으로 이미 초과</td>
+          </tr>
+          <tr>
+            <th scope="row">발로 수도꼭지를 찬다</th>
+            <td>수전과 아기 사이의 거리는 세면대 깊이 <span class="num">20–25cm</span>뿐. 아기 다리가 그걸 넘어섰다</td>
+          </tr>
+          <tr>
+            <th scope="row">물 온도 대처가 느리다</th>
+            <td>일반 수전은 <strong>온도를 기억하지 못한다</strong>. 매번 처음부터 다시 맞춰야 한다</td>
+          </tr>
+          <tr>
+            <th scope="row">엉덩이 뒤쪽이 안 씻긴다</th>
+            <td>눕힌 자세에서는 골반이 바닥에 눌려 둔열부가 닫힌다</td>
+          </tr>
+          <tr>
+            <th scope="row">손목이 아프다</th>
+            <td>아기 체중이 손목 한 점에 걸린다. 산후 <strong>드퀘르뱅 건초염</strong>의 전형적 유발 동작</td>
+          </tr>
+          <tr>
+            <th scope="row">아기가 커졌다</th>
+            <td>아기비데 표기는 <span class="num">36개월</span>이지만 실사용 한계는 대개 <span class="num">11–13kg · 80cm</span> 부근</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="call warn">
+      <h4>그래서 결론부터</h4>
+      <ul class="plain">
+        <li><strong>~12개월</strong> — 세면대 + 아기비데가 최적. 지금까지의 방식이 맞았습니다.</li>
+        <li><strong>12–24개월</strong> — 세면대를 버리고 <em>물티슈 1차 + 욕실 샤워 2차</em>로. 눕히지 말고 <strong>세워서</strong>.</li>
+        <li><strong>24개월~</strong> — 아기가 서서 씻습니다. 동시에 배변훈련을 시작합니다.</li>
+        <li><strong>전 구간 공통</strong> — 다음 투자는 아기비데가 아니라 <strong>써모스탯(온도조절) 수전</strong>입니다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 근거 ═══════════════ -->
+<section class="sec">
+  <div class="wrap">
+    <p class="dimtag">근거 <b>RCT 6건</b></p>
+    <h2>물티슈냐 물이냐</h2>
+
+    <p>부모들 사이에서 갈리는 논쟁이지만, 임상 근거는 생각보다 정리되어 있습니다.</p>
+
+    <div class="tw">
+      <table>
+        <caption>기저귀 부위 세정법 비교 연구</caption>
+        <thead>
+          <tr><th scope="col">연구</th><th scope="col">설계</th><th scope="col">결론</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Ehretsmann 2001<br><span class="num">JEADV</span></th>
+            <td>아토피 영아, 물티슈 vs 물+세정재</td>
+            <td>전반적 피부 상태 <strong>차이 없음</strong></td>
+          </tr>
+          <tr>
+            <th scope="row">Lavender 2012<br><span class="num">n=280</span></th>
+            <td>신생아 평가자맹검 무작위배정 <strong>동등성 시험</strong></td>
+            <td>물티슈와 탈지면+물은 피부 수분도에서 <strong>동등</strong>. 유해 영향 근거 없음</td>
+          </tr>
+          <tr>
+            <th scope="row">Garcia Bartels 2012<br><span class="num">Pediatr Dermatol</span></th>
+            <td>신생아 전향적 무작위 파일럿</td>
+            <td>표준화된 기저귀 관리가 피부장벽·IL-1α에 유리</td>
+          </tr>
+          <tr>
+            <th scope="row">Rodriguez 2020<br><span class="num">성분 리뷰</span></th>
+            <td>물티슈 성분 검토</td>
+            <td>안전성·유효성 지지. <strong>성분이 관건</strong>(무향·무알코올·약산성)</td>
+          </tr>
+          <tr>
+            <th scope="row">약산성 물티슈 2025<br><span class="num">RCT ×2</span></th>
+            <td>pH 완충 물티슈 vs 면수건+물</td>
+            <td>약산성 물티슈 쪽이 <strong>오히려 더 좋음</strong></td>
+          </tr>
+          <tr>
+            <th scope="row">Ahmad 2025<br><span class="num">J Cutan Med Surg</span></th>
+            <td>리뷰</td>
+            <td>둘 다 허용. 성분 최소화 물티슈는 동등 이상</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>“물로 씻겨야 한다”는 절대명제가 아닙니다.</strong> 무향·무알코올·약산성 물티슈는 임상적으로 물과 동등하거나 더 낫습니다. 다만 위 연구들은 대부분 소변과 소량 변 상황을 봤습니다. <strong>대량 변에서는 물이 물리적으로 우월합니다</strong> — 마찰 없이 제거되고, 주름과 둔열부까지 도달하고, 촉감으로 세정 완료를 확인할 수 있습니다.</p>
+
+    <h3>그래서 실무 규칙</h3>
+
+    <div class="rule">
+      <div class="rule-row">
+        <span class="rule-k">소변 · 소량</span>
+        <span class="rule-v">물티슈만. 물 세정은 과잉입니다.</span>
+      </div>
+      <div class="rule-row">
+        <span class="rule-k">보통 변</span>
+        <span class="rule-v">물티슈로 대부분 제거 → 물로 마무리</span>
+      </div>
+      <div class="rule-row">
+        <span class="rule-k">대량 · 등까지</span>
+        <span class="rule-v">물티슈로 <b>덩어리만</b> 훑어내기 → 물 세정 → 완전 건조</span>
+      </div>
+    </div>
+
+    <p>“물티슈만으로는 대량 변이 힘들다”는 건 정확한 관찰입니다. 물티슈는 버릴 도구가 아니라 <strong>1차 전처리 도구</strong>로 자리를 옮기면 됩니다. 이 문서의 핵심 전환이 여기입니다.</p>
+
+    <h3>피부 관리 공통 원칙</h3>
+    <p class="note">NHS 스코틀랜드 신생아 기저귀 관리 지침 외</p>
+    <ul class="plain">
+      <li>물+탈지면, 또는 무향·무알코올 물티슈 — <strong>둘 다 공식 권장</strong>입니다.</li>
+      <li>비누·버블배스 같은 자극원은 피하고, 씻긴 뒤에는 문지르지 말고 <strong>톡톡 두드려 건조</strong>합니다.</li>
+      <li><strong>기저귀 프리 타임</strong>(맨엉덩이 시간)을 줍니다. 발진 예방과 치료의 1순위입니다.</li>
+      <li>여아는 <strong>앞에서 뒤로</strong>. 남아는 포피를 억지로 젖히지 않습니다.</li>
+      <li>기저귀 발진은 흔합니다. 세정 방식보다 <strong>습기와 마찰 관리</strong>가 결정적입니다.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════ 월령별 ═══════════════ -->
+<section class="sec">
+  <div class="wrap">
+    <p class="dimtag">단계 <b>5구간</b></p>
+    <h2>월령과 키로 나눈<br>다섯 구간</h2>
+
+    <p>월령은 참고값입니다. 실제 기준은 <strong>아기의 전장과 체중</strong>, 그리고 <strong>혼자 설 수 있는가</strong> 두 가지입니다.</p>
+
+    <!-- Stage 1 -->
+    <article class="stage">
+      <div class="stage-hd">
+        <span class="stage-age">0–6M</span>
+        <span class="stage-ttl">목 못 가눔 → 뒤집기 전</span>
+      </div>
+      <div class="stage-bd">
+        <dl class="spec">
+          <dt>치수</dt><dd><span class="num">~68cm</span> · <span class="num">~7.5kg</span></dd>
+          <dt>자세</dt><dd>눕힘. 등받이가 목과 머리를 받쳐야 합니다</dd>
+          <dt>도구</dt><dd>세면대 + 등받이형 아기비데, 또는 한 팔 안기</dd>
+        </dl>
+        <p>모유변이 묽고 횟수가 많아 <strong>물 세정 빈도가 가장 높은 구간</strong>입니다. 한 팔로 안고 세면대에서 씻기는 방식은 이 구간에서는 정답입니다. 6개월을 넘기며 힘들어지는 것이 정상입니다.</p>
+        <p class="note">탯줄이 떨어지기 전에는 통목욕 대신 부분 세정으로.</p>
+      </div>
+    </article>
+
+    <!-- Stage 2 -->
+    <article class="stage">
+      <div class="stage-hd">
+        <span class="stage-age">6–12M</span>
+        <span class="stage-ttl">앉기 → 잡고 서기</span>
+      </div>
+      <div class="stage-bd">
+        <dl class="spec">
+          <dt>치수</dt><dd><span class="num">68–76cm</span> · <span class="num">7.5–10kg</span></dd>
+          <dt>자세</dt><dd>눕힘에서 <strong>세움으로 전환 시작</strong></dd>
+          <dt>도구</dt><dd>세면대 + 지지대형·핸들형 아기비데</dd>
+        </dl>
+        <p>아기비데의 황금기이자 마지막 구간입니다. <strong>아기가 발로 수도꼭지에 닿기 시작하면 그게 눕힘 자세 졸업 신호</strong>입니다.</p>
+
+        <h4>세우면 세 가지가 동시에 해결됩니다</h4>
+        <ul class="plain">
+          <li>중력으로 둔열부가 벌어져 <strong>뒤쪽까지 물이 닿습니다</strong></li>
+          <li>오물 섞인 물이 아기 등과 허리로 역류하지 않습니다</li>
+          <li>체중을 아기 자신의 다리가 받아 <strong>손목 부담이 급감합니다</strong></li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- Stage 3 -->
+    <article class="stage now">
+      <div class="stage-hd">
+        <span class="stage-age">12–24M</span>
+        <span class="stage-ttl">혼자 서기 → 걷기</span>
+        <span class="flag">전환점</span>
+      </div>
+      <div class="stage-bd">
+        <dl class="spec">
+          <dt>치수</dt><dd><span class="num">76–87cm</span> · <span class="num">10–12.5kg</span></dd>
+          <dt>자세</dt><dd>세움</dd>
+          <dt>도구</dt><dd>욕실 핸드샤워, 또는 주방 싱크</dd>
+        </dl>
+        <p><strong>세면대 방식의 구조적 한계 구간입니다.</strong> 아기비데 표기가 36개월이어도 실사용은 여기서 끝납니다. 전장이 볼을 넘고, 다리 힘이 세져 수전을 걷어차고, 들어올리는 체중이 10kg을 넘습니다.</p>
+
+        <h4>욕실 구조별 선택지</h4>
+        <div class="tw">
+          <table>
+            <thead><tr><th scope="col">상황</th><th scope="col">방법</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">욕조 있음</th><td>욕조 안에 세우고 핸드샤워. 미끄럼방지 매트 필수</td></tr>
+              <tr><th scope="row">샤워부스</th><td>부스 안에 세우고 핸드샤워. 벽 그랩바 또는 흡착 손잡이</td></tr>
+              <tr><th scope="row">세면대만</th><td><strong>주방 싱크</strong>로 이동. 수전이 <span class="num">약 90cm</span>로 높고 볼이 넓어 허리와 손목 부담이 적습니다. 국내 커뮤니티에서 실제로 많이 쓰는 방법 — 위생 세척 루틴은 별도로</td></tr>
+              <tr><th scope="row">외출 · 여행</th><td><strong>휴대용 비데 보틀</strong>. 산후조리용 제품이 그대로 쓰입니다. <span class="num">350ml</span>급, 거꾸로 들어도 분사되는 각도형</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </article>
+
+    <!-- Stage 4 -->
+    <article class="stage">
+      <div class="stage-hd">
+        <span class="stage-age">24–36M</span>
+        <span class="stage-ttl">아기가 주체가 되는 구간</span>
+      </div>
+      <div class="stage-bd">
+        <dl class="spec">
+          <dt>치수</dt><dd><span class="num">87–95cm</span> · <span class="num">12.5–15kg</span></dd>
+          <dt>자세</dt><dd>자립. 부모는 쪼그려 앉아 보조만</dd>
+          <dt>도구</dt><dd>발판(스텝스툴) + 핸드샤워, 유아 변기</dd>
+        </dl>
+
+        <h4>배변훈련 타이밍</h4>
+        <p class="note">미국소아과학회 · 미국가정의학회</p>
+        <ul class="plain">
+          <li><span class="num">18개월</span>경 준비 신호가 보이기 시작 → <span class="num">24개월</span>경 훈련 시작 → <span class="num">30–36개월</span> 낮 시간 배뇨 조절</li>
+          <li>준비 신호: 걷기, 옷 벗고 입기, 지시 따르기, 요의·변의 인지와 표현, <strong>젖은 기저귀를 불쾌해 함</strong>, 어른 화장실 흉내</li>
+          <li>야간 배변 조절이 가장 먼저 완성됩니다 — 여아 <span class="num">약 22개월</span>, 남아 <span class="num">약 25개월</span></li>
+        </ul>
+
+        <div class="call">
+          <p><strong>이 고민의 진짜 종착점은 장비가 아니라 배변훈련입니다.</strong> 변을 변기에 보게 되는 순간 문제 자체가 사라집니다. 24개월 무렵이라면 새 장비보다 배변훈련 쪽 투자 수익률이 훨씬 높습니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- Stage 5 -->
+    <article class="stage">
+      <div class="stage-hd">
+        <span class="stage-age">36M+</span>
+        <span class="stage-ttl">세정 문제의 종료</span>
+      </div>
+      <div class="stage-bd">
+        <dl class="spec">
+          <dt>치수</dt><dd><span class="num">95cm~</span> · <span class="num">15kg~</span></dd>
+          <dt>자세</dt><dd>자립</dd>
+          <dt>도구</dt><dd>변기 + 발판. 물티슈는 마무리 역할로</dd>
+        </dl>
+      </div>
+    </article>
+
+    <h3>한 장 요약</h3>
+    <div class="tw wide">
+      <table>
+        <caption>구간별 자세 · 도구 · 물티슈의 역할</caption>
+        <thead>
+          <tr><th scope="col">월령</th><th scope="col">전장</th><th scope="col">체중</th><th scope="col">자세</th><th scope="col">주 도구</th><th scope="col">물티슈</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">0–6M</th><td class="num">~68cm</td><td class="num">~7.5kg</td><td>눕힘</td><td>세면대 + 등받이 비데</td><td>마무리</td></tr>
+          <tr><th scope="row">6–12M</th><td class="num">68–76</td><td class="num">7.5–10</td><td>눕힘→세움</td><td>세면대 + 지지대 비데</td><td>1차 제거</td></tr>
+          <tr><th scope="row">12–24M</th><td class="num">76–87</td><td class="num">10–12.5</td><td><strong>세움</strong></td><td><strong>욕실 핸드샤워</strong></td><td><strong>1차 제거</strong></td></tr>
+          <tr><th scope="row">24–36M</th><td class="num">87–95</td><td class="num">12.5–15</td><td>자립</td><td>발판 + 핸드샤워</td><td>1차 제거</td></tr>
+          <tr><th scope="row">36M+</th><td class="num">95~</td><td class="num">15~</td><td>자립</td><td>변기 + 배변훈련</td><td>마무리</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 제품 ═══════════════ -->
+<section class="sec">
+  <div class="wrap">
+    <p class="dimtag">제품 <b>비데 5종 · 투자 3순위</b></p>
+    <h2>무엇을 살 것인가</h2>
+
+    <h3>아기비데 — 0–24개월 구간용</h3>
+    <div class="tw wide">
+      <table>
+        <caption>국내 유통 주요 제품 (2026년 9월 공개 리뷰 기준)</caption>
+        <thead>
+          <tr><th scope="col">제품</th><th scope="col">방식</th><th scope="col">월령</th><th scope="col">가격</th><th scope="col">장점</th><th scope="col">단점</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">포프베베<br>다기능</th>
+            <td>지지 프레임 + 안전벨트</td>
+            <td class="num">0–36M</td>
+            <td class="num">8.5만</td>
+            <td>사용 기간 최장, 양방향 30° 회전, 등받이로 머리감기·세수까지</td>
+            <td>가격, 설치 후 붙박이, 곰팡이 관리</td>
+          </tr>
+          <tr>
+            <th scope="row">허그베어<br>샤워핸들형</th>
+            <td>핸들 6단계 높이 조절</td>
+            <td class="num">6–24M</td>
+            <td class="num">7.5만</td>
+            <td>리뷰 2만건 이상으로 검증량 최다, KC인증</td>
+            <td><strong>6개월 미만 불가</strong></td>
+          </tr>
+          <tr>
+            <th scope="row">허그베어<br>신생아 싱크형</th>
+            <td>스틸 지지대</td>
+            <td class="num">0–12M</td>
+            <td class="num">8만</td>
+            <td>신생아 특화, 경량 <span class="num">1.7kg</span></td>
+            <td>최대 <span class="num">12kg</span>, 미끄러움 지적</td>
+          </tr>
+          <tr>
+            <th scope="row">모이니<br>힙비데</th>
+            <td>쿠션 마운트</td>
+            <td class="num">0–24M</td>
+            <td class="num">5.5만</td>
+            <td>초경량 <span class="num">800g</span>, 조립 불필요</td>
+            <td><strong>지지력이 약해 손목을 계속 쓴다</strong>, 고정 불안정</td>
+          </tr>
+          <tr>
+            <th scope="row">해피달링<br>세이프</th>
+            <td>흡착판(고무 접착)</td>
+            <td class="num">0–36M</td>
+            <td class="num">1.6만</td>
+            <td>최저가, 4단계 각도조절</td>
+            <td><strong>세면대 재질에 따라 흡착력 편차</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="call warn">
+      <h4>여기서 읽어야 할 것</h4>
+      <p>흡착형은 고정이 불안정하고, 쿠션형은 지지력이 약해 손목을 계속 씁니다. 포프베베가 가장 오래 쓰는 제품인 건 맞지만 그래도 실사용 상한은 <span class="num">12–18개월</span>입니다. <strong>“더 좋은 아기비데”를 찾는 방향은 이미 막혀 있습니다. 카테고리를 바꿔야 합니다.</strong></p>
+    </div>
+
+    <h3>지금 사야 할 것</h3>
+
+    <div class="buy first">
+      <div class="buy-hd">
+        <span class="buy-rank">1순위</span>
+        <span class="buy-name">써모스탯(온도조절) 수전</span>
+        <span class="buy-price">3–15만원</span>
+      </div>
+      <p>“물 온도가 변하면 빠르게 대처하기 어렵다”를 <strong>유일하게 근본적으로 없애는 물건</strong>입니다. 다이얼로 온도를 <span class="num">38–40°C</span>에 고정해두면 이후 레버는 물의 세기만 조절합니다. 다른 곳에서 물을 틀어 압력이 변해도 출수 온도를 자동 보정하고, 대부분 <span class="num">40–42°C</span>에서 버튼을 눌러야 더 뜨거워지는 세이프티 스톱이 달려 있습니다.</p>
+      <p class="note">벽붙이형은 셀프 교체도 가능합니다(메인 밸브 차단 → 잔수 제거 → 편심관 교체 → 누수 확인). 자신 없으면 설치기사 호출 기준 출장비 포함 <span class="num">5–8만원</span> 수준. 세면대·주방 수전에도 같은 방식이 적용됩니다.</p>
+    </div>
+
+    <div class="buy">
+      <div class="buy-hd">
+        <span class="buy-rank">2순위</span>
+        <span class="buy-name">핸드샤워 + 거치대 재배치</span>
+        <span class="buy-price">1–3만원</span>
+      </div>
+      <ul class="plain">
+        <li>벽 거치대를 <strong>아기 눈높이 아래로</strong> 하나 더 붙입니다. 흡착식·접착식으로 충분합니다.</li>
+        <li><strong>원터치 정지 버튼 달린 샤워헤드</strong>로 교체하면 한 손으로 물을 끊고 켭니다. 온도는 수전에 고정되어 있으니 물만 여닫으면 됩니다.</li>
+        <li>샤워호스를 <span class="num">1.5m → 2m</span> 이상으로 바꾸면 욕조 밖 매트에 세워두고도 닿습니다.</li>
+      </ul>
+    </div>
+
+    <div class="buy">
+      <div class="buy-hd">
+        <span class="buy-rank">3순위</span>
+        <span class="buy-name">미끄럼방지 매트 + 발판</span>
+        <span class="buy-price">1–2만원</span>
+      </div>
+      <p>흡착 매트는 <strong>세워 씻기의 전제조건</strong>입니다. 미끄러짐은 욕실에서 가장 흔한 사고입니다. 발판은 24개월 이후 아기가 스스로 설 높이를 만들어 줍니다.</p>
+    </div>
+
+    <h3>같이 두면 좋은 것</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th scope="col">물건</th><th scope="col">용도</th><th scope="col">가격</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">휴대용 비데 보틀</th><td>외출·여행·차 안. 각도형 노즐은 거꾸로 들어도 분사됩니다</td><td class="num">1–3만</td></tr>
+          <tr><th scope="row">무향·무알코올 물티슈</th><td>1차 제거 전담. 두께 있는 대형 시트가 유리합니다</td><td>—</td></tr>
+          <tr><th scope="row">거즈 · 면수건</th><td>마무리 두드림 건조. 문지르지 않습니다</td><td>—</td></tr>
+          <tr><th scope="row">산화아연 크림</th><td>습기 차단막</td><td>—</td></tr>
+          <tr><th scope="row">벽 그랩바 · 흡착 손잡이</th><td>아기가 붙잡고 설 지지점</td><td class="num">1–2만</td></tr>
+          <tr><th scope="row">후드 타월</th><td>씻긴 직후 감싸 체온 유지</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 프로토콜 ═══════════════ -->
+<section class="sec">
+  <div class="wrap">
+    <p class="dimtag">실행 <b>12–24M · 대량 변 기준</b></p>
+    <h2>4분짜리 절차</h2>
+
+    <div class="call">
+      <h4>미리 세팅해 둘 것</h4>
+      <ul class="plain">
+        <li>써모스탯 수전을 <span class="num">39°C</span>에 고정해 둡니다</li>
+        <li>욕실 문 앞에 방수 매트와 갈아입힐 기저귀·옷을 미리 놓습니다</li>
+        <li>핸드샤워를 낮은 거치대에 걸어 둡니다</li>
+      </ul>
+    </div>
+
+    <div class="proto">
+      <div class="step">
+        <span class="step-t">0–30초</span>
+        <div class="step-b">
+          <h4>1차 제거</h4>
+          <ul class="plain">
+            <li>매트 위에 눕히고 기저귀 앞면을 엽니다</li>
+            <li>기저귀 앞부분으로 한 번 훑어 덩어리를 밀어냅니다</li>
+            <li>물티슈 2–3장으로 앞에서 뒤로, <strong>덩어리만</strong> 제거합니다. 완벽히 닦으려 하지 않습니다</li>
+            <li>더러운 기저귀를 말아 빼고 깨끗한 면으로 엉덩이를 받칩니다</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-t">30초–2분</span>
+        <div class="step-b">
+          <h4>물 세정</h4>
+          <ul class="plain">
+            <li>안아서 욕실로 이동해 미끄럼방지 매트 위에 <strong>세웁니다</strong></li>
+            <li>부모는 변기 뚜껑 위나 목욕의자에 <strong>앉습니다</strong> — 허리와 손목을 지키는 핵심입니다</li>
+            <li>아기가 벽 손잡이를 잡게 하고, 한 손은 옆구리를 가볍게 받칩니다</li>
+            <li>아래에서 위로 헹굽니다. 세운 자세라 둔열부가 벌어져 뒤쪽까지 닿습니다</li>
+            <li>손가락 하나로 주름을 훑어 세정 완료를 촉감으로 확인합니다</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-t">2–4분</span>
+        <div class="step-b">
+          <h4>건조와 기저귀 프리</h4>
+          <ul class="plain">
+            <li>수건으로 톡톡 두드려 말립니다. 주름 사이까지 확실히</li>
+            <li><span class="num">2–3분</span> 맨엉덩이로 둡니다 — 발진 예방 1순위</li>
+            <li>필요하면 산화아연 크림을 바르고 기저귀를 채웁니다</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-t">마무리</span>
+        <div class="step-b">
+          <h4>부모 손 씻기</h4>
+          <p class="note">비누로 30초.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>손목을 아끼는 자세</h3>
+    <p>산후 여성의 상당 비율이 <strong>드퀘르뱅 건초염</strong>, 이른바 “엄마 손목”을 겪습니다. 원인은 반복적인 아기 들어올리기와 손목·엄지의 부자연스러운 자세입니다. MRI 연구와 위험인자 역학 연구로 확립된 실제 위험입니다.</p>
+    <ul class="plain">
+      <li><strong>엄지를 벌려 아기를 받치지 않습니다.</strong> 엄지는 손바닥에 붙이고 손바닥 전체와 팔뚝으로 받칩니다.</li>
+      <li>들어올릴 때 손목을 꺾지 말고, 팔꿈치를 몸에 붙여 몸통 힘으로 듭니다.</li>
+      <li>씻길 때는 <strong>앉아서</strong>. 서서 허리를 굽히면 요추와 손목에 동시에 부하가 걸립니다.</li>
+      <li>엄지 아래쪽 손목이 이미 아프면 스플린트와 정형외과 상담을. 방치하면 만성화됩니다.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════ 안전 ═══════════════ -->
+<section class="sec">
+  <div class="wrap">
+    <p class="dimtag">안전 <b>화상 · 익수 · 미끄러짐</b></p>
+    <h2>물 온도는<br>안전 문제다</h2>
+
+    <div class="tw">
+      <table>
+        <caption>수온별 아동이 심각한 화상을 입기까지 걸리는 시간</caption>
+        <thead><tr><th scope="col">수온</th><th scope="col">화상까지</th><th scope="col">비고</th></tr></thead>
+        <tbody>
+          <tr><th scope="row" class="num">38–40°C</th><td>—</td><td>세정·목욕 권장 범위</td></tr>
+          <tr><th scope="row" class="num">49°C</th><td class="num">약 9분</td><td>미국소아과학회·CPSC 권고 상한</td></tr>
+          <tr><th scope="row" class="num">54°C</th><td class="num">25초</td><td></td></tr>
+          <tr><th scope="row" class="num">60°C</th><td class="num">3초</td><td>저탕식 온수탱크의 통상 설정 온도</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="call warn">
+      <h4>온수기 설정</h4>
+      <p>공급 온도를 <span class="num">49°C</span> 이하로 두는 것이 미국소아과학회와 CPSC의 공통 권고입니다. 다만 저탕식 온수탱크는 레지오넬라 억제를 위해 탱크를 <span class="num">60°C</span>로 유지해야 하므로, <strong>탱크 출구에 믹싱밸브를 달아 공급 온도만 <span class="num">49°C</span>로 제한</strong>하는 것이 병원과 보육시설의 표준 방식입니다.</p>
+    </div>
+
+    <ul class="safe">
+      <li><strong>화상</strong> — 물을 아기에게 향하기 전에 항상 부모 손목 안쪽으로 먼저 확인합니다.</li>
+      <li><strong>익수</strong> — 욕조 목욕의자는 안전장치가 아닙니다. 물 근처의 아기에게서 눈을 떼지 않습니다. 물건을 가지러 가야 하면 아기를 데리고 갑니다.</li>
+      <li><strong>미끄러짐</strong> — 젖은 아기는 매우 미끄럽습니다. 미끄럼방지 매트와 아기가 잡을 지지점을 함께 둡니다.</li>
+      <li><strong>수도꼭지 충돌</strong> — 세면대를 계속 쓴다면 실리콘 커버를 씌웁니다. 근본적으로는 아기를 수전에서 떼어놓는 것이 맞습니다.</li>
+      <li><strong>위생</strong> — 주방 싱크를 쓴다면 사용 후 세제 세척과 정기 소독을, 식재료 동선과 분리해 운영합니다.</li>
+      <li><strong>곰팡이</strong> — 아기비데·쿠션·매트는 쓰고 나면 물기를 털어 세워 말립니다. 상시 젖은 상태가 곰팡이의 1순위 원인입니다.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════ 하지 않아도 되는 것 ═══════════════ -->
+<section class="sec">
+  <div class="wrap">
+    <p class="dimtag">제외 <b>5가지</b></p>
+    <h2>하지 않아도 되는 것</h2>
+    <ul class="dont">
+      <li><strong>더 비싼 아기비데로 갈아타기</strong> — 12개월을 넘긴 아기에게 세면대 설치형은 어차피 한계입니다. 그 돈은 수전과 샤워 환경에 쓰는 편이 낫습니다.</li>
+      <li><strong>매번 완벽한 물 세정</strong> — 소변과 소량 변은 물티슈로 충분하다는 것이 무작위배정 시험의 결론입니다. 모든 교체마다 욕실을 왕복하면 지쳐서 루틴이 무너집니다.</li>
+      <li><strong>비누·바디워시로 매번 씻기</strong> — NHS는 자극원 회피를 권합니다. 물만으로 충분하고, 필요할 때 약산성 무향 워시를 가끔 쓰면 됩니다.</li>
+      <li><strong>박박 문질러 닦기</strong> — 마찰이 피부장벽을 깹니다. 물티슈도 문지르지 말고 눌러 떼고, 건조도 두드립니다.</li>
+      <li><strong>물티슈 워머에 의존하기</strong> — 겨울철 편의용일 뿐 필수가 아닙니다. 젖은 시트를 데우면 세균 번식 우려도 따라옵니다.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════ 최종 권고 ═══════════════ -->
+<section class="sec">
+  <div class="wrap">
+    <p class="dimtag">권고 <b>순서대로</b></p>
+    <h2>지금 이 순서로</h2>
+    <p class="note">포프베베를 쓰던 아기가 커진 상황 기준. 아래는 실제 실행 순서입니다.</p>
+
+    <ol class="steps">
+      <li><strong>포프베베는 그대로 두되 역할을 바꿉니다.</strong> 응가 세정 장비에서 머리 감기기·세수·손발 씻기 장비로. 아직 쓸모가 남았습니다.</li>
+      <li><strong>써모스탯 수전을 답니다.</strong> 이번 고민의 최대 병목인 온도 문제를 없앱니다. 아기가 클수록 더 오래 쓰는 투자입니다.</li>
+      <li><strong>욕실에 낮은 샤워 거치대, 미끄럼방지 매트, 잡을 손잡이를 세팅합니다.</strong> 합쳐서 3–5만원.</li>
+      <li><strong>루틴을 바꿉니다.</strong> 물티슈 1차 → 욕실에서 세워서 핸드샤워 2차 → 두드려 건조 → 기저귀 프리 2분. 세운 자세가 “뒤쪽이 안 씻긴다”와 손목 부담을 한 번에 해결합니다.</li>
+      <li><strong>부모는 앉아서 씻깁니다.</strong> 변기 뚜껑 위나 낮은 목욕의자. 허리와 손목을 동시에 살립니다.</li>
+      <li><strong>18개월 전후로 배변훈련 준비 신호를 관찰하기 시작합니다.</strong> 이 문제의 진짜 끝은 장비가 아니라 배변훈련입니다.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ═══════════════ 출처 ═══════════════ -->
+<section class="sec">
+  <div class="wrap">
+    <p class="dimtag">출처 <b>논문 · 지침 · 현장</b></p>
+    <h2>참고 자료</h2>
+
+    <div class="srcgrp">
+      <h3>논문과 임상 근거</h3>
+      <ul class="src">
+        <li><a href="https://onlinelibrary.wiley.com/doi/10.1046/j.0926-9959.2001.00004.x">Cutaneous tolerance of baby wipes by infants with atopic dermatitis, and comparison of the mildness of baby wipe and water in infant skin</a><span class="meta">Ehretsmann et al. · JEADV 2001</span></li>
+        <li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3418152/">Effect on skin hydration of using baby wipes to clean the napkin area of newborn babies: assessor-blinded randomised controlled equivalence trial</a><span class="meta">Lavender et al. · BMC Pediatrics 2012</span></li>
+        <li><a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1525-1470.2011.01590.x">Standardized Diaper Care Regimen: A Prospective, Randomized Pilot Study on Skin Barrier Function and Epidermal IL-1α in Newborns</a><span class="meta">Garcia Bartels et al. · Pediatric Dermatology 2012</span></li>
+        <li><a href="https://onlinelibrary.wiley.com/doi/10.1111/pde.14112">The science behind wet wipes for infant skin: Ingredient review, safety, and efficacy</a><span class="meta">Rodriguez et al. · Pediatric Dermatology 2020</span></li>
+        <li><a href="https://www.sciencedirect.com/science/article/pii/S2667009725000326">Baby wipes with a mildly acidic, pH-buffering system provided better skin condition compared to cotton washcloth and water in two randomized clinical trials</a><span class="meta">ScienceDirect 2025</span></li>
+        <li><a href="https://doi.org/10.1177/12034754241290824">Wipes or Water: A Traditional Approach to Preventing Diaper Dermatitis</a><span class="meta">Ahmad et al. · J Cutan Med Surg 2025</span></li>
+        <li><a href="https://www.waterwipes.com/health-care/resources/cleaning-the-newborn-diaper-area-a-literature-review">Cleaning the newborn diaper area: a literature review</a><span class="meta">문헌 리뷰</span></li>
+      </ul>
+    </div>
+
+    <div class="srcgrp">
+      <h3>손목과 근골격 — 부모 쪽 근거</h3>
+      <ul class="src">
+        <li><a href="https://ajronline.org/doi/10.2214/ajr.182.3.1820719">“Baby Wrist”: MRI of an Overuse Syndrome in Mothers</a><span class="meta">AJR 2004</span></li>
+        <li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11141414/">Risk Factors Associated With de Quervain Tenosynovitis in Postpartum Women</a><span class="meta">PMC11141414</span></li>
+        <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11966086/">‘I couldn’t change his nappy’: New mothers’ experiences of De Quervain’s tendinosis and its impact on occupational performance</a><span class="meta">PMC11966086</span></li>
+        <li><a href="https://www.researchgate.net/publication/11967226_Postpartumnewborn_de_Quervain's_tenosynovitis_of_the_wrist">“Postpartum/newborn” de Quervain’s tenosynovitis of the wrist</a><span class="meta">ResearchGate</span></li>
+      </ul>
+    </div>
+
+    <div class="srcgrp">
+      <h3>가이드라인</h3>
+      <ul class="src">
+        <li><a href="https://www.clinicalguidelines.scot.nhs.uk/ggc-paediatric-guidelines/ggc-paediatric-guidelines/neonatology/napkin-care-guidelines-neonates/">Napkin care guidelines, neonates</a><span class="meta">NHS Greater Glasgow &amp; Clyde</span></li>
+        <li><a href="https://www.kingstonandrichmond.nhs.uk/patients-and-families/patient-leaflets/nappy-rash">Nappy rash</a><span class="meta">NHS Kingston and Richmond</span></li>
+        <li><a href="https://www.justonenorfolk.nhs.uk/childhood-illnesses/nappy-rash/">Nappy Rash</a><span class="meta">Just One Norfolk · NHS</span></li>
+        <li><a href="https://www.nationwidechildrens.org/conditions/diaper-dermatitis-diaper-rash">Diaper Dermatitis: Overview, Prevention and Treatment</a><span class="meta">Nationwide Children’s</span></li>
+        <li><a href="https://www.mayoclinic.org/diseases-conditions/diaper-rash/diagnosis-treatment/drc-20371641">Diaper rash — Diagnosis &amp; treatment</a><span class="meta">Mayo Clinic</span></li>
+        <li><a href="https://www.aafp.org/pubs/afp/issues/2019/1015/p468.html">Toilet Training: Common Questions and Answers</a><span class="meta">AAFP 2019</span></li>
+        <li><a href="https://www.stanfordchildrens.org/en/topic/default?id=is-it-time-for-toilet-training-1-1533">Is It Time for Toilet Training?</a><span class="meta">Stanford Medicine Children’s Health</span></li>
+        <li><a href="https://mcpress.mayoclinic.org/parenting/toilet-training-recognizing-readiness/">Toilet training: Recognizing readiness</a><span class="meta">Mayo Clinic Press</span></li>
+        <li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11429537/">Toilet Training Readiness Scale for 0–5-Year-Old Children</a><span class="meta">PMC11429537</span></li>
+        <li><a href="https://www.westmorlandandfurness.gov.uk/family-help/birth-two-years/bathing-your-baby">Bathing your baby</a><span class="meta">Westmorland &amp; Furness · NHS 연계</span></li>
+      </ul>
+    </div>
+
+    <div class="srcgrp">
+      <h3>온수와 화상 안전</h3>
+      <ul class="src">
+        <li><a href="https://journalistsresource.org/home/thermostatic-mixing-valves-scald-burns/">Hot tap water injures thousands of people in the U.S. annually</a><span class="meta">Journalist’s Resource · 믹싱밸브</span></li>
+        <li><a href="https://www.canada.ca/en/public-health/services/water-temperature-burns-scalds.html">Water temperature and burns/scalds</a><span class="meta">Government of Canada</span></li>
+        <li><a href="https://www.cashacme.com/us/en/resources/hot-water-safety">Hot Water Temperature Safety</a><span class="meta">Cash Acme</span></li>
+        <li><a href="https://www.phcppros.com/articles/1898-what-are-safe-hot-water-temperatures">What are safe hot water temperatures?</a><span class="meta">phcppros</span></li>
+        <li><a href="https://en.wikipedia.org/wiki/Thermostatic_mixing_valve">Thermostatic mixing valve</a><span class="meta">Wikipedia</span></li>
+      </ul>
+    </div>
+
+    <div class="srcgrp">
+      <h3>블로그와 커뮤니티 — 실사용 경험</h3>
+      <ul class="src">
+        <li><a href="https://guenbradbury.substack.com/p/better-baby-bottom-cleaning">How to clean a baby’s bottom</a><span class="meta">Guen Bradbury · 물 세정의 물리적 근거</span></li>
+        <li><a href="https://community.mmtalk.kr/community/article/500086">세면대에서 응가 씻기기 무서우면 어떻게 물로 씻겨야 할까요?</a><span class="meta">마미톡 커뮤니티</span></li>
+        <li><a href="https://www.teamblind.com/kr/post/%EC%95%84%EA%B8%B0-%EC%97%89%EB%8D%A9%EC%9D%B4-%EC%94%BB%EA%B8%B8-%EB%95%8C-%ED%8C%81-%EC%A2%80-%EB%B6%80%ED%83%81%ED%95%B4%EC%9A%94-NoBbVuXK">아기 엉덩이 씻길 때 팁 좀 부탁해요</a><span class="meta">블라인드 육아</span></li>
+        <li><a href="https://www.teamblind.com/kr/post/%EC%95%84%EA%B8%B0%EB%B9%84%EB%8D%B0-3%EB%8C%80%EC%9E%A5-%EB%AD%90-%EC%82%B4%EC%A7%80-%ED%88%AC%ED%91%9C-%EB%B6%80%ED%83%81%EB%93%9C%EB%A0%A4%EC%9A%94-SbeahH74">아기비데 3대장 뭐 살지 투표 부탁드려요</a><span class="meta">블라인드 육아</span></li>
+        <li><a href="https://babybilly.co/ko/community/detail/bedong/424883">아기 응아하면 어떻게 닦이시나요?</a><span class="meta">베이비빌리</span></li>
+        <li><a href="https://www.a-ha.io/questions/479b75bf322111ca998bd8b932d52892">돌 지난 아기인데 목욕 쉽게 하는 방법이 있을까요?</a><span class="meta">아하</span></li>
+        <li><a href="https://lamlamge.com/%ED%8F%AC%ED%94%84%EB%B2%A0%EB%B2%A0-%EC%95%84%EA%B8%B0-%EB%B9%84%EB%8D%B0-%EC%84%A4%EC%B9%98-%EB%82%B4%EB%8F%88%EB%82%B4%EC%82%B0-%ED%9B%84%EA%B8%B0/">포프베베 아기 비데 솔직후기 — 설치, 장단점, 내돈내산</a><span class="meta">람람지</span></li>
+        <li><a href="https://mom-mom.net/itemsharings/63691b915a3714e132b812e4">포프베베 아기비데 추천 이유</a><span class="meta">맘맘 · 2026</span></li>
+        <li><a href="https://troubleshooter.co.kr/best-baby-bidets-review-2026/">아기비데 추천 Best 5 실사용 후기 및 장단점 분석</a><span class="meta">troubleshooter.co.kr · 2026</span></li>
+        <li><a href="https://xn--o80bo9m18g6jixrl.com/bathroom-shower-faucet-replacement/">욕실 샤워수전 교체, 벽붙이 수전 셀프 설치 방법과 주의사항</a><span class="meta">설치 가이드</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="foot">
+  <div class="wrap">
+    <p class="stamp">주의사항</p>
+    <p>이 문서는 공개된 연구·가이드라인·사용자 후기를 정리한 참고자료입니다. 아기 피부에 발진·진물·물집이 지속되거나, 부모의 손목·허리 통증이 2주 이상 이어지면 소아과와 정형외과 진료가 먼저입니다.</p>
+    <p>제품 가격과 사양은 2026년 9월 기준 공개 리뷰 자료를 인용한 것입니다. 구매 전 현재 스펙과 <strong>세면대 실측 치수</strong>를 반드시 확인하세요.</p>
+  </div>
+</footer>
+
+</div>
