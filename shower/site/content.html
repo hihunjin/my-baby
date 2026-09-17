@@ -1,0 +1,896 @@
+<title>월령별 아기 목욕</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Diphylleia&family=Gothic+A1:wght@400;500;700;900&display=swap">
+<style>
+/* ── tokens ───────────────────────────────────────────── */
+:root{
+  --ground:#E3E9ED;
+  --surface:#FAFCFD;
+  --surface-2:#EEF3F6;
+  --ink:#15212A;
+  --ink-2:#4C5F6B;
+  --ink-3:#56666E;
+  --line:#C7D4DB;
+  --line-2:#DBE4E9;
+  --bowl:#8F6309;          /* 노란 바가지 — 유일한 강조색 */
+  --bowl-bright:#E3A81C;   /* 눈금·수면선 등 그래픽 전용 */
+  --bowl-soft:#F5E7C6;
+  --water:#A9C3D2;
+  --water-deep:#7FA3B8;
+  --heat:#A8341A;
+  --heat-soft:#F2DCD5;
+  --safe:#24664A;
+  --safe-soft:#D6E7DD;
+  --shadow:0 1px 2px rgba(21,33,42,.06);
+  --fd:'Diphylleia','Apple SD Gothic Neo',serif;
+  --fb:'Gothic A1','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
+  --fm:'DM Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0F171C;
+    --surface:#18232A;
+    --surface-2:#1E2B33;
+    --ink:#E2EAEE;
+    --ink-2:#AABBC4;
+    --ink-3:#7F929C;
+    --line:#2D3D46;
+    --line-2:#243139;
+    --bowl:#E0AC3E;
+    --bowl-bright:#EFBE52;
+    --bowl-soft:#3A2E13;
+    --water:#33505F;
+    --water-deep:#43697F;
+    --heat:#E38A6E;
+    --heat-soft:#3A211A;
+    --safe:#74BE98;
+    --safe-soft:#16301F;
+    --shadow:0 1px 2px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0F171C;
+  --surface:#18232A;
+  --surface-2:#1E2B33;
+  --ink:#E2EAEE;
+  --ink-2:#AABBC4;
+  --ink-3:#7F929C;
+  --line:#2D3D46;
+  --line-2:#243139;
+  --bowl:#E0AC3E;
+  --bowl-bright:#EFBE52;
+  --bowl-soft:#3A2E13;
+  --water:#33505F;
+  --water-deep:#43697F;
+  --heat:#E38A6E;
+  --heat-soft:#3A211A;
+  --safe:#74BE98;
+  --safe-soft:#16301F;
+  --shadow:0 1px 2px rgba(0,0,0,.35);
+}
+
+/* ── base ─────────────────────────────────────────────── */
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--ground);color:var(--ink);
+  font-family:var(--fb);font-size:16px;line-height:1.78;
+  word-break:keep-all;overflow-wrap:break-word;
+  -webkit-text-size-adjust:100%;
+}
+h1,h2,h3{font-family:var(--fd);font-weight:400;line-height:1.38;text-wrap:balance;margin:0}
+h4{font-family:var(--fb);font-weight:700;margin:0}
+p{margin:0}
+ul,ol{margin:0;padding:0;list-style:none}
+strong{font-weight:700}
+a{color:var(--ink);text-decoration:none;border-bottom:1.5px solid var(--bowl);padding-bottom:1px}
+a:hover{background:var(--bowl-soft)}
+:focus-visible{outline:2px solid var(--bowl);outline-offset:3px;border-radius:2px}
+::selection{background:var(--bowl-soft);color:var(--ink)}
+.wrap{max-width:860px;margin:0 auto;padding-inline:18px}
+.mono{font-family:var(--fm);font-variant-numeric:tabular-nums}
+.eyebrow{
+  font-family:var(--fm);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-3);
+}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:12px;z-index:60;background:var(--surface);padding:10px 14px;border:1px solid var(--ink)}
+
+
+/* ── masthead ─────────────────────────────────────────── */
+.mast{padding-block:38px 26px}
+.mast .eyebrow{margin-bottom:16px}
+.mast h1{font-size:clamp(32px,8vw,52px);letter-spacing:.01em}
+.mast .lede{margin-top:16px;max-width:54ch;color:var(--ink-2);font-size:17px}
+.mast .lede strong{color:var(--ink)}
+.mast-meta{
+  margin-top:20px;display:flex;flex-wrap:wrap;gap:6px 16px;
+  font-family:var(--fm);font-size:11.5px;color:var(--ink-3);
+}
+
+/* ── hero: 온도 스케일 ────────────────────────────────── */
+.hero{background:var(--surface);border-block:1px solid var(--line);padding-block:30px 34px}
+.hero .kicker{font-family:var(--fm);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--bowl)}
+.hero h2{font-size:clamp(21px,4.6vw,29px);margin-top:10px;max-width:22ch}
+.scale{margin-top:34px}
+.scale-track{
+  position:relative;height:34px;border-radius:2px;
+  background:linear-gradient(90deg,var(--water) 0%,var(--water-deep) 13%,#C9A24A 44%,var(--heat) 74%,#7E2410 100%);
+}
+:root[data-theme="dark"] .scale-track,
+:root:not([data-theme="light"]) .scale-track{opacity:.86}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .scale-track{opacity:1}}
+.scale-band{
+  position:absolute;top:-7px;bottom:-7px;left:18.42%;width:2.63%;
+  border:2px solid var(--ink);background:var(--surface);
+  box-shadow:0 0 0 3px var(--surface);
+  transform-origin:left center;
+}
+.scale-pin{position:absolute;top:0;bottom:0;width:2px;background:var(--ink);opacity:.72}
+.scale-top{position:relative;height:50px;margin-bottom:9px}
+.scale-bot{position:relative;height:56px;margin-top:9px}
+.scale-mk{position:absolute;bottom:0;transform:translateX(-50%);text-align:center;width:88px}
+.scale-mk b{display:block;font-family:var(--fm);font-size:13.5px;font-weight:500;color:var(--ink-2);line-height:1.3}
+.scale-mk span{display:block;font-size:11px;line-height:1.4;color:var(--ink-3);margin-top:2px}
+.scale-mk.is-heat b{color:var(--heat)}
+.scale-mk.at-end{transform:translateX(-72%)}
+.scale-mk::before{content:"";position:absolute;bottom:-9px;left:50%;width:1px;height:9px;background:var(--line)}
+.scale-mk.at-end::before{left:72%}
+.scale-lead{position:absolute;top:0;width:190px;max-width:64vw}
+.scale-lead::before{content:"";position:absolute;top:-9px;left:0;width:1px;height:9px;background:var(--safe)}
+.scale-lead b{display:block;font-family:var(--fm);font-size:20px;font-weight:500;color:var(--safe);line-height:1.25;letter-spacing:-.01em}
+.scale-lead span{display:block;font-size:12.5px;line-height:1.5;color:var(--ink-2);margin-top:3px}
+@media (max-width:640px){
+  .scale-mk{width:78px}
+  .scale-mk b{font-size:12.5px}
+  .scale-mk span{font-size:10.5px}
+  .scale-mk.at-end{transform:translateX(-68%)}
+  .scale-mk.at-end::before{left:68%}
+  .scale-lead b{font-size:18px}
+}
+@media (max-width:430px){
+  .scale-top{height:68px}
+  .scale-mk{width:64px}
+}
+.hero-note{
+  margin-top:8px;font-size:14.5px;color:var(--ink-2);max-width:60ch;
+  padding-top:16px;border-top:1px solid var(--line-2);
+}
+
+/* ── 월령 선택 ────────────────────────────────────────── */
+.picker{
+  position:sticky;top:0;z-index:30;background:var(--ground);
+  border-bottom:1px solid var(--line);
+}
+.picker-in{display:flex;max-width:860px;margin:0 auto;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x proximity}
+.picker-in::-webkit-scrollbar{display:none}
+.tab{
+  scroll-snap-align:start;flex:1 0 auto;min-width:98px;
+  display:flex;flex-direction:column;gap:3px;align-items:flex-start;
+  padding:12px 13px 11px;background:none;border:0;border-left:1px solid var(--line-2);
+  cursor:pointer;font-family:var(--fb);color:var(--ink-3);text-align:left;
+  border-top:3px solid transparent;
+}
+.tab:first-child{border-left:0;padding-left:18px}
+.tab:last-child{padding-right:18px}
+.tab-age{font-family:var(--fm);font-size:13px;font-weight:500;letter-spacing:-.01em;white-space:nowrap}
+.tab-tag{font-size:10.5px;line-height:1.3;white-space:nowrap}
+.tab:hover{background:var(--surface-2);color:var(--ink-2)}
+.tab[aria-selected="true"]{color:var(--ink);border-top-color:var(--bowl-bright);background:var(--surface)}
+.tab[aria-selected="true"] .tab-tag{color:var(--ink-2)}
+
+/* ── 단계 패널 ────────────────────────────────────────── */
+[role=tabpanel]:focus:not(:focus-visible){outline:none}
+.stage{background:var(--surface);border-bottom:1px solid var(--line);padding-block:30px 40px}
+.stage-head{display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap}
+@media (max-width:420px){.stage-head{gap:16px}.gauge{flex-basis:58px}.gauge-vessel{height:104px}}
+
+.gauge{flex:0 0 74px;padding-top:4px}
+.gauge-vessel{
+  position:relative;height:126px;
+  background:var(--surface-2);border:1.5px solid var(--line);border-top:0;
+  clip-path:polygon(0 0,100% 0,89% 100%,11% 100%);
+}
+.gauge-water{
+  position:absolute;left:0;right:0;bottom:0;height:var(--fill,0%);
+  background:var(--water);border-top:3px solid var(--bowl-bright);
+  transition:height .42s cubic-bezier(.35,0,.15,1);
+}
+.gauge-grad{position:absolute;right:0;top:0;bottom:0;width:9px}
+.gauge-grad i{position:absolute;right:0;width:9px;height:1px;background:var(--line)}
+.gauge-cap{
+  margin-top:9px;font-family:var(--fm);font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);text-align:center;
+}
+
+.stage-title{flex:1 1 0;min-width:0}
+.stage-title .age{font-family:var(--fm);font-size:12px;letter-spacing:.1em;color:var(--bowl)}
+.stage-title h2{font-size:clamp(23px,5vw,33px);margin-top:7px}
+.stage-title .sum{margin-top:12px;font-size:16.5px;color:var(--ink-2);max-width:46ch}
+.stage-title .sum strong{color:var(--ink)}
+.depth{
+  margin-top:18px;display:inline-flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+  padding:7px 12px;background:var(--surface-2);border-left:3px solid var(--bowl-bright);
+}
+.depth b{font-weight:700;font-size:14.5px}
+.depth span{font-family:var(--fm);font-size:12.5px;color:var(--ink-2)}
+
+.facts{
+  margin-top:26px;display:grid;background:var(--surface);
+  border:1px solid var(--line-2);
+  grid-template-columns:repeat(auto-fit,minmax(186px,1fr));
+}
+/* 칸 경계는 셀이 직접 그린다 — 열 수가 바뀌어도 빈 칸이 남지 않는다 */
+.fact{
+  padding:13px 15px;margin:-1px 0 0 -1px;
+  border-left:1px solid var(--line-2);border-top:1px solid var(--line-2);
+}
+.fact dt{font-family:var(--fm);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3)}
+.fact dd{margin:5px 0 0;font-size:15px;font-weight:500;overflow-wrap:break-word}
+
+.block{margin-top:30px}
+.block h3{
+  font-family:var(--fb);font-weight:700;font-size:13px;letter-spacing:.06em;
+  color:var(--ink);padding-bottom:9px;border-bottom:1px solid var(--line);
+}
+.block h3 em{font-style:normal;color:var(--ink-3);font-weight:500;font-family:var(--fm);font-size:11px;letter-spacing:.1em;margin-left:8px}
+.steps{counter-reset:s;margin-top:16px;display:grid;gap:13px}
+.steps li{
+  counter-increment:s;position:relative;padding-left:38px;
+  font-size:15.5px;color:var(--ink-2);
+}
+.steps li::before{
+  content:counter(s);position:absolute;left:0;top:4px;width:26px;
+  font-family:var(--fm);font-size:12px;color:var(--bowl);letter-spacing:.05em;
+}
+.steps li strong{color:var(--ink)}
+.plain{margin-top:16px;display:grid;gap:11px}
+.plain li{position:relative;padding-left:28px;font-size:15.5px;color:var(--ink-2)}
+.plain li::before{
+  content:"";position:absolute;left:0;top:11px;
+  width:7px;height:7px;background:var(--bowl-bright);
+}
+.plain li strong{color:var(--ink)}
+.dont li::before{background:none;border-top:2px solid var(--heat);width:12px;height:0;top:14px}
+.dont li strong{color:var(--heat)}
+
+.callout{
+  margin-top:18px;padding:15px 17px;background:var(--surface-2);
+  border-left:3px solid var(--line);font-size:14.5px;color:var(--ink-2);
+}
+.callout b{display:block;font-size:13px;color:var(--ink);margin-bottom:5px}
+.callout.warn{background:var(--heat-soft);border-left-color:var(--heat)}
+.callout.warn b{color:var(--heat)}
+.callout cite{font-style:normal;font-size:13px;color:var(--ink-3);display:block;margin-top:7px}
+
+/* ── 불변 3원칙 ───────────────────────────────────────── */
+.always{background:var(--ground);padding-block:40px 44px}
+.always h2{font-size:clamp(22px,4.6vw,30px)}
+.always .sub{margin-top:11px;color:var(--ink-2);font-size:15.5px;max-width:52ch}
+.three{margin-top:28px;display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(248px,1fr))}
+.three li{min-width:0}
+.three li{background:var(--surface);border:1px solid var(--line-2);padding:20px 19px 22px}
+.three .n{font-family:var(--fm);font-size:11px;letter-spacing:.14em;color:var(--bowl)}
+.three h4{margin-top:11px;font-size:17px}
+.three p{margin-top:9px;font-size:14.5px;color:var(--ink-2)}
+
+/* ── 근거 ─────────────────────────────────────────────── */
+.why{background:var(--surface);border-block:1px solid var(--line);padding-block:44px 48px}
+.why>.wrap>h2{font-size:clamp(22px,4.6vw,30px)}
+.why>.wrap>.sub{margin-top:11px;color:var(--ink-2);font-size:15.5px;max-width:56ch}
+.ev{margin-top:34px;display:grid;gap:30px}
+.ev-item{display:grid;gap:14px}
+@media (min-width:760px){.ev-item{grid-template-columns:minmax(150px,172px) minmax(0,1fr);gap:26px}}
+.ev-stat{border-top:2px solid var(--ink);padding-top:11px}
+.ev-stat b{display:block;font-family:var(--fm);font-size:31px;font-weight:500;line-height:1.1;letter-spacing:-.02em}
+.ev-stat span{display:block;font-size:12.5px;color:var(--ink-2);margin-top:6px;line-height:1.5}
+.ev-body h4{font-size:16.5px}
+.ev-body p{margin-top:9px;font-size:15px;color:var(--ink-2)}
+.ev-body .src{margin-top:10px;font-size:12.5px;color:var(--ink-3);font-family:var(--fm)}
+.ev-body .src a{border-bottom-width:1px}
+
+/* ── 갈림길 표 ────────────────────────────────────────── */
+.forks{padding-block:44px 48px}
+.forks h2{font-size:clamp(22px,4.6vw,30px)}
+.forks .sub{margin-top:11px;color:var(--ink-2);font-size:15.5px;max-width:54ch}
+.fork{margin-top:26px;border-top:1px solid var(--line)}
+.fork-row{padding:19px 0;border-bottom:1px solid var(--line-2);display:grid;gap:9px}
+@media (min-width:700px){.fork-row{grid-template-columns:minmax(190px,260px) minmax(0,1fr);gap:28px;align-items:start}}
+.fork-q{font-weight:700;font-size:15.5px}
+.fork-a{font-size:15px;color:var(--ink-2)}
+.fork-a b{color:var(--ink)}
+
+/* ── 체크리스트 ───────────────────────────────────────── */
+.check{background:var(--ground);padding-block:40px 46px}
+.check h2{font-size:clamp(22px,4.6vw,30px)}
+.check .sub{margin-top:11px;color:var(--ink-2);font-size:15.5px}
+.checklist{margin-top:24px;background:var(--surface);border:1px solid var(--line-2)}
+.checklist li{border-bottom:1px solid var(--line-2)}
+.checklist li:last-child{border-bottom:0}
+.checklist label{display:flex;gap:13px;align-items:flex-start;padding:13px 16px;cursor:pointer;font-size:15.5px}
+.checklist label:hover{background:var(--surface-2)}
+.checklist input{
+  appearance:none;flex:0 0 17px;width:17px;height:17px;margin-top:5px;
+  border:1.5px solid var(--ink-3);background:var(--surface);cursor:pointer;
+}
+.checklist input:checked{background:var(--bowl-bright);border-color:var(--bowl)}
+.checklist input:checked+span{color:var(--ink-3);text-decoration:line-through;text-decoration-color:var(--ink-3)}
+
+/* ── 출처 ─────────────────────────────────────────────── */
+.srcs{background:var(--surface);border-top:1px solid var(--line);padding-block:42px 56px}
+.srcs h2{font-size:clamp(20px,4.2vw,26px)}
+.srcs .sub{margin-top:10px;color:var(--ink-2);font-size:15px;max-width:56ch}
+.srcgrp{margin-top:28px}
+.srcgrp h4{
+  font-family:var(--fm);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--bowl);padding-bottom:8px;border-bottom:1px solid var(--line-2);font-weight:500;
+}
+.srclist{margin-top:13px;display:grid;gap:9px}
+.srclist li{font-size:14px;color:var(--ink-2);line-height:1.6}
+.srclist a{border-bottom-width:1px}
+.foot{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-3);max-width:60ch}
+
+/* ── theme toggle ─────────────────────────────────────── */
+.theme{
+  position:fixed;right:14px;bottom:14px;z-index:40;
+  width:40px;height:40px;border-radius:50%;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;
+  display:grid;place-items:center;box-shadow:var(--shadow);font-size:15px;
+}
+.theme:hover{color:var(--ink);border-color:var(--ink-3)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+@media print{.picker,.theme{display:none}}
+</style>
+<a class="skip" href="#stage">단계별 내용으로 건너뛰기</a>
+
+<div class="wrap">
+  <header class="mast">
+    <p class="eyebrow">0 — 30 months</p>
+    <h1>월령별 아기 목욕</h1>
+    <p class="lede">욕조 두 개에서 하나로, 다시 샤워기로. <strong>언제 무엇을 바꾸는지</strong>, 그리고 30개월 내내 바뀌지 않는 것.</p>
+    <p class="mast-meta"><span>2026-09-17 정리</span><span>AAP · NHS · CPSC · RCT</span><span>국내 커뮤니티 관행 포함</span></p>
+  </header>
+</div>
+
+<!-- ── 히어로: 온도 스케일 ───────────────────────────── -->
+<section class="hero" aria-labelledby="h-temp">
+  <div class="wrap">
+    <p class="kicker">모든 단계에 공통</p>
+    <h2 id="h-temp">목욕물은 이 좁은 구간 안에 있어야 한다</h2>
+
+    <div class="scale" role="img" aria-label="수온 척도. 섭씨 37에서 38도가 목욕물 적정 구간이고, 49도는 온수기 상한 권고, 60도는 1초 만에 중증 화상을 입는 온도입니다.">
+      <div class="scale-top" aria-hidden="true">
+        <div class="scale-mk" style="left:50%"><b>49℃</b><span>온수기 상한</span></div>
+        <div class="scale-mk is-heat at-end" style="left:78.95%"><b>60℃</b><span>1초 만에 중증 화상</span></div>
+      </div>
+      <div class="scale-track">
+        <div class="scale-band"></div>
+        <div class="scale-pin" style="left:50%"></div>
+        <div class="scale-pin" style="left:78.95%"></div>
+      </div>
+      <div class="scale-bot" aria-hidden="true">
+        <div class="scale-lead" style="left:18.42%"><b>37–38℃</b><span>목욕물. 이 1도 안이 전부입니다</span></div>
+      </div>
+    </div>
+
+    <p class="hero-note">팔꿈치 테스트는 38℃와 41℃를 구분하지 못합니다. 온도계를 쓰고, 보일러 설정은 <strong>한 번 49℃ 이하로 고정</strong>해 두면 매번 신경 쓸 일이 하나 줄어듭니다.</p>
+  </div>
+</section>
+
+<!-- ── 월령 선택 ─────────────────────────────────────── -->
+<nav class="picker" id="stage" aria-label="월령 선택">
+  <div class="picker-in" role="tablist">
+    <button class="tab" role="tab" aria-selected="true"  aria-controls="p1" id="t1" data-fill="0"   data-cm="담그지 않음"><span class="tab-age">0–2주</span><span class="tab-tag">탯줄</span></button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p2" id="t2" data-fill="26%" data-cm="≈ 5–8cm"><span class="tab-age">2주–3M</span><span class="tab-tag">욕조 2개</span></button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p3" id="t3" data-fill="36%" data-cm="≈ 8–10cm"><span class="tab-age">3–6M</span><span class="tab-tag">1개로</span></button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p4" id="t4" data-fill="46%" data-cm="≈ 10cm"><span class="tab-age">6–9M</span><span class="tab-tag">앉기</span></button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p5" id="t5" data-fill="54%" data-cm="≈ 10–13cm"><span class="tab-age">9–15M</span><span class="tab-tag">얼굴 적응</span></button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p6" id="t6" data-fill="60%" data-cm="≈ 13cm"><span class="tab-age">15–24M</span><span class="tab-tag">서기</span></button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p7" id="t7" data-fill="68%" data-cm="≈ 13–15cm"><span class="tab-age">24–30M</span><span class="tab-tag">거부기</span></button>
+  </div>
+</nav>
+
+<section class="stage">
+  <div class="wrap">
+    <div class="stage-head">
+      <aside class="gauge" aria-hidden="true">
+        <div class="gauge-vessel">
+          <div class="gauge-water" id="gaugeWater" style="--fill:0%"></div>
+          <div class="gauge-grad"><i style="top:16.6%"></i><i style="top:33.3%"></i><i style="top:50%"></i><i style="top:66.6%"></i><i style="top:83.3%"></i></div>
+        </div>
+        <p class="gauge-cap" id="gaugeCap">담그지 않음</p>
+      </aside>
+
+      <div class="stage-title">
+        <!-- 1 -->
+        <div class="stage-hd" id="h1p">
+          <p class="age">0–2주 · 탯줄이 남아 있는 시기</p>
+          <h2>물에 담그지 않는다</h2>
+          <p class="sum">탯줄이 떨어지고 배꼽이 아물 때까지, 보통 <strong>1~2주</strong>. 대야에 받은 물과 거즈로 닦습니다.</p>
+          <p class="depth"><b>담그기 시작</b> <span>배꼽이 마르고 딱지가 떨어진 뒤</span></p>
+        </div>
+        <!-- 2 -->
+        <div class="stage-hd" id="h2p" hidden>
+          <p class="age">2주–3개월 · 욕조 2개가 표준인 구간</p>
+          <h2>목욕조와 헹굼조</h2>
+          <p class="sum">욕조 두 개를 쓰는 진짜 이유는 위생이 아니라 <strong>체온</strong>입니다. 물을 다시 받는 동안 벗은 아기가 식는 시간을 없애줍니다.</p>
+          <p class="depth"><b>물 깊이</b> <span>어깨는 물 밖에 — 얕게</span></p>
+        </div>
+        <!-- 3 -->
+        <div class="stage-hd" id="h3p" hidden>
+          <p class="age">3–6개월 · 욕조를 하나로 줄이는 지점</p>
+          <h2>헹굼조 대신 샤워기</h2>
+          <p class="sum">아기가 무거워져 욕조 사이로 옮기기 힘들어지는 시기. <strong>배수하면서 헹구면</strong> 욕조 하나로도 결과는 같습니다.</p>
+          <p class="depth"><b>물 깊이</b> <span>배꼽 아래</span></p>
+        </div>
+        <!-- 4 -->
+        <div class="stage-hd" id="h4p" hidden>
+          <p class="age">6–9개월 · 전환의 기준</p>
+          <h2>나이가 아니라 앉기</h2>
+          <p class="sum">지지 없이 안정적으로 앉으면 큰 욕조로 옮겨도 됩니다. 기준은 개월 수가 아니라 <strong>앉는 능력</strong>입니다.</p>
+          <p class="depth"><b>물 깊이</b> <span>엉덩이가 잠길 정도</span></p>
+        </div>
+        <!-- 5 -->
+        <div class="stage-hd" id="h5p" hidden>
+          <p class="age">9–15개월 · 얼굴에 물 닿기</p>
+          <h2>가릴 것인가, 적응시킬 것인가</h2>
+          <p class="sum">손으로 가리기 · 샤워캡 · 점진적 적응. 셋 다 쓰이고, <strong>순서대로 섞어 쓰는 것</strong>이 현실적인 답입니다.</p>
+          <p class="depth"><b>물 깊이</b> <span>앉은키 기준 배꼽 아래</span></p>
+        </div>
+        <!-- 6 -->
+        <div class="stage-hd" id="h6p" hidden>
+          <p class="age">15–24개월 · 서서 씻기</p>
+          <h2>일어서기 시작한다</h2>
+          <p class="sum">욕조에서 일어서려 하는 시기. 미끄럼 방지 매트와 수도꼭지 커버가 이때부터 <strong>선택이 아니라 기본</strong>입니다.</p>
+          <p class="depth"><b>물 깊이</b> <span>여전히 얕게 — 앉은키 배꼽 아래</span></p>
+        </div>
+        <!-- 7 -->
+        <div class="stage-hd" id="h7p" hidden>
+          <p class="age">24–30개월 · 공포가 가장 흔한 구간</p>
+          <h2>갑자기 목욕을 거부한다</h2>
+          <p class="sum">잘 씻던 아이가 돌변하는 것이 <strong>이 시기의 정상</strong>입니다. 발달상 공포가 뚜렷해지는 구간이라 며칠 쉬어가도 됩니다.</p>
+          <p class="depth"><b>물 깊이</b> <span>무릎 아래</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage-body">
+      <!-- ══ 패널 1 ══ -->
+      <div id="p1" role="tabpanel" aria-labelledby="t1" tabindex="0">
+        <dl class="facts">
+          <div class="fact"><dt>욕조</dt><dd>쓰지 않음 · 대야 + 거즈</dd></div>
+          <div class="fact"><dt>빈도</dt><dd>주 2–3회</dd></div>
+          <div class="fact"><dt>시간</dt><dd>5분 내외</dd></div>
+        </dl>
+        <div class="block">
+          <h3>이렇게 한다 <em>topping &amp; tailing</em></h3>
+          <ol class="steps">
+            <li>따뜻한 물을 받은 대야와 솜·거즈를 준비하고, 아기는 <strong>속옷과 기저귀만 남긴 채</strong> 수건으로 감쌉니다.</li>
+            <li>눈은 코 쪽에서 바깥으로, <strong>한쪽 눈에 솜 하나씩</strong>. 반대쪽에 쓰지 않습니다.</li>
+            <li>귀는 바깥쪽만. 귓속은 닦지 않습니다.</li>
+            <li>목주름 · 손 · 겨드랑이를 닦고, <strong>마지막에</strong> 기저귀 부위를 앞에서 뒤로 닦습니다.</li>
+            <li>물기를 두드려 말리고 3분 안에 보습제를 바릅니다.</li>
+          </ol>
+        </div>
+        <div class="block">
+          <h3>하지 않는다</h3>
+          <ul class="plain dont">
+            <li><strong>욕조에 담그기</strong> — 배꼽이 아물기 전까지.</li>
+            <li><strong>태지를 서둘러 씻어내기</strong> — 첫 목욕 자체를 생후 24시간 뒤로 미루는 것이 WHO·AAP 권고입니다.</li>
+            <li><strong>탯줄 부위에 소독제나 파우더</strong> — 젖으면 두드려 말리는 것으로 충분합니다.</li>
+          </ul>
+        </div>
+        <div class="callout">
+          <b>매일 목욕하지 않아도 됩니다</b>
+          첫 1년은 주 2~3회로 충분합니다. 그 사이에는 얼굴 · 목 · 손 · 기저귀 부위만 매일 닦아주면 됩니다.
+          <cite>NHS · AAP · 대한소아과학회</cite>
+        </div>
+      </div>
+
+      <!-- ══ 패널 2 ══ -->
+      <div id="p2" role="tabpanel" aria-labelledby="t2" tabindex="0" hidden>
+        <dl class="facts">
+          <div class="fact"><dt>욕조</dt><dd>목욕조 + 헹굼조</dd></div>
+          <div class="fact"><dt>빈도</dt><dd>주 2–3회</dd></div>
+          <div class="fact"><dt>시간</dt><dd>5–10분</dd></div>
+        </dl>
+        <div class="block">
+          <h3>이렇게 한다</h3>
+          <ol class="steps">
+            <li>두 욕조에 37–38℃ 물을 받습니다. <strong>헹굼조는 조금 더 따뜻하게</strong> 받아두면 쓸 때쯤 딱 맞습니다.</li>
+            <li>수건 2장 · 새 옷 · 기저귀 · 보습제를 <strong>팔 닿는 곳</strong>에 미리 둡니다. 중간에 자리를 뜰 상황 자체를 없애는 것이 목적입니다.</li>
+            <li>다리부터 천천히 적셔 놀라지 않게 하고, 팔다리 → 몸통 → 얼굴 → <strong>마지막에 엉덩이·생식기</strong> 순으로 씻깁니다.</li>
+            <li>헹굼조로 옮겨 헹구고 곧바로 수건으로 감쌉니다.</li>
+          </ol>
+        </div>
+        <div class="callout">
+          <b>속싸개 목욕 — 근거가 있는 요령</b>
+          얇은 속싸개로 감싼 채 욕조에 넣고, 씻는 부위만 한쪽씩 풀었다 다시 덮습니다. RCT에서 일반 욕조 목욕보다 목욕 10분 뒤 체온이 높고, 우는 시간이 32초 대 94초로 짧았습니다. 모로반사가 심한 아기일수록 차이가 큽니다.
+          <cite>Swaddled vs conventional bathing RCT · 메타분석 2026</cite>
+        </div>
+        <div class="block">
+          <h3>하지 않는다</h3>
+          <ul class="plain dont">
+            <li><strong>오래 담그기</strong> — 10분을 넘길 이유가 없는 시기입니다.</li>
+            <li><strong>입욕제</strong> — 483명 12개월 RCT에서 임상적 이득이 없었습니다. 그 돈은 목욕 후 보습제에 씁니다.</li>
+            <li><strong>전신 비누칠을 매번</strong> — 기저귀 부위와 접힌 곳 외에는 맹물로 충분합니다.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ══ 패널 3 ══ -->
+      <div id="p3" role="tabpanel" aria-labelledby="t3" tabindex="0" hidden>
+        <dl class="facts">
+          <div class="fact"><dt>욕조</dt><dd>1개 + 샤워기 (2개 유지도 가능)</dd></div>
+          <div class="fact"><dt>빈도</dt><dd>주 2–3회</dd></div>
+          <div class="fact"><dt>시간</dt><dd>5–10분</dd></div>
+        </dl>
+        <div class="block">
+          <h3>욕조 하나로 씻기는 순서 <em>핵심은 4번</em></h3>
+          <ol class="steps">
+            <li>욕조에 물을 받아 담그고 잠깐 놉니다.</li>
+            <li>비눗칠을 합니다.</li>
+            <li>받아둔 물을 바가지로 끼얹어 1차로 헹굽니다.</li>
+            <li><strong>마개를 열어 물을 빼면서</strong> 샤워기로 최종 헹굼. 비눗물이 고인 채로 남지 않는 것이 이 방식의 전부입니다.</li>
+          </ol>
+        </div>
+        <div class="block">
+          <h3>2개를 유지하는 편이 나은 경우</h3>
+          <ul class="plain">
+            <li>아토피가 있어 <strong>비눗물 잔류를 최소화</strong>하고 싶을 때</li>
+            <li>샤워기 <strong>수압이나 온도가 불안정한</strong> 집</li>
+            <li>혼자 씻길 때 — 샤워기를 잡을 손이 없습니다</li>
+          </ul>
+        </div>
+        <div class="callout">
+          <b>정답은 없습니다</b>
+          욕조 1개와 2개의 위생 결과는 같습니다. 배수하면서 헹구는 순서만 지키면 어느 쪽이든 맞는 방식입니다. 이 시기부터 뒤집기가 시작되니 욕조 안 미끄럼 방지 패드를 먼저 챙기는 편이 실익이 큽니다.
+        </div>
+      </div>
+
+      <!-- ══ 패널 4 ══ -->
+      <div id="p4" role="tabpanel" aria-labelledby="t4" tabindex="0" hidden>
+        <dl class="facts">
+          <div class="fact"><dt>욕조</dt><dd>큰 욕조 가능 + 샤워기</dd></div>
+          <div class="fact"><dt>빈도</dt><dd>주 2–3회 (매일도 무방)</dd></div>
+          <div class="fact"><dt>전환 신호</dt><dd>지지 없이 앉기</dd></div>
+        </dl>
+        <div class="block">
+          <h3>이렇게 한다</h3>
+          <ol class="steps">
+            <li>처음 몇 번은 <strong>물을 평소보다 더 얕게</strong> 받고, 한 손은 계속 아기 몸에 댑니다.</li>
+            <li>큰 욕조가 낯설어하면 <strong>큰 욕조 안에 쓰던 아기 욕조</strong>를 그대로 넣어 씁니다.</li>
+            <li>샤워기로 넘어갈 땐 수압을 최저로, <strong>발 → 다리 → 등 → 머리</strong> 순서로.</li>
+            <li>아이가 직접 샤워기를 잡아보게 합니다. 물을 통제해 본 경험이 다음 단계를 쉽게 만듭니다.</li>
+          </ol>
+        </div>
+        <div class="callout warn">
+          <b>목욕의자는 안전장치가 아닙니다</b>
+          CPSC는 전복과 다리구멍 이탈을 이유로 목욕의자·목욕링 리콜을 해마다 반복해 발표하고 있습니다. 2024년 UncleWu, 2025년 Bebamour·Superb Sports, 2026년 Trankerloop·YCXXKJ. 편의 도구로만 쓰고, 손은 계속 닿는 거리에 둡니다.
+          <cite>CPSC Recalls, 2024–2026</cite>
+        </div>
+        <div class="block">
+          <h3>이 시기의 갈림길</h3>
+          <ul class="plain">
+            <li><strong>샤워핸들로 전환</strong> — 국내 커뮤니티에서도 이 구간이 절반씩 갈립니다. 10개월쯤 넘어가며 물을 무서워하는 사례가 흔해, 전환 전 적응 기간을 두라는 조언이 많습니다.</li>
+            <li><strong>욕조 2개 유지</strong> — 계속 써도 아무 문제 없습니다. 바꾸는 이유는 위생이 아니라 부모의 허리입니다.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ══ 패널 5 ══ -->
+      <div id="p5" role="tabpanel" aria-labelledby="t5" tabindex="0" hidden>
+        <dl class="facts">
+          <div class="fact"><dt>욕조</dt><dd>욕조 + 샤워기 헹굼</dd></div>
+          <div class="fact"><dt>빈도</dt><dd>주 2–3회 이상</dd></div>
+          <div class="fact"><dt>이 시기의 과제</dt><dd>머리 감기기</dd></div>
+        </dl>
+        <div class="block">
+          <h3>세 갈래, 순서대로 섞어 쓰기</h3>
+          <ol class="steps">
+            <li><strong>손으로 이마 가리기</strong> — 가장 낮은 단계. 손날이나 마른 수건을 눈썹 위에 대고 물을 뒤로 흘려보냅니다. 눈에 물이 안 들어가는 경험을 반복하는 것이 목적입니다.</li>
+            <li><strong>샴푸캡 · 샤워바이저</strong> — 공포가 심할 때 한시적으로. 오래 전면 의존하면 적응이 그만큼 늦어집니다. 괜찮아지면 떼는 용도로 씁니다.</li>
+            <li><strong>점진적 적응</strong> — 뒤통수 → 옆머리 → 정수리 순으로 컵으로 붓습니다. 매번 <strong>&ldquo;하나, 둘, 셋&rdquo;</strong> 예고하고 붓습니다. 예측 가능성이 공포를 줄입니다.</li>
+          </ol>
+        </div>
+        <div class="block">
+          <h3>거드는 것들</h3>
+          <ul class="plain">
+            <li>아이가 <strong>스스로 얼굴에 물을 뿌리게</strong> 하기. 젖은 수건으로 얼굴 닦기부터 시작해도 됩니다.</li>
+            <li>인형이나 오리 <strong>머리를 먼저 감기기</strong>. 보고 따라 하는 효과가 큽니다.</li>
+            <li>자세를 <strong>아이가 고르게</strong> 하기 — 뒤로 눕히는 살롱식, 앞으로 숙이고 마른 수건으로 눈 가리기. 고를 수 있다는 것만으로 저항이 줄어듭니다.</li>
+          </ul>
+        </div>
+        <div class="block">
+          <h3>하지 않는다</h3>
+          <ul class="plain dont">
+            <li><strong>예고 없이 정수리에 붓기</strong> — 한 번의 실수가 몇 주를 되돌립니다.</li>
+            <li><strong>울어도 빨리 끝내려 밀어붙이기</strong> — 다음 목욕이 더 어려워집니다.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ══ 패널 6 ══ -->
+      <div id="p6" role="tabpanel" aria-labelledby="t6" tabindex="0" hidden>
+        <dl class="facts">
+          <div class="fact"><dt>욕조</dt><dd>샤워핸들 + 의자 조합이 편해짐</dd></div>
+          <div class="fact"><dt>빈도</dt><dd>주 2–3회 이상</dd></div>
+          <div class="fact"><dt>이 시기의 과제</dt><dd>미끄러짐</dd></div>
+        </dl>
+        <div class="block">
+          <h3>이렇게 한다</h3>
+          <ol class="steps">
+            <li>욕조 바닥에 <strong>미끄럼 방지 매트</strong>를 깝니다. 서려고 하는 시기라 이것 하나가 가장 큰 차이를 만듭니다.</li>
+            <li>수도꼭지에 실리콘 커버를 씌웁니다. 부딪히는 것과 화상, 두 가지를 동시에 막습니다.</li>
+            <li>스스로 하려는 욕구가 커집니다. <strong>&ldquo;배는 네가, 머리는 내가&rdquo;</strong>처럼 역할을 나눕니다.</li>
+            <li>목욕 후 보습제를 아이가 직접 바르게 하면 루틴 전체에 대한 저항이 줄어듭니다.</li>
+          </ol>
+        </div>
+        <div class="callout warn">
+          <b>의자에 앉혔다고 손을 놓지 않습니다</b>
+          욕조 익수 사망의 80%가 만 2세 미만이고, 병원 기록상 익수 사례의 96%가 &lsquo;계획된 목욕 시간&rsquo;에 일어납니다. 사고가 아니라 문을 열러, 전화를 받으러, 수건을 가지러 간 사이의 공백입니다.
+          <cite>CPSC · Pediatric bathtub drowning cohort</cite>
+        </div>
+      </div>
+
+      <!-- ══ 패널 7 ══ -->
+      <div id="p7" role="tabpanel" aria-labelledby="t7" tabindex="0" hidden>
+        <dl class="facts">
+          <div class="fact"><dt>욕조</dt><dd>샤워 위주 + 욕조 놀이</dd></div>
+          <div class="fact"><dt>빈도</dt><dd>주 2–3회면 충분</dd></div>
+          <div class="fact"><dt>이 시기의 과제</dt><dd>거부와 공포</dd></div>
+        </dl>
+        <div class="block">
+          <h3>왜 갑자기 무서워하나</h3>
+          <p class="sum" style="margin-top:16px;color:var(--ink-2)">24~30개월은 공포가 뚜렷해지는 발달 구간입니다. 배수구로 빨려 들어갈까 봐, 욕실의 물소리와 울림 때문에, 얼굴에 튀는 물 때문에 — 이유는 아이마다 다르고, 대개 <strong>지나갑니다</strong>.</p>
+        </div>
+        <div class="block">
+          <h3>이렇게 한다</h3>
+          <ol class="steps">
+            <li><strong>강제하지 않습니다.</strong> 밀어붙이면 공포가 커지고 신뢰가 깎입니다.</li>
+            <li>목욕 자체는 선택지가 아니되, <strong>주변은 고르게</strong> 합니다 — 언제 할지, 어떤 장난감, 어떤 컵.</li>
+            <li>큰 욕조가 무서우면 <strong>큰 욕조 안에 작은 욕조</strong>를 넣어 씻깁니다.</li>
+            <li>물놀이를 목욕과 분리합니다. 대야나 야외 물놀이로 물에 대한 좋은 기억을 따로 쌓습니다.</li>
+            <li>며칠은 스펀지 목욕으로 대체해도 됩니다. 주 2~3회 기준에서 위생상 문제가 없습니다.</li>
+          </ol>
+        </div>
+        <div class="block">
+          <h3>하지 않는다</h3>
+          <ul class="plain dont">
+            <li><strong>아이 앞에서 마개 뽑기</strong> — 아이를 먼저 꺼낸 뒤 물을 뺍니다.</li>
+            <li><strong>&ldquo;하나도 안 무서워&rdquo;로 넘기기</strong> — 무서운 이유를 먼저 찾아야 없앨 수 있습니다.</li>
+          </ul>
+        </div>
+        <div class="callout">
+          <b>샤워핸들은 언제 시작해도 됩니다</b>
+          24개월까지 안 쓰는 집도, 8개월부터 쓰는 집도 모두 정상 범위입니다. 판단 기준은 개월 수가 아니라 아이가 물을 무서워하지 않고 헹굼이 깨끗하게 되는가입니다.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 바뀌지 않는 것 ────────────────────────────────── -->
+<section class="always" aria-labelledby="h-always">
+  <div class="wrap">
+    <h2 id="h-always">30개월 내내 바뀌지 않는 것</h2>
+    <p class="sub">욕조를 몇 개 쓰든, 샤워기로 넘어갔든 상관없이 같습니다. 나머지는 전부 취향의 문제입니다.</p>
+    <ul class="three">
+      <li>
+        <p class="n">온도</p>
+        <h4>37–38℃, 보일러는 49℃ 이하</h4>
+        <p>보일러 설정은 한 번 해두면 끝입니다. 목욕물은 온도계로 확인하고, 팔꿈치는 보조로만 씁니다.</p>
+      </li>
+      <li>
+        <p class="n">감독</p>
+        <h4>팔 뻗으면 닿는 거리</h4>
+        <p>물 2.5cm, 20초면 익사가 가능합니다. 휴대폰은 멀리 두고, 필요한 물건은 시작 전에 전부 팔 닿는 곳에 둡니다.</p>
+      </li>
+      <li>
+        <p class="n">피부</p>
+        <h4>짧게 씻고 3분 안에 보습</h4>
+        <p>5~10분, 순한 세정제 최소량, 나오자마자 물기를 두드려 말리고 보습제. 입욕제는 근거상 이득이 없습니다.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── 근거 ──────────────────────────────────────────── -->
+<section class="why" aria-labelledby="h-why">
+  <div class="wrap">
+    <h2 id="h-why">근거</h2>
+    <p class="sub">위의 권고 중 어디까지가 연구로 뒷받침되고 어디부터가 관행인지 구분해 둡니다.</p>
+
+    <div class="ev">
+      <article class="ev-item">
+        <div class="ev-stat"><b>80%</b><span>욕조·스파·양동이 익사 사망 중 만 2세 미만</span></div>
+        <div class="ev-body">
+          <h4>익수 — 이 페이지에서 가장 확실한 숫자</h4>
+          <p>수영장 외 익사 사망의 71%가 욕조에서 일어납니다. 최근 병원 기반 코호트에서는 욕조 익수 환자의 84%가 2세 미만이었고, <strong>96%가 계획된 목욕 시간</strong>에 발생했습니다. 예기치 못한 접근이 아니라 감독의 짧은 공백이 원인이라는 뜻입니다.</p>
+          <p class="src"><a href="https://www.cpsc.gov/Newsroom/News-Releases/2007/Infants-and-Toddlers-at-Risk-of-Drowning-in-Bathtubs-Spas-and-Buckets-80-percent-of-deaths-involve-children-younger-than-two">CPSC</a> · <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12231728/">Central Texas cohort</a></p>
+        </div>
+      </article>
+
+      <article class="ev-item">
+        <div class="ev-stat"><b>1초</b><span>60℃ 물이 중증 화상을 입히는 데 걸리는 시간</span></div>
+        <div class="ev-body">
+          <h4>화상 — 설정 한 번으로 끝나는 일</h4>
+          <p>AAP와 영국 CAPT 모두 온수기 상한을 <strong>49℃(120℉) 이하</strong>로 권고합니다. 49℃에서는 어른이 개입할 시간이 남지만 60℃에서는 남지 않습니다. 팔꿈치 테스트는 38℃와 41℃를 구분하지 못하므로 목욕 온도계를 함께 씁니다.</p>
+          <p class="src"><a href="https://parachute.ca/en/injury-topic/burns-and-scalds/hot-tap-water/">Parachute</a> · <a href="https://raisingchildren.net.au/newborns/safety/bath-water-safety/bath-temperature">Raising Children Network</a></p>
+        </div>
+      </article>
+
+      <article class="ev-item">
+        <div class="ev-stat"><b>32초</b><span>속싸개 목욕군의 우는 시간. 일반 욕조 목욕군은 94초</span></div>
+        <div class="ev-body">
+          <h4>속싸개 목욕 — 초기 몇 달에 실제로 효과가 있는 요령</h4>
+          <p>여러 RCT와 메타분석에서 속싸개 목욕군이 목욕 10분 뒤 체온이 더 높고 스트레스 점수와 우는 시간이 유의하게 낮았습니다. 미숙아 대상 연구가 많지만 신생아 초기에 그대로 응용할 수 있습니다.</p>
+          <p class="src"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4134173/">Swaddled vs conventional RCT</a> · <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12620475/">Swaddle vs tub 2025</a> · <a href="https://link.springer.com/article/10.1186/s12887-023-04280-y">BMC Pediatrics 체계적 고찰</a></p>
+        </div>
+      </article>
+
+      <article class="ev-item">
+        <div class="ev-stat"><b>0</b><span>에몰리언트 입욕제의 임상적 이득. 1–11세 483명, 12개월</span></div>
+        <div class="ev-body">
+          <h4>피부 — 근거가 아직 엇갈리는 영역</h4>
+          <p>BATHE 트라이얼에서 입욕제 추가의 이득은 확인되지 않았습니다. 목욕 빈도와 아토피의 관계도 코호트마다 결론이 갈리고, 생후 6개월까지 목욕을 주 1회 이하로 줄이는 중재는 <strong>실행 가능성만 입증된 단계</strong>입니다. 확실한 것은 짧게 · 미온수로 · 세정제 최소량 · 나오자마자 보습, 이 네 가지뿐입니다.</p>
+          <p class="src"><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5930266/">BMJ BATHE</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/42359599/">BabyBathe RCT</a> · <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10947084/">출생 코호트</a></p>
+        </div>
+      </article>
+
+      <article class="ev-item">
+        <div class="ev-stat"><b>며칠</b><span>일관된 취침 루틴이 수면 지표를 바꾸는 데 걸린 기간</span></div>
+        <div class="ev-body">
+          <h4>수면 — 위생보다 큰 이득일 수 있는 부분</h4>
+          <p>3~18개월 영아 123쌍 RCT에서 목욕 → 마사지 → 조용한 활동으로 이어지는 취침 루틴이 야간 각성, 입면 용이성, 아침 기분, 그리고 <strong>엄마의 수면의 질</strong>까지 개선했습니다. 효과는 며칠 안에 나타납니다. 목욕 시간을 매일 같은 시각, 대개 취침 40~60분 전으로 고정하는 것만으로 얻을 수 있습니다.</p>
+          <p class="src"><a href="https://www.sciencedirect.com/science/article/abs/pii/S1389945717303635">Sleep Medicine</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/28985580/">루틴 도입 효과 속도</a></p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── 갈림길 ────────────────────────────────────────── -->
+<section class="forks" aria-labelledby="h-forks">
+  <div class="wrap">
+    <h2 id="h-forks">갈림길</h2>
+    <p class="sub">집집마다 갈리는 선택들. 대부분은 정답이 없고, 없다는 것이 답입니다.</p>
+    <div class="fork">
+      <div class="fork-row"><p class="fork-q">헹굼욕조는 언제까지 쓰나</p><p class="fork-a">의학적 기준이 없습니다. 보통 <b>3~6개월</b>에 바가지나 샤워기로 대체합니다. 아토피가 있으면 더 오래 유지해도 이득이 있습니다.</p></div>
+      <div class="fork-row"><p class="fork-q">욕조 1개와 2개, 어느 쪽이 깨끗한가</p><p class="fork-a">위생 결과는 <b>같습니다</b>. 배수하면서 헹구는 순서만 지키면 1개로 충분합니다.</p></div>
+      <div class="fork-row"><p class="fork-q">샤워핸들은 몇 개월부터</p><p class="fork-a">앉기가 안정되고 물 적응이 되었는가로 판단합니다. <b>8개월도 24개월도 정상 범위</b>입니다.</p></div>
+      <div class="fork-row"><p class="fork-q">목욕의자를 사도 되나</p><p class="fork-a">써도 되지만 <b>안전장치가 아닙니다</b>. 리콜 이력을 확인하고, 앉혔더라도 손은 계속 닿는 거리에 둡니다.</p></div>
+      <div class="fork-row"><p class="fork-q">샤워캡을 쓰면 적응이 늦어지나</p><p class="fork-a">한시적으로 쓰면 문제없습니다. 다만 <b>장기 전면 의존</b>은 적응을 늦춥니다. 과도기 도구로 쓰고 괜찮아지면 뗍니다.</p></div>
+      <div class="fork-row"><p class="fork-q">매일 목욕해야 하나</p><p class="fork-a">1세 전에는 <b>주 2~3회</b>로 충분합니다. 매일 하려면 더 짧게, 세정제는 더 적게.</p></div>
+      <div class="fork-row"><p class="fork-q">입욕제는 도움이 되나</p><p class="fork-a">RCT 기준 <b>이득이 확인되지 않았습니다</b>. 목욕 후 보습제에 집중하는 편이 낫습니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 체크리스트 ────────────────────────────────────── -->
+<section class="check" aria-labelledby="h-check">
+  <div class="wrap">
+    <h2 id="h-check">시작하기 전에</h2>
+    <p class="sub">월령과 상관없이 매번 같습니다.</p>
+    <ul class="checklist">
+      <li><label><input type="checkbox"><span>물 37–38℃ 확인, 보일러는 49℃ 이하로 고정되어 있다</span></label></li>
+      <li><label><input type="checkbox"><span>수건 · 갈아입힐 옷 · 기저귀 · 보습제가 팔 닿는 곳에 있다</span></label></li>
+      <li><label><input type="checkbox"><span>휴대폰은 무음이고 손이 닿지 않는 곳에 있다</span></label></li>
+      <li><label><input type="checkbox"><span>물은 이 월령에 필요한 만큼만 받았다</span></label></li>
+      <li><label><input type="checkbox"><span>욕조 바닥에 미끄럼 방지가 되어 있다</span></label></li>
+      <li><label><input type="checkbox"><span>끝나면 아이를 먼저 꺼내고, 그다음에 물을 뺀다</span></label></li>
+      <li><label><input type="checkbox"><span>나오면 3분 안에 보습제를 바른다</span></label></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── 출처 ──────────────────────────────────────────── -->
+<section class="srcs" aria-labelledby="h-src">
+  <div class="wrap">
+    <h2 id="h-src">출처</h2>
+    <p class="sub">공식 가이드라인과 연구, 그리고 실제 부모들의 관행을 구분해 실었습니다. 관행 쪽은 근거가 아니라 참고입니다.</p>
+
+    <div class="srcgrp">
+      <h4>가이드라인 · 공공기관</h4>
+      <ul class="srclist">
+        <li><a href="https://www.healthychildren.org/English/ages-stages/baby/bathing-skin-care/Pages/Bathing-Your-Newborn.aspx">AAP HealthyChildren — Bathing Your Newborn</a></li>
+        <li><a href="https://www.mayoclinic.org/healthy-lifestyle/infant-and-toddler-health/in-depth/healthy-baby/art-20044438">Mayo Clinic — Baby bath basics</a></li>
+        <li><a href="https://www.nhs.uk/baby/caring-for-a-newborn/washing-and-bathing-your-baby/">NHS — Washing and bathing your baby</a> · <a href="https://www.nhsinform.scot/ready-steady-baby/early-parenthood/caring-for-your-new-baby/bathing-your-baby/">NHS inform Scotland</a></li>
+        <li><a href="https://raisingchildren.net.au/newborns/safety/bath-water-safety/bath-temperature">Raising Children Network — Bath temperature</a> · <a href="https://raisingchildren.net.au/newborns/behaviour/common-concerns/fear-of-the-bath">Fear of the bath</a></li>
+        <li><a href="https://www.cpsc.gov/Newsroom/News-Releases/2007/Infants-and-Toddlers-at-Risk-of-Drowning-in-Bathtubs-Spas-and-Buckets-80-percent-of-deaths-involve-children-younger-than-two">CPSC — 욕조·스파·양동이 익사</a> · <a href="https://www.cpsc.gov/recall-products/baby-bathtub-seats-and-rings">목욕의자·목욕링 리콜 목록</a></li>
+        <li><a href="https://parachute.ca/en/injury-topic/burns-and-scalds/hot-tap-water/">Parachute — Hot tap water burns</a> · <a href="https://www.seattlechildrens.org/health-safety/injury-prevention/water-safety-for-children-birth-to-5-years/">Seattle Children&rsquo;s — 0~5세 물 안전</a></li>
+        <li><a href="https://www.childcare.go.kr/?menuno=421">아이사랑 임신육아종합포털 — 월령별 돌보기</a></li>
+      </ul>
+    </div>
+
+    <div class="srcgrp">
+      <h4>논문 · 연구</h4>
+      <ul class="srclist">
+        <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12620475/">Swaddle bath vs. tub bath RCT (2025)</a> · <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4134173/">Swaddled vs conventional bathing RCT</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/41975571/">체온 손실 예방 메타분석</a></li>
+        <li><a href="https://link.springer.com/article/10.1186/s12887-023-04280-y">BMC Pediatrics — 목욕 방법별 생리지표 체계적 고찰</a></li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/42359599/">BJD — 영아 목욕 감소 중재 RCT (BabyBathe)</a> · <a href="https://onlinelibrary.wiley.com/doi/10.1111/cea.14464">프로토콜</a></li>
+        <li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5930266/">BMJ — BATHE 입욕제 RCT</a> · <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10947084/">출생 코호트: 조기 에몰리언트 목욕과 아토피</a></li>
+        <li><a href="https://www.mdpi.com/2036-7503/16/1/6">소아 아토피에서의 목욕: 왜, 어떻게, 언제</a></li>
+        <li><a href="https://www.sciencedirect.com/science/article/abs/pii/S1389945717303635">Sleep Medicine — 마사지 기반 취침 루틴</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/28985580/">루틴 도입 효과 속도</a></li>
+        <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12231728/">욕조 익수 소아 병원 방문 분석</a></li>
+      </ul>
+    </div>
+
+    <div class="srcgrp">
+      <h4>관행 · 실사용기</h4>
+      <ul class="srclist">
+        <li><a href="https://www.yugacrew.com/crewletter/baby-bath-guide">육아크루 — 월령별 목욕 방법과 욕조 선택</a> · <a href="https://www.yugacrew.com/crewletter/baby-bathing">목욕 주기·온도·순서</a></li>
+        <li><a href="https://www.malanghoney.com/article/newstip/8/34272/">말랑하니 — 헹굼욕조 활용 신생아 목욕법</a> · <a href="https://news.hidoc.co.kr/news/articleView.html?idxno=45839">하이닥 — 신생아 첫 목욕</a></li>
+        <li><a href="https://community.mmtalk.kr/community/article/124170">마미톡 — 아기 목욕 어떻게 시키세요</a> · <a href="https://www.teamblind.com/kr/post/10%EA%B0%9C%EC%9B%94-%EC%95%84%EA%B8%B0-%EB%AA%A9%EC%9A%95%EC%8B%9C%ED%82%A4%EB%8A%94-%EB%B0%A9%EB%B2%95%E2%80%A6-8UGgOEiz">블라인드 — 10개월 아기 목욕</a></li>
+        <li><a href="https://www.berkeleyparentsnetwork.org/advice/toddler/hairwashing">Berkeley Parents Network — 머리 감기기</a> · <a href="https://www.momjunction.com/articles/tips-to-wash-your-toddlers-hair_00330316/">Momjunction — 14가지 팁</a></li>
+        <li><a href="https://blog.lovevery.com/child-development/what-to-do-when-your-toddler-is-scared-of-the-bath/">Lovevery — 목욕을 무서워하는 유아</a> · <a href="https://www.romper.com/parenting/when-can-baby-sit-up-in-bath-tub">Romper — 욕조에 앉기 가능 시점</a> · <a href="https://share.upmc.com/2022/08/how-often-to-bathe-my-child/">UPMC — 연령별 목욕 빈도</a></li>
+      </ul>
+    </div>
+
+    <p class="foot">이 페이지는 일반적인 정보를 정리한 것이고 진료를 대신하지 않습니다. 피부 문제나 목욕 중 아이의 반응이 평소와 다르면 소아과에 문의하세요. 월령 구간은 편의상 나눈 것이며, 실제 전환 시점은 아이마다 다릅니다.</p>
+  </div>
+</section>
+
+<button class="theme" id="themeBtn" type="button" aria-label="밝기 전환">◐</button>
+
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  var heads=[].slice.call(document.querySelectorAll('.stage-hd'));
+  var panels=tabs.map(function(t){return document.getElementById(t.getAttribute('aria-controls'));});
+  var water=document.getElementById('gaugeWater');
+  var cap=document.getElementById('gaugeCap');
+
+  function show(i){
+    tabs.forEach(function(t,n){
+      t.setAttribute('aria-selected',n===i?'true':'false');
+      if(heads[n]) heads[n].hidden=n!==i;
+      if(panels[n]) panels[n].hidden=n!==i;
+    });
+    var fill=tabs[i].dataset.fill, cm=tabs[i].dataset.cm;
+    water.style.setProperty('--fill',fill);
+    cap.textContent=cm;
+    try{sessionStorage.setItem('bath-stage',String(i));}catch(e){}
+  }
+
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){show(i);});
+    t.addEventListener('keydown',function(e){
+      var d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+      if(!d)return;
+      e.preventDefault();
+      var n=(i+d+tabs.length)%tabs.length;
+      tabs[n].focus();show(n);
+    });
+  });
+
+  var saved=0;
+  try{saved=parseInt(sessionStorage.getItem('bath-stage'),10)||0;}catch(e){}
+  show(saved>=0&&saved<tabs.length?saved:0);
+
+  // 히어로 스케일: 안전 구간을 한 번만 그려 보인다
+  var band=document.querySelector('.scale-band');
+  if(band&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    band.style.transform='scaleX(0)';
+    requestAnimationFrame(function(){
+      band.style.transition='transform .7s cubic-bezier(.3,0,.2,1) .15s';
+      band.style.transform='scaleX(1)';
+    });
+  }
+
+  // 밝기
+  var btn=document.getElementById('themeBtn');
+  try{var s=localStorage.getItem('bath-theme'); if(s)document.documentElement.dataset.theme=s;}catch(e){}
+  btn.addEventListener('click',function(){
+    var cur=document.documentElement.dataset.theme;
+    if(!cur)cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+    var next=cur==='dark'?'light':'dark';
+    document.documentElement.dataset.theme=next;
+    try{localStorage.setItem('bath-theme',next);}catch(e){}
+  });
+})();
+</script>
