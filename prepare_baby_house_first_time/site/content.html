@@ -1,0 +1,1078 @@
+<title>어린이집 첫 등원 준비</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Space+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+/* ══ tokens ══════════════════════════════════════════════
+   이른 아침. 창백한 페리윙클 바탕 위의 딥 인디고.
+   액센트는 남보라 하나. 브론즈는 월령 힌트에만, 로즈는 금지 항목에만. */
+:root{
+  --ground:#EDEFF7;
+  --surface:#FBFBFE;
+  --surface-2:#F4F5FC;
+  --ink:#1A1E38;
+  --ink-2:#4C5273;
+  --ink-3:#787E9F;
+  --line:#D7DAEC;
+  --line-2:#E6E8F4;
+  --accent:#4A46C9;
+  --accent-2:#6F6BE0;
+  --accent-soft:#E3E2F8;
+  --warm:#9E5E17;
+  --warm-soft:#F4E9DA;
+  --rose:#A93350;
+  --rose-soft:#F6E2E7;
+  --night:#161A33;
+  --night-2:#1F2444;
+  --night-ink:#E9EAF7;
+  --night-ink-2:#A8ADD2;
+  --night-line:#333961;
+  --night-accent:#A6A2FF;
+  --shadow:0 1px 2px rgba(26,30,56,.06),0 8px 24px -16px rgba(26,30,56,.22);
+  --fd:'Gowun Batang','Apple SD Gothic Neo',serif;
+  --fb:'Pretendard Variable',Pretendard,'Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
+  --fm:'Space Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --pad:clamp(16px,4vw,36px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#101324;
+    --surface:#181C33;
+    --surface-2:#1E233E;
+    --ink:#E9EAF7;
+    --ink-2:#AEB3D4;
+    --ink-3:#848AAF;
+    --line:#2E3355;
+    --line-2:#242942;
+    --accent:#A6A2FF;
+    --accent-2:#BEBBFF;
+    --accent-soft:#272C50;
+    --warm:#D9A464;
+    --warm-soft:#2E2617;
+    --rose:#E58AA0;
+    --rose-soft:#331D25;
+    --night:#080A16;
+    --night-2:#10142A;
+    --night-line:#252A49;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#101324;--surface:#181C33;--surface-2:#1E233E;
+  --ink:#E9EAF7;--ink-2:#AEB3D4;--ink-3:#848AAF;
+  --line:#2E3355;--line-2:#242942;
+  --accent:#A6A2FF;--accent-2:#BEBBFF;--accent-soft:#272C50;
+  --warm:#D9A464;--warm-soft:#2E2617;--rose:#E58AA0;--rose-soft:#331D25;
+  --night:#080A16;--night-2:#10142A;--night-line:#252A49;
+  --shadow:0 1px 2px rgba(0,0,0,.4);
+}
+
+/* ══ base ════════════════════════════════════════════════ */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  margin:0;background:var(--ground);color:var(--ink);
+  font-family:var(--fb);font-size:16.5px;line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+  font-feature-settings:"tnum" 0;
+  word-break:keep-all;overflow-wrap:break-word;
+}
+a{color:var(--accent);text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{color:var(--accent-2)}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:3px;border-radius:3px}
+[hidden]{display:none!important}
+h1,h2,h3,h4{margin:0;font-weight:700;line-height:1.3;letter-spacing:-.015em}
+p{margin:0 0 .85em}
+p:last-child{margin-bottom:0}
+ul{margin:0;padding:0 0 0 1.1em}
+li{margin:.25em 0}
+.wrap{max-width:860px;margin:0 auto;padding:0 var(--pad)}
+
+/* ══ 상단 고정: 제목 + 월령 + 압축 눈금자 ═════════════════ */
+.top{
+  position:sticky;top:0;z-index:40;
+  background:color-mix(in srgb,var(--ground) 88%,transparent);
+  backdrop-filter:saturate(1.6) blur(14px);
+  -webkit-backdrop-filter:saturate(1.6) blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.topin{max-width:860px;margin:0 auto;padding:10px var(--pad) 0}
+.brandrow{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:9px}
+.brand{font-family:var(--fd);font-weight:700;font-size:17px;letter-spacing:-.02em}
+.brand .now{font-family:var(--fm);color:var(--accent);font-size:13px;margin-left:2px}
+.agebox{margin-left:auto;display:flex;align-items:center;gap:10px;min-width:0}
+.agelab{font-size:12.5px;color:var(--ink-3);white-space:nowrap}
+.agewrap{display:flex;align-items:center;gap:9px}
+.agenum{
+  font-family:var(--fm);font-weight:700;font-size:13px;color:var(--accent);
+  background:var(--accent-soft);border-radius:999px;padding:2px 9px;white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+}
+input[type=range]{
+  -webkit-appearance:none;appearance:none;background:transparent;
+  width:clamp(88px,20vw,150px);margin:0;cursor:pointer;
+}
+input[type=range]::-webkit-slider-runnable-track{height:3px;background:var(--line);border-radius:2px}
+input[type=range]::-moz-range-track{height:3px;background:var(--line);border-radius:2px}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:16px;height:16px;border-radius:50%;
+  background:var(--accent);border:3px solid var(--surface);margin-top:-6.5px;
+  box-shadow:0 0 0 1px var(--accent);
+}
+input[type=range]::-moz-range-thumb{
+  width:16px;height:16px;border-radius:50%;background:var(--accent);
+  border:3px solid var(--surface);box-shadow:0 0 0 1px var(--accent);
+}
+
+/* 시그니처: 오른쪽으로 갈수록 조여드는 눈금자 */
+.ruler{
+  position:relative;height:46px;
+  overflow-x:auto;overflow-y:hidden;scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+}
+.ruler::-webkit-scrollbar{display:none}
+/* 좌우 여백: 첫 눈금과 마지막 눈금 라벨이 잘리지 않게 */
+.rail{position:relative;height:46px;min-width:500px;margin:0 32px}
+.rail::before{
+  content:"";position:absolute;left:0;right:0;top:12px;height:1px;
+  background:linear-gradient(90deg,var(--line) 0%,var(--line) 62%,var(--ink-3) 100%);
+}
+.tick{
+  position:absolute;top:0;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  background:none;border:0;padding:6px 3px 0;cursor:pointer;color:inherit;
+  font-family:var(--fm);font-size:10.5px;letter-spacing:.01em;
+  white-space:nowrap;
+}
+.tick i{
+  display:block;width:2px;height:11px;background:var(--line);border-radius:1px;
+  transition:height .22s ease,background .22s ease;
+}
+.tick b{font-weight:400;color:var(--ink-3);transition:color .22s ease}
+.tick:hover i{background:var(--ink-3)}
+.tick:hover b{color:var(--ink-2)}
+.tick[aria-current="true"] i{height:17px;background:var(--accent)}
+.tick[aria-current="true"] b{color:var(--accent);font-weight:700}
+.tick.done i{background:var(--accent-2)}
+.tick .pct{
+  position:absolute;top:31px;font-size:9px;color:var(--accent);
+  opacity:0;transition:opacity .2s ease;
+}
+.tick.some .pct{opacity:.85}
+
+/* ══ 히어로 ══════════════════════════════════════════════ */
+.hero{padding:clamp(40px,8vw,76px) 0 clamp(28px,5vw,44px)}
+.eyebrow{
+  font-family:var(--fm);font-size:11.5px;letter-spacing:.14em;
+  color:var(--ink-3);text-transform:uppercase;margin-bottom:16px;
+}
+.hero h1{
+  font-family:var(--fd);font-weight:700;
+  font-size:clamp(30px,6.4vw,50px);line-height:1.22;letter-spacing:-.03em;
+  margin-bottom:20px;text-wrap:balance;
+}
+.hero h1 em{font-style:normal;color:var(--accent);}
+.lede{font-size:clamp(16px,2.3vw,18.5px);color:var(--ink-2);max-width:40em}
+
+/* 코르티솔 곡선 */
+.curve{
+  margin:clamp(26px,5vw,40px) 0 0;padding:clamp(18px,3.6vw,26px);
+  background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  box-shadow:var(--shadow);
+}
+.curve figcaption{
+  font-size:13.5px;color:var(--ink-2);margin-top:14px;padding-top:13px;
+  border-top:1px solid var(--line-2);
+}
+.curve figcaption b{color:var(--ink);font-weight:600}
+.curve svg{display:block;width:100%;height:auto}
+.cline{
+  fill:none;stroke:var(--accent);stroke-width:2.4;
+  stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:1200;stroke-dashoffset:1200;
+  animation:draw 1.9s .25s cubic-bezier(.4,0,.2,1) forwards;
+}
+@keyframes draw{to{stroke-dashoffset:0}}
+.cfill{fill:var(--accent);opacity:.07}
+.cbase{stroke:var(--line);stroke-width:1;stroke-dasharray:3 4}
+.cdot{fill:var(--surface);stroke:var(--accent);stroke-width:2.4}
+.clab{font-family:var(--fb);font-size:11px;fill:var(--ink-3)}
+.clab.hi{fill:var(--accent);font-weight:700}
+@media (prefers-reduced-motion:reduce){
+  .cline{animation:none;stroke-dashoffset:0}
+}
+
+/* ══ 원칙 3 ══════════════════════════════════════════════ */
+.rules{
+  display:grid;gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  margin:clamp(30px,5vw,46px) 0;
+}
+@media (min-width:720px){.rules{grid-template-columns:repeat(3,1fr)}}
+.rule{background:var(--surface);padding:20px 19px}
+.rule h3{
+  font-size:14.5px;margin-bottom:7px;letter-spacing:-.01em;
+  display:flex;align-items:center;gap:8px;
+}
+.rule h3::before{
+  content:"";width:7px;height:7px;border-radius:2px;
+  background:var(--accent);flex:none;
+}
+.rule p{font-size:14px;color:var(--ink-2);line-height:1.68}
+
+/* ══ 구간 ════════════════════════════════════════════════ */
+.phase{padding:clamp(30px,5vw,44px) 0;border-top:1px solid var(--line)}
+.phead{display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+.pd{
+  font-family:var(--fm);font-weight:700;font-size:clamp(20px,3.6vw,27px);
+  color:var(--accent);letter-spacing:-.02em;line-height:1.15;flex:none;
+}
+.ptitle{font-family:var(--fd);font-size:clamp(19px,3.2vw,25px);letter-spacing:-.02em;line-height:1.2;padding-top:2px}
+.pmeta{margin-left:auto;display:flex;align-items:center;gap:10px;padding-top:6px}
+.bar{width:74px;height:4px;border-radius:2px;background:var(--line-2);overflow:hidden;flex:none}
+.bar span{display:block;height:100%;width:0;background:var(--accent);border-radius:2px;transition:width .35s cubic-bezier(.4,0,.2,1)}
+.cnt{font-family:var(--fm);font-size:11.5px;color:var(--ink-3);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pnote{color:var(--ink-2);font-size:15px;margin-bottom:20px;max-width:46em}
+
+/* 체크리스트 */
+.list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line-2)}
+.item{border-bottom:1px solid var(--line-2)}
+.item label{
+  display:flex;gap:13px;align-items:flex-start;
+  padding:12px 4px;cursor:pointer;
+  transition:background .14s ease;border-radius:8px;
+}
+.item label:hover{background:var(--surface-2)}
+.item input{
+  appearance:none;-webkit-appearance:none;margin:0;flex:none;
+  width:19px;height:19px;margin-top:3px;border-radius:6px;
+  border:1.5px solid var(--line);background:var(--surface);
+  cursor:pointer;position:relative;
+  transition:border-color .16s ease,background .16s ease;
+}
+.item input:hover{border-color:var(--accent)}
+.item input:checked{background:var(--accent);border-color:var(--accent)}
+.item input:checked::after{
+  content:"";position:absolute;left:5.6px;top:2.2px;
+  width:4.5px;height:9.5px;border:solid #fff;border-width:0 2.2px 2.2px 0;
+  transform:rotate(43deg);
+}
+.itxt{flex:1;min-width:0}
+.itxt strong{font-weight:500;display:block;transition:color .16s ease,text-decoration-color .16s ease}
+.item input:checked+.itxt strong{
+  color:var(--ink-3);text-decoration:line-through;
+  text-decoration-color:var(--line);text-decoration-thickness:1px;
+}
+.itxt small{display:block;font-size:13.2px;color:var(--ink-3);line-height:1.6;margin-top:2px}
+.itxt small a{color:var(--ink-3);text-decoration-color:var(--line)}
+.itxt small a:hover{color:var(--accent)}
+
+/* 월령 힌트 */
+.hint{
+  display:flex;gap:11px;margin:18px 0 0;padding:14px 16px;
+  background:var(--warm-soft);border-radius:12px;
+  font-size:14.2px;line-height:1.66;color:var(--ink-2);
+}
+.hint::before{
+  content:"";flex:none;width:3px;border-radius:2px;background:var(--warm);
+  align-self:stretch;
+}
+.hint p{margin:0}
+.hint b{font-weight:700;color:var(--ink)}
+/* 첫 <b> 만 월령 라벨. 본문 강조까지 라벨 꼴이 되지 않게 한다. */
+.hint p>b:first-child{color:var(--warm);font-family:var(--fm);font-size:12.5px;letter-spacing:.02em}
+.dday .hint b{color:var(--night-ink)}
+
+/* 참고 노트: 월령 힌트와 구분되는 액센트 계열 */
+.hint.tip{background:var(--accent-soft)}
+.hint.tip::before{background:var(--accent)}
+.hint.tip p>b:first-child{color:var(--accent)}
+.avoid.tip{background:var(--accent-soft)}
+.avoid.tip h4{color:var(--accent)}
+.avoid.tip li::marker{color:var(--accent)}
+
+/* 하지 말 것 */
+.avoid{
+  margin-top:20px;padding:15px 17px;border-radius:12px;
+  background:var(--rose-soft);font-size:14.2px;line-height:1.7;
+}
+.avoid h4{font-size:13px;color:var(--rose);margin-bottom:6px}
+.avoid ul{padding-left:1.05em;color:var(--ink-2)}
+.avoid li::marker{color:var(--rose)}
+
+/* ══ 당일: 반전 구간 ═════════════════════════════════════ */
+.dday{
+  background:var(--night);color:var(--night-ink);
+  margin-top:clamp(34px,6vw,54px);
+  padding:clamp(40px,7vw,72px) 0 clamp(36px,6vw,60px);
+  position:relative;
+}
+.dday::before{
+  content:"";position:absolute;inset:0 0 auto;height:200px;
+  background:radial-gradient(120% 100% at 50% 0%,rgba(166,162,255,.14),transparent 70%);
+  pointer-events:none;
+}
+.dday .eyebrow{color:var(--night-ink-2)}
+.dday h2{
+  font-family:var(--fd);font-size:clamp(25px,4.6vw,36px);
+  letter-spacing:-.03em;margin-bottom:14px;
+}
+.dday .lede{color:var(--night-ink-2);font-size:16px;margin-bottom:clamp(28px,5vw,42px)}
+.beat{
+  display:grid;gap:4px 22px;padding:22px 0;
+  border-top:1px solid var(--night-line);
+}
+@media (min-width:720px){.beat{grid-template-columns:110px 1fr}}
+.btime{
+  font-family:var(--fm);font-weight:700;font-size:15px;
+  color:var(--night-accent);letter-spacing:-.01em;padding-top:1px;
+}
+.bbody h3{font-size:16.5px;margin-bottom:9px;color:var(--night-ink)}
+.bbody ul{padding-left:1.05em;color:var(--night-ink-2);font-size:14.6px}
+.bbody li::marker{color:var(--night-line)}
+.bbody p{color:var(--night-ink-2);font-size:14.6px}
+
+/* 30분 전 6박자 — 실제 순서가 있는 유일한 곳 */
+.script{list-style:none;padding:0;margin:14px 0 0;counter-reset:s}
+/* 번호를 절대 배치한다. li 를 flex 로 만들면 안쪽 <b> 가 각각
+   flex 항목이 되어 문장이 토막나므로 쓰지 않는다. */
+.script li{
+  counter-increment:s;position:relative;padding:11px 0 11px 35px;
+  border-bottom:1px solid var(--night-line);
+  color:var(--night-ink-2);font-size:14.8px;line-height:1.66;
+}
+.script li:last-child{border-bottom:0}
+.script li::before{
+  content:counter(s);position:absolute;left:0;top:14px;
+  font-family:var(--fm);font-size:11.5px;font-weight:700;
+  color:var(--night);background:var(--night-accent);
+  width:21px;height:21px;border-radius:50%;
+  display:grid;place-items:center;
+}
+.script b{color:var(--night-ink);font-weight:600}
+.dday .hint{background:rgba(217,164,100,.11);color:var(--night-ink-2)}
+.dday .avoid{background:rgba(229,138,160,.1)}
+.dday .avoid ul{color:var(--night-ink-2)}
+
+/* ══ 표 ══════════════════════════════════════════════════ */
+.tablewrap{overflow-x:auto;margin:18px 0 0;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14.2px}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line-2);vertical-align:top}
+thead th{
+  font-family:var(--fm);font-size:11.5px;letter-spacing:.05em;color:var(--ink-3);
+  font-weight:400;background:var(--surface-2);white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:0}
+td:first-child{font-weight:500;white-space:nowrap}
+.tw{font-family:var(--fm);font-size:12.5px;color:var(--accent);white-space:nowrap}
+
+/* ══ 근거 ════════════════════════════════════════════════ */
+.study{
+  padding:20px 0;border-bottom:1px solid var(--line-2);
+  display:grid;gap:3px 22px;
+}
+@media (min-width:720px){.study{grid-template-columns:150px 1fr}}
+.study:last-of-type{border-bottom:0}
+.sname{font-family:var(--fm);font-size:12px;color:var(--ink-3);line-height:1.55;padding-top:3px}
+.sbody h3{font-size:16px;margin-bottom:6px}
+.sbody p{font-size:14.5px;color:var(--ink-2)}
+
+/* ══ 유틸 ════════════════════════════════════════════════ */
+.sec{
+  font-family:var(--fd);font-size:clamp(20px,3.4vw,27px);
+  letter-spacing:-.025em;margin-bottom:10px;
+}
+.sub{color:var(--ink-2);font-size:15px;margin-bottom:18px;max-width:46em}
+.block{padding:clamp(30px,5vw,44px) 0;border-top:1px solid var(--line)}
+.srcs{columns:2;column-gap:32px;font-size:13.6px;line-height:1.72;color:var(--ink-2)}
+@media (max-width:640px){.srcs{columns:1}}
+.srcs h3{
+  font-family:var(--fm);font-size:11.5px;letter-spacing:.05em;color:var(--ink-3);
+  font-weight:400;margin:18px 0 6px;break-after:avoid;
+}
+.srcs h3:first-child{margin-top:0}
+.srcs ul{padding-left:1em;margin-bottom:4px}
+.srcs li{break-inside:avoid;margin:.3em 0}
+
+.tools{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:22px}
+.btn{
+  font-family:var(--fb);font-size:13.2px;font-weight:500;
+  padding:8px 15px;border-radius:9px;cursor:pointer;
+  background:var(--surface);color:var(--ink-2);
+  border:1px solid var(--line);
+  transition:border-color .15s ease,color .15s ease,background .15s ease;
+}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.note{font-size:12.8px;color:var(--ink-3)}
+
+footer.wrap{
+  padding:34px var(--pad) 52px;border-top:1px solid var(--line);
+  font-size:13px;color:var(--ink-3);line-height:1.7;
+}
+footer strong{color:var(--ink-2);font-weight:600}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+
+/* 인쇄 */
+@media print{
+  .top{position:static;backdrop-filter:none}
+  .ruler,.btn,.agebox{display:none}
+  body{background:#fff;color:#000;font-size:11pt}
+  .dday{background:#fff;color:#000}
+  .dday h2,.bbody h3,.script b{color:#000}
+  .bbody ul,.bbody p,.script li,.dday .lede{color:#333}
+  .btime{color:#000}
+  .phase,.block{break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+
+<header class="top">
+  <div class="topin">
+    <div class="brandrow">
+      <span class="brand">어린이집 첫 등원<span class="now" id="ddayTag"></span></span>
+      <div class="agebox">
+        <label class="agelab" for="age">우리 아이</label>
+        <span class="agewrap">
+          <input type="range" id="age" min="6" max="24" step="1" value="12"
+                 aria-describedby="ageOut">
+          <output class="agenum" id="ageOut" for="age">12개월</output>
+        </span>
+      </div>
+    </div>
+    <nav class="ruler" aria-label="준비 구간">
+      <div class="rail" id="rail"></div>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+<section class="hero">
+  <p class="eyebrow">6–24개월 · 준비 가이드</p>
+  <h1>적응은 아이가 울지 않게 만드는 일이 아니라,<br><em>3주짜리 프로젝트</em>입니다.</h1>
+  <p class="lede">
+    첫 등원을 앞두고 사야 할 물건은 사실 얼마 안 됩니다. 진짜 준비는 아이의 하루를
+    어린이집 시간표 쪽으로 천천히 옮겨 놓는 일, 그리고 헤어지는 연습입니다.
+    아래 눈금을 따라가면 4주 전부터 등원 30분 전까지 무엇을 할지 나옵니다.
+    위에서 아이 월령을 맞추면 그 월령에 해당하는 주의사항이 함께 붙습니다.
+  </p>
+
+  <figure class="curve">
+    <svg viewBox="0 0 620 190" role="img" aria-label="어린이집 전이 기간의 코르티솔 변화 곡선. 부모 동반기에는 낮게 유지되다가 분리 시작 후 상승해 9일차에 정점을 찍고, 3주차부터 내려와 3개월 후 처음 수준으로 돌아온다.">
+      <line class="cbase" x1="26" y1="150" x2="600" y2="150"/>
+      <path class="cfill" d="M26,146 C70,142 96,140 120,136 C160,128 180,104 212,88 C248,70 268,58 306,50 C344,58 366,74 400,92 C436,112 470,130 520,140 C550,145 578,147 600,148 L600,150 L26,150 Z"/>
+      <path class="cline" d="M26,146 C70,142 96,140 120,136 C160,128 180,104 212,88 C248,70 268,58 306,50 C344,58 366,74 400,92 C436,112 470,130 520,140 C550,145 578,147 600,148"/>
+      <circle class="cdot" cx="306" cy="50" r="4.6"/>
+      <text class="clab" x="26" y="172">집</text>
+      <text class="clab" x="112" y="172">부모 동반</text>
+      <text class="clab" x="206" y="172">분리 1주</text>
+      <text class="clab hi" x="278" y="36">9일차 정점</text>
+      <text class="clab" x="392" y="172">3주차</text>
+      <text class="clab" x="540" y="172">3개월 후</text>
+    </svg>
+    <figcaption>
+      노르웨이 32개 기관 유아 113명(평균 14.6개월)을 추적한 결과, 스트레스 호르몬은
+      <b>부모가 함께 있는 동안 낮게 유지되다가 분리 시작 후 올라가 9일차 전후에 정점</b>을
+      찍고, <b>3주차부터 내려와 3개월 뒤 처음 수준으로 돌아왔습니다.</b>
+      교사들은 아이가 “조금 낯설어한다” 정도로 봤지만, 부모들은 첫 한 달 내내 저녁에
+      매우 피곤해하고 매달린다고 보고했습니다. 기관에서 멀쩡해 보여도 집에서 대가를 치릅니다.
+      끝이 있다는 뜻이기도 합니다.
+      <a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2023.1165788/full">Frontiers in Psychology, 2023</a>
+    </figcaption>
+  </figure>
+</section>
+
+<section class="rules" aria-label="바뀌지 않는 세 가지">
+  <div class="rule">
+    <h3>몰래 나가지 않습니다</h3>
+    <p>예고 없이 사라지면 아이는 언제 또 없어질지 몰라 잠시도 눈을 떼지 못하게 됩니다.
+       당장의 울음은 피하지만 불안을 키웁니다. 짧게, 매번 똑같이 인사하고 나갑니다.</p>
+  </div>
+  <div class="rule">
+    <h3>적응 기간은 길수록 낫습니다</h3>
+    <p>15개월 영아 70명을 추적한 연구에서, 부모가 적응에 더 많은 날을 쓴 아이일수록
+       애착이 안정으로 유지되거나 안정으로 바뀌었습니다. 며칠 아끼는 것이 이득이 아닙니다.</p>
+  </div>
+  <div class="rule">
+    <h3>첫 달은 집에서 무너집니다</h3>
+    <p>저녁에 예민하고 매달리고 밤에 자주 깨는 것은 적응이 실패했다는 뜻이 아니라
+       정상 반응입니다. 하원 후 일정을 비우고 취침을 30~45분 당기세요.</p>
+  </div>
+</section>
+
+<!-- ══ D-4주 ══ -->
+<section class="phase" id="p1" data-phase="D-4주">
+  <div class="phead">
+    <span class="pd">D-4주</span>
+    <h2 class="ptitle">원에 물어보기</h2>
+    <div class="pmeta"><div class="bar"><span></span></div><span class="cnt"></span></div>
+  </div>
+  <p class="pnote">이 구간은 부모가 할 일이 거의 전부입니다. 한 번에 몰아서 물어보면 나머지 4주가 저절로 굴러갑니다.
+     적응 일정이 곧 부모의 휴가 계획이라 가장 먼저 알아야 합니다.</p>
+
+  <ul class="list">
+    <li class="item"><label><input type="checkbox" data-k="w4-1"><span class="itxt"><strong>적응프로그램을 며칠, 어떤 방식으로 운영하는지</strong><small>부모 동반 기간이 있는지, 며칠인지까지. 통상 2~4주를 아이 상태에 맞춰 운영합니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w4-2"><span class="itxt"><strong>담당 교사가 고정되는지</strong><small>연구가 일관되게 강조하는 요소입니다. 매일 다른 교사가 먹이고 재우면 적응이 늦어집니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w4-3"><span class="itxt"><strong>하루 일과표 받아오기</strong><small>등원 · 오전 간식 · 점심 · 낮잠 시작과 종료 · 오후 간식 · 하원 시각. 다음 3주를 이 표에 맞춥니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w4-4"><span class="itxt"><strong>식사 방식 확인</strong><small>이유식 단계와 입자 크기, 분유는 원에서 타주는지 가져가는지, 젖병 · 빨대컵 · 일반컵 중 무엇을 쓰는지.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w4-5"><span class="itxt"><strong>낮잠 방식 확인</strong><small>매트인지 요인지, 이불을 가져가는지, 안아서 재우는지 눕혀 재우는지.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w4-6"><span class="itxt"><strong>애착인형과 공갈젖꼭지 반입 가능 여부</strong><small>가능하다면 이번 달 준비의 난이도가 크게 내려갑니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w4-7"><span class="itxt"><strong>준비물 목록 · 수량 · 이름표 방식</strong><small>원마다 다릅니다. 인터넷 목록이 아니라 원 안내문이 기준입니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w4-8"><span class="itxt"><strong>제출 서류 목록과 마감일</strong><small>영유아 건강검진 결과표나 예방접종 증명서가 없다면 오늘 예약하세요. 발급에 시간이 걸립니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w4-9"><span class="itxt"><strong>아플 때 기준과 연락 방식</strong><small>등원 제한 체온, 격리 기준, 누구에게 어떻게 연락이 오는지.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w4-10"><span class="itxt"><strong>알림장 앱 가입 방법과 CCTV 열람 절차</strong><small>키즈노트 등. 가입은 지금 해두고 첫날 전에 한 번 열어봅니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w4-11"><span class="itxt"><strong>복직일을 등원 시작 + 3~4주 뒤로 미룰 수 있는지 재검토</strong><small>적응 2주에 아픈 날들이 겹칩니다. 첫 해 호흡기 감염 8~15회가 전형적입니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w4-12"><span class="itxt"><strong>백업 돌봄 후보 정리</strong><small>조부모, 아이돌봄서비스 신청, 배우자 연차 배분. 신청부터 배정까지 시간이 걸립니다.</small></span></label></li>
+  </ul>
+
+  <div class="hint" data-band="A"><p><b>6–8개월</b><br>분리불안이 아직 정점이 아니라 헤어지는 것 자체는 상대적으로 수월합니다. 대신 젖병과 낮잠이 진짜 장벽이니, 원의 수유 · 낮잠 운영 방식을 가장 먼저 확인하세요.</p></div>
+  <div class="hint" data-band="B"><p><b>9–11개월</b><br>낯가림과 분리불안이 겹치는 가장 어려운 구간입니다. 적응 기간을 3주 이상으로 잡고, 부모 동반 기간을 명시적으로 요청하세요.</p></div>
+  <div class="hint" data-band="C"><p><b>12–14개월</b><br>분리불안 정점(10~18개월)입니다. 게다가 분유→우유, 젖병→컵, 낮잠 2회→1회 전환이 몰리는 시기이니, 다른 전환은 등원이 안정된 뒤로 미루세요.</p></div>
+  <div class="hint" data-band="D"><p><b>15–18개월</b><br>예고와 그림책이 통하기 시작합니다. 원이 1회 낮잠 체제인지, 몇 시에 재우는지 확인해서 집 낮잠과 맞추세요.</p></div>
+  <div class="hint" data-band="E"><p><b>19–24개월</b><br>말로 약속하고 그 약속을 지키는 것이 가장 강한 도구가 됩니다. 배변훈련 계획이 있다면 등원 적응기와 겹치지 않게 미루세요. 퇴행이 흔합니다.</p></div>
+</section>
+
+<!-- ══ D-3주 ══ -->
+<section class="phase" id="p2" data-phase="D-3주">
+  <div class="phead">
+    <span class="pd">D-3주</span>
+    <h2 class="ptitle">하루를 옮기기</h2>
+    <div class="pmeta"><div class="bar"><span></span></div><span class="cnt"></span></div>
+  </div>
+  <p class="pnote">받아온 일과표 쪽으로 집 시간표를 옮깁니다. 한 번에 바꾸면 아이가 무너집니다. 3주에 걸쳐 하루 15~30분씩.</p>
+
+  <ul class="list">
+    <li class="item"><label><input type="checkbox" data-k="w3-1"><span class="itxt"><strong>기상 시간을 매일 15분씩 앞당기기</strong><small>등원 시각에서 역산합니다. 아침에 깨우는 것이 아니라 밤에 재우는 시각을 당겨야 합니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w3-2"><span class="itxt"><strong>낮잠 시각을 원의 낮잠 시작 시각으로 이동</strong><small>오전잠이 있는 아기는 등원 시간과 충돌하지 않는지 먼저 확인하세요.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w3-3"><span class="itxt"><strong>점심 시각을 원의 점심 시각으로 이동</strong></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w3-4"><span class="itxt"><strong>이유식을 원에서 주는 형태에 맞춰보기</strong><small>입자 크기, 간, 국과 밥 형태, 채소 종류. 집에서 먼저 익숙해지면 첫 주에 덜 굶습니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w3-5"><span class="itxt"><strong>원 식단표에 있는데 안 먹여본 식재료를 집에서 먼저 시도</strong><small>평일 오전에 하세요. 이상 반응이 있으면 바로 병원에 갈 수 있습니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w3-6"><span class="itxt"><strong>어린이집을 긍정적인 말로 자주 언급하기</strong><small>등원을 소재로 한 그림책을 반복해서 읽습니다. “엄마 없어도 괜찮겠어?” 같은 문장은 불안을 만듭니다.</small></span></label></li>
+  </ul>
+
+  <div class="hint" data-band="A"><p><b>6–8개월</b><br>이유식 중기 단계와 원 제공 형태를 맞추는 것이 이번 주의 핵심입니다. 알레르기를 확인하지 않은 재료를 원에서 처음 먹이지 않게 하세요.</p></div>
+  <div class="hint" data-band="B"><p><b>9–11개월</b><br>오전잠 1회 + 오후잠 1회를 유지하는 아기가 많습니다. 원 운영과 충돌하면 낮잠을 억지로 줄이기보다 등원 시각을 조정하는 편이 낫습니다.</p></div>
+  <div class="hint" data-band="C"><p><b>12–14개월</b><br>낮잠 2회에서 1회로 넘어가는 시기와 겹칩니다. 등원과 같은 주에 통합을 시도하지 마세요. 원에서 자연히 1회가 되는 경우가 많습니다.</p></div>
+  <div class="hint" data-band="D"><p><b>15–18개월</b><br>낮잠 거부가 시작될 수 있습니다. 원에서 못 자는 날은 취침을 30~45분 당겨 수면 부채를 갚습니다.</p></div>
+  <div class="hint" data-band="E"><p><b>19–24개월</b><br>“내일은 어린이집 가는 날”처럼 날짜를 세는 말이 통합니다. 달력에 표시하고 함께 세어 보세요.</p></div>
+</section>
+
+<!-- ══ D-2주 ══ -->
+<section class="phase" id="p3" data-phase="D-2주">
+  <div class="phead">
+    <span class="pd">D-2주</span>
+    <h2 class="ptitle">아이의 실전 기술</h2>
+    <div class="pmeta"><div class="bar"><span></span></div><span class="cnt"></span></div>
+  </div>
+  <p class="pnote">첫 주에 실제로 문제가 되는 것은 딱 세 가지입니다. 남이 주는 것을 먹기, 낯선 곳에서 자기, 분리를 견디기.
+     물건은 나중에 사도 되지만 이건 2주가 걸립니다.</p>
+
+  <ul class="list">
+    <li class="item"><label><input type="checkbox" data-k="w2-1"><span class="itxt"><strong>엄마가 아닌 사람이 먹여보기</strong><small>모유수유아는 젖병 거부가 흔합니다. 엄마가 방에 없는 상태에서 아빠나 조부모가 시도하세요. 아기는 냄새로 압니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w2-2"><span class="itxt"><strong>페이스드 피딩으로 바꿔보기</strong><small>젖병을 눕혀 아기가 속도를 조절하게 하는 방식입니다. 유속 · 젖꼭지 모양 · 온도를 한 번에 하나씩 바꿔가며 수용되는 조합을 찾습니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w2-3"><span class="itxt"><strong>빨대컵 · 손잡이컵 연습</strong><small>원에서 젖병을 쓰지 않는 경우에 대비합니다. 12개월 이상이면 필수에 가깝습니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w2-4"><span class="itxt"><strong>원과 같은 환경에서 낮잠 연습</strong><small>원이 매트나 요를 쓰면 집에서도 바닥에 눕혀 재워봅니다. 안아서 재우던 아기는 눕혀 토닥이는 방식으로 천천히 넘어갑니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w2-5"><span class="itxt"><strong>생활소음 속에서 자는 연습</strong><small>원은 조용하지 않습니다. 완전한 정적에서만 자는 습관이면 첫 주에 낮잠이 통째로 날아갑니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w2-6"><span class="itxt"><strong>분리 연습: 5분 → 15분 → 30분 → 1시간 → 2시간</strong><small>매번 같은 인사말과 같은 동작을 쓰고, 반드시 돌아와서 “봐, 엄마 왔지”를 확인시킵니다. 까꿍 놀이도 같은 원리입니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w2-7"><span class="itxt"><strong>애착인형을 하나로 고정하고, 가능하면 같은 것 2개</strong><small>분실과 세탁에 대비해 번갈아 쓰며 둘 다 집 냄새가 배게 합니다. 반입이 안 되는 원이면 엄마 티셔츠 조각이나 손수건이 대안입니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w2-8"><span class="itxt"><strong>기저귀 · 물티슈를 원 지정 브랜드로 바꿔 써보기</strong><small>피부 반응을 첫날이 아니라 지금 확인합니다.</small></span></label></li>
+  </ul>
+
+  <div class="hint" data-band="A"><p><b>6–8개월</b><br>이 구간의 준비 우선순위는 젖병 → 낮잠 → 분리 순입니다. 분리 연습보다 먹고 자는 문제를 먼저 해결하세요.</p></div>
+  <div class="hint" data-band="B"><p><b>9–11개월</b><br>애착인형이 가장 잘 먹히는 구간입니다. 대부분의 아이가 8~12개월에 스스로 애착 대상을 고릅니다. 짧은 분리에서 울음과 심박 상승을 실제로 낮춘다는 연구가 있습니다.</p></div>
+  <div class="hint" data-band="C"><p><b>12–14개월</b><br>젖병 끊기와 등원을 같은 주에 하지 마세요. 원칙은 하나입니다. 한 번에 하나만.</p></div>
+  <div class="hint" data-band="D"><p><b>15–18개월</b><br>인형으로 “어린이집 놀이”를 재연해보세요. 인형을 보내고, 인사하고, 데리러 가는 순서를 그대로 해보면 예고가 훨씬 잘 작동합니다.</p></div>
+  <div class="hint" data-band="E"><p><b>19–24개월</b><br>분리 연습에서 “점심 먹고 올게”처럼 일과 단위로 예고하고 정확히 그때 나타나세요. 약속을 지키는 경험이 쌓이는 만큼 첫날이 쉬워집니다.</p></div>
+</section>
+
+<!-- ══ D-1주 ══ -->
+<section class="phase" id="p4" data-phase="D-1주">
+  <div class="phead">
+    <span class="pd">D-1주</span>
+    <h2 class="ptitle">물건과 의식</h2>
+    <div class="pmeta"><div class="bar"><span></span></div><span class="cnt"></span></div>
+  </div>
+  <p class="pnote">이번 주에 쇼핑을 시작하면 이름표 붙일 시간이 없습니다. 사는 데 하루, 이름 붙이는 데 이틀입니다.</p>
+
+  <ul class="list">
+    <li class="item"><label><input type="checkbox" data-k="w1-1"><span class="itxt"><strong>준비물 전량 구매 완료</strong><small>아래 준비물 목록 참고. 수량은 원 안내문이 기준입니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w1-2"><span class="itxt"><strong>이름표 전량 부착 완료</strong><small>옷 안쪽 라벨, 양말, 신발 좌우, 젖병 몸통과 뚜껑, 컵, 이불, 베개, 가방까지. 세탁과 열탕 소독을 견디는 방식으로.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w1-3"><span class="itxt"><strong>원 사전 방문해서 교실에서 30분~1시간 놀기</strong><small>연구에서 priming visit으로 권고되는 항목입니다. 첫날 처음 보는 공간이 아니게 만듭니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w1-4"><span class="itxt"><strong>등원길 예행연습</strong><small>실제 등원 시간에 실제 경로로. 소요 시간을 재두면 당일 아침이 편합니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w1-5"><span class="itxt"><strong>인사 의식을 정하고 집에서 연습</strong><small>예: 안아주기 → 뽀뽀 → 하이파이브 → 창문에서 손 흔들기. 3~4동작을 넘기지 않습니다. 매번 똑같아야 의미가 생깁니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w1-6"><span class="itxt"><strong>돌아오는 시점을 표현할 말 정하기</strong><small>“3시에 올게”는 아이에게 아무 의미가 없습니다. “낮잠 자고 나면 올게”는 의미가 있습니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="w1-7"><span class="itxt"><strong>첫 주 반차 또는 재택 확보</strong><small>첫날은 1~2시간이면 충분하고, 그 1~2시간 동안 부모도 근처에 있는 편이 낫습니다.</small></span></label></li>
+  </ul>
+
+  <div class="hint" data-band="A"><p><b>6–8개월</b><br>뒤집기, 배밀이, 혼자 앉기 중 지금 어디까지 하는지를 원에 정확히 알리세요. 교실 안전과 직결됩니다.</p></div>
+  <div class="hint" data-band="B"><p><b>9–11개월</b><br>기어다니고 붙잡고 서는 시기입니다. 사전 방문 때 교실 바닥과 모서리, 계단 접근을 직접 확인하세요.</p></div>
+  <div class="hint" data-band="C"><p><b>12–14개월</b><br>걷기 시작했다면 실내화가 필요한지 확인하세요. 사전 방문 때 아이가 직접 걸어 들어가 보게 하면 좋습니다.</p></div>
+  <div class="hint" data-band="D"><p><b>15–18개월</b><br>자율성 욕구가 커지는 시기라 선택권을 주면 협조가 늘어납니다. 가방 색, 어떤 인형을 가져갈지를 아이가 고르게 하세요.</p></div>
+  <div class="hint" data-band="E"><p><b>19–24개월</b><br>등원 준비물을 아이와 함께 챙기고, 자기 물건을 자기가 넣게 하세요. 이름표에 글자 대신 고정된 상징 그림을 함께 붙이면 스스로 찾습니다.</p></div>
+</section>
+
+<!-- ══ D-며칠 ══ -->
+<section class="phase" id="p5" data-phase="D-며칠">
+  <div class="phead">
+    <span class="pd">D-3일</span>
+    <h2 class="ptitle">서류와 안전망</h2>
+    <div class="pmeta"><div class="bar"><span></span></div><span class="cnt"></span></div>
+  </div>
+  <p class="pnote">마지막 며칠은 종이 작업과, 아이가 아플 때 무너지지 않게 하는 준비입니다.</p>
+
+  <ul class="list">
+    <li class="item"><label><input type="checkbox" data-k="d3-1"><span class="itxt"><strong>서류 제출 완료</strong><small>입소 신청서 · 아동 생활기록부 · 주민등록등본 · 예방접종 증명서 · 영유아 건강검진 결과표 · 운영방침 및 응급처치 및 귀가 동의서 · 알레르기 체크리스트 · 비상연락망(3순위까지). 원마다 다르니 받은 안내문이 기준입니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="d3-2"><span class="itxt"><strong>투약이 필요하면 투약의뢰서 준비</strong><small>약은 1회분씩 소분하고, 약 종류 · 용량 · 시간 · 의뢰자명을 적습니다. 냉장 보관 약은 등원할 때 말로 한 번 더 전달하세요.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="d3-3"><span class="itxt"><strong>아이 정보 메모 한 장 써서 교사에게 전달</strong><small>애칭 / 좋아하는 놀이와 노래 / 달래는 방법 / 졸린 신호(귀 만짐, 눈 비빔) / 먹는 속도와 싫어하는 음식 / 배변 신호 / 절대 안 되는 것. 실제로 가장 도움이 되는 준비물입니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="d3-4"><span class="itxt"><strong>“아이가 아프면 누가 데리러 가는가”를 배우자와 문장으로 합의</strong><small>번갈아 가는 규칙까지 정해두세요. 그날 아침에 정하면 늦습니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="d3-5"><span class="itxt"><strong>백업 돌봄 확정</strong><small>조부모나 아이돌봄서비스. 첫 달에는 반드시 한 번 이상 쓰게 됩니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="d3-6"><span class="itxt"><strong>전날 밤: 가방 세팅, 옷 꺼내두기, 평소보다 일찍 재우기</strong></span></label></li>
+  </ul>
+
+  <div class="hint" data-band="A"><p><b>6–8개월</b><br>모체 이행항체가 빠지는 시기라 감염에 가장 취약합니다. 첫 달 결석을 넉넉히 가정하고 백업 돌봄을 두 겹으로 준비하세요.</p></div>
+  <div class="hint" data-band="B"><p><b>9–11개월</b><br>생후 첫 해에 입소하면 상기도감염과 급성중이염이 더 이르게, 더 자주 옵니다. 다만 만 4세 이후에는 오히려 더 적어집니다.</p></div>
+  <div class="hint" data-band="C"><p><b>12–14개월</b><br>메모에 “요즘 새로 시작한 것”을 꼭 적으세요. 걷기, 컵, 새 단어. 교사가 아이를 빨리 파악합니다.</p></div>
+  <div class="hint" data-band="D"><p><b>15–18개월</b><br>말로 표현하는 요구가 늘어난 만큼, 아이만 알아듣는 단어를 메모에 적어주면 교사가 바로 알아듣습니다.</p></div>
+  <div class="hint" data-band="E"><p><b>19–24개월</b><br>배변 신호와 표현하는 말, 현재 어디까지 하는지를 구체적으로 적으세요. 적응기에는 퇴행이 흔하니 압박하지 않기로 미리 합의해 두는 편이 좋습니다.</p></div>
+</section>
+
+</div>
+
+<!-- ══ 당일 ══ -->
+<section class="dday" id="p6" data-phase="당일">
+  <div class="wrap">
+    <p class="eyebrow">당일</p>
+    <h2>여기부터는 분 단위입니다</h2>
+    <p class="lede">준비의 세계가 끝나고 실행의 세계가 시작됩니다.
+       앞의 4주가 잘 됐다면 오늘 할 일은 서두르지 않는 것 하나뿐입니다.</p>
+
+    <div class="beat">
+      <span class="btime">2시간 전</span>
+      <div class="bbody">
+        <h3>배부르게, 여유 있게</h3>
+        <ul>
+          <li>평소보다 20~30분 일찍 깨웁니다. 서두름이 없어야 합니다.</li>
+          <li><b>충분히 먹입니다.</b> 첫날 원에서 잘 안 먹을 가능성이 높으니 집에서 채워 보냅니다.</li>
+          <li>부모도 밥을 먹습니다. 부모의 허기가 조급함이 됩니다.</li>
+          <li>열 · 기침 · 콧물을 확인합니다. 첫날부터 아프면 미루는 것이 맞습니다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="beat">
+      <span class="btime">1시간 전</span>
+      <div class="bbody">
+        <h3>갈아입히기 쉬운 옷으로</h3>
+        <ul>
+          <li>고무줄 바지, 배 쪽 스냅, 상하의 분리. <b>멜빵바지 · 단추 많은 셔츠 · 목이 좁은 티 · 스키니는 피합니다.</b></li>
+          <li>가방 최종 확인: 기저귀(재원 1시간당 1개), 물티슈, 여벌 옷, 이불, 컵이나 젖병, 서류, 애착인형.</li>
+          <li>예상 소요 시간에 15분을 더해 출발합니다.</li>
+          <li>이동 중에 같은 문장을 반복합니다. <b>“오늘은 ○○반에 가서 선생님이랑 놀 거야. 낮잠 자고 나면 엄마가 올게.”</b> 예측 가능성이 불안을 줄입니다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="beat">
+      <span class="btime">30분 전</span>
+      <div class="bbody">
+        <h3>도착부터 헤어지기까지, 순서대로</h3>
+        <ol class="script">
+          <li><b>바로 떼어놓지 않습니다.</b> 교실에 같이 들어가 5~15분 함께 놉니다.</li>
+          <li><b>부모는 의도적으로 수동적으로.</b> 계속 안고 있거나 계속 말 걸지 않습니다. 교사가 접촉할 공간을 비워줍니다.</li>
+          <li>아이가 장난감이나 교사에게 관심을 보이는 순간을 기다립니다. <b>놀이에 들어간 그 시점</b>에 시작합니다.</li>
+          <li>정해둔 인사 의식을 실행합니다. <b>짧게, 밝게, 확실하게.</b> 전부 합쳐 1~2분.</li>
+          <li><b>돌아서면 돌아보지 않습니다.</b> 다시 돌아가면 “울면 엄마가 온다”를 가르치게 됩니다.</li>
+          <li>교사에게 <b>10분 뒤 사진 한 장</b>을 부탁해 둡니다. 대부분의 아이가 5~10분 안에 울음을 그칩니다. 부모의 불안도 같이 해결됩니다.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div>
+      <div class="avoid" style="margin-top:26px">
+        <h4>오늘 하지 말 것</h4>
+        <ul>
+          <li>몰래 나가기</li>
+          <li>“울지 마”라고 야단치기</li>
+          <li>30분 넘게 교실에서 서성이기</li>
+          <li>울음을 이유로 첫날부터 계획을 무한정 늘리기 — 첫날은 1~2시간이면 충분합니다</li>
+          <li>부모가 같이 울며 인사하기 — 차에 타서 우는 것은 정상입니다. 교실 앞에서만 참으면 됩니다</li>
+        </ul>
+      </div>
+      <div class="hint" data-band="A"><p><b>6–8개월</b><br>이 월령은 헤어지는 것보다 수유 시각이 관건입니다. 등원 직전에 먹이지 말고, 원에서 첫 수유를 교사가 하게 시간을 맞춰 보내세요.</p></div>
+      <div class="hint" data-band="B"><p><b>9–11개월</b><br>교사가 안으면 우는 것이 기본값인 시기입니다. 실패가 아닙니다. 애착인형을 반드시 들려 보내고, 첫 분리는 30분으로 짧게 끊으세요.</p></div>
+      <div class="hint" data-band="C"><p><b>12–14개월</b><br>분리불안 정점입니다. 말은 거의 못 해도 이해는 합니다. 예고 문장이 이 시점부터 확실히 작동하기 시작합니다.</p></div>
+      <div class="hint" data-band="D"><p><b>15–18개월</b><br>누가 데려다줄지, 어떤 신발을 신을지처럼 주변 요소를 아이가 고르게 하세요. 등원 자체는 선택지가 아니되 나머지는 선택지입니다.</p></div>
+      <div class="hint" data-band="E"><p><b>19–24개월</b><br>거부와 떼쓰기가 등원 저항의 형태로 나옵니다. 약속한 시각에 정확히 나타나는 것이 가장 강력한 대응입니다. 신뢰가 쌓이면 저항이 줄어듭니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+
+<!-- ══ 첫 2~4주 ══ -->
+<section class="block" id="p7" data-phase="첫 2~4주">
+  <h2 class="sec">첫 2~4주는 이렇게 굴러갑니다</h2>
+  <p class="sub">독일 베를린 적응 모델과 한국 어린이집 적응프로그램을 합친 기본안입니다.
+     날짜가 아니라 <b>아이의 반응</b>이 기준이라, 첫 분리가 어려우면 그 단계를 늘립니다.
+     원과 상의할 때 이 표를 그대로 보여주면 대화가 빨라집니다.</p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>일차</th><th>체류</th><th>부모</th><th>목표</th></tr></thead>
+      <tbody>
+        <tr><td class="tw">1–2일</td><td>1시간</td><td>동반</td><td>공간과 교사 탐색. 부모는 수동적으로 앉아 있기</td></tr>
+        <tr><td class="tw">3일</td><td>1–1.5시간</td><td>동반</td><td>교사가 놀이와 기저귀 갈이를 시도</td></tr>
+        <tr><td class="tw">4–5일</td><td>1.5–2시간</td><td>첫 분리 30분</td><td>인사하고 나갔다가 30분 뒤 복귀. 달래지면 성공</td></tr>
+        <tr><td class="tw">6–8일</td><td>2–3시간</td><td>분리</td><td>간식까지. 집에서 예민한 것이 정상인 구간</td></tr>
+        <tr><td class="tw">9–10일</td><td>3–4시간</td><td>분리</td><td>점심 먹고 하원. <b>스트레스 정점</b></td></tr>
+        <tr><td class="tw">11–13일</td><td>4–5시간</td><td>분리</td><td>낮잠 시도. 가장 큰 관문</td></tr>
+        <tr><td class="tw">14–15일</td><td>5–6시간</td><td>분리</td><td>낮잠 후 하원</td></tr>
+        <tr><td class="tw">16일–</td><td>정규</td><td>분리</td><td>정규 일과. 3주차부터 스트레스가 내려갑니다</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="avoid tip">
+    <h4>이 기간 집에서</h4>
+    <ul>
+      <li>하원 후 <b>아무 일정도 넣지 않습니다.</b> 조용히, 스크린 없이, 몸 접촉 많이.</li>
+      <li><b>취침을 30~45분 앞당깁니다.</b> 원에서 낮잠이 짧아지면 밤잠으로 갚아야 합니다.</li>
+      <li>매일 같은 방식으로, <b>약속한 시점에 정확히</b> 데리러 갑니다. 신뢰는 여기서 만들어집니다.</li>
+      <li>새로운 수면 훈련이나 젖병 끊기를 시작하지 않습니다. 일단 통과하는 것이 목표입니다.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══ 준비물 ══ -->
+<section class="block" id="p8" data-phase="준비물">
+  <h2 class="sec">준비물</h2>
+  <p class="sub">품목과 수량은 원마다 다릅니다. 아래는 일반적인 최대 목록이고, <b>원에서 받은 안내문이 항상 우선</b>입니다.</p>
+
+  <h3 style="font-size:15px;margin:22px 0 2px">매일 가방</h3>
+  <ul class="list">
+    <li class="item"><label><input type="checkbox" data-k="s-1"><span class="itxt"><strong>기저귀</strong><small>재원 1시간당 1개로 계산합니다. 4시간이면 4~5개.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="s-2"><span class="itxt"><strong>물티슈</strong><small>원 지정 브랜드가 있는지 확인.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="s-3"><span class="itxt"><strong>여벌 옷 2~3벌</strong><small>상의 · 하의 · 양말 · 속옷 세트로. 6~12개월은 더 넉넉히.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="s-4"><span class="itxt"><strong>더러워진 옷 담을 방수 주머니</strong></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="s-5"><span class="itxt"><strong>턱받이 · 손수건 · 개인 수건</strong><small>원에 따라 걸어두는 고리 수건을 지정하기도 합니다.</small></span></label></li>
+  </ul>
+
+  <h3 style="font-size:15px;margin:26px 0 2px">원에 두는 것</h3>
+  <ul class="list">
+    <li class="item"><label><input type="checkbox" data-k="s-6"><span class="itxt"><strong>낮잠 이불과 베개</strong><small>원 지정 사이즈 확인. 보통 주 1회 세탁하러 돌아옵니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="s-7"><span class="itxt"><strong>실내화</strong><small>걷는 아이. 혼자 신기 쉬운 벨크로로.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="s-8"><span class="itxt"><strong>개인 컵 · 빨대컵 · 젖병</strong><small>젖꼭지 유속을 표시해 두면 교사가 헷갈리지 않습니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="s-9"><span class="itxt"><strong>식사도구, 칫솔과 치약</strong><small>원 제공 여부 확인. 칫솔은 보통 돌 이후.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="s-10"><span class="itxt"><strong>여벌 옷 예비 세트</strong></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="s-11"><span class="itxt"><strong>로션 · 선크림</strong><small>원 요청 시. 개봉일을 적어 보냅니다.</small></span></label></li>
+    <li class="item"><label><input type="checkbox" data-k="s-12"><span class="itxt"><strong>애착인형</strong><small>반입이 허용되는 경우.</small></span></label></li>
+  </ul>
+
+  <div class="hint tip">
+    <p><b>이름표</b><br>전부 붙입니다. 옷 안쪽 라벨, 양말, 신발 좌우, 젖병 몸통과 뚜껑, 컵, 이불, 베개, 가방, 물티슈 뚜껑까지.
+    세탁과 열탕 소독을 견디는 방식으로 하고, 글자를 모르는 월령이면 이름 옆에 <b>늘 같은 상징 그림</b>(같은 동물이나 색)을 붙이면 아이가 스스로 찾습니다.</p>
+  </div>
+</section>
+
+<!-- ══ 문제 ══ -->
+<section class="block" id="p9" data-phase="이럴 땐">
+  <h2 class="sec">이럴 땐 이렇게</h2>
+  <p class="sub">아래는 거의 전부 <b>정상 범주</b>입니다. 정상인 걸 알고 보면 훨씬 견딜 만합니다.</p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>증상</th><th>정상인가</th><th>대응</th></tr></thead>
+      <tbody>
+        <tr><td>헤어질 때 운다</td><td>대부분 5~10분 내 그침. 몇 주 지속 가능</td><td>인사 의식 유지, 교사에게 10분 뒤 사진 요청</td></tr>
+        <tr><td>저녁에 매달리고 예민하다</td><td>첫 한 달 내내 흔함</td><td>일정 비우기, 신체 접촉 늘리기, 조기 취침</td></tr>
+        <tr><td>원에서 안 먹는다</td><td>첫 1~2주 흔함</td><td>아침저녁에 보충. 패턴이 이어지면 먹이는 자세 · 컵 종류 · 타이밍을 교사와 조정</td></tr>
+        <tr><td>젖병을 거부한다</td><td>모유수유아에게 매우 흔함</td><td>엄마 없는 상태에서 다른 사람이, 페이스드 피딩으로. 6개월 이상이면 컵으로 우회</td></tr>
+        <tr><td>원에서 낮잠을 안 잔다</td><td>첫 2~3주 흔함</td><td>밤잠을 당겨 수면 부채 보전. 집에서 매트와 생활소음 환경 연습</td></tr>
+        <tr><td>밤에 자주 깬다</td><td>적응기에 흔함</td><td>새 수면 훈련을 시작하지 말 것. 일단 통과</td></tr>
+        <tr><td>배변이 퇴행한다</td><td>흔함</td><td>배변훈련 중이면 잠시 중단, 압박 금지</td></tr>
+        <tr><td>계속 아프다</td><td>첫 해 호흡기 감염 8~15회가 전형</td><td>예상된 비용으로 계획. 백업 돌봄 가동</td></tr>
+        <tr><td>몇 주 뒤 갑자기 거부한다</td><td>만 2~3세 2차 분리불안</td><td>원인 확인 후 짧은 인사 의식을 다시 복원</td></tr>
+        <tr><td>교사에게 더 붙는다</td><td><b>성공 신호</b></td><td>질투하지 않기. 애착 대상의 확대가 목표입니다</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="avoid">
+    <h4>원에 정식으로 이야기할 때</h4>
+    <ul>
+      <li>담당 교사가 자주 바뀐다 — 연구가 강조하는 고정 담당 원칙에 어긋납니다</li>
+      <li>3~4주가 지나도 분리할 때 달래지는 정도에 전혀 진전이 없다</li>
+      <li>알림장이 지나치게 형식적이고, 구체적으로 물어도 답이 오지 않는다</li>
+      <li>아이 몸의 상처나 멍에 대한 설명이 일관되지 않다</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══ 근거 ══ -->
+<section class="block" id="p10" data-phase="근거">
+  <h2 class="sec">이 가이드가 기대고 있는 것</h2>
+  <p class="sub">권고의 대부분은 아래 세 갈래에서 나옵니다.</p>
+
+  <div class="study">
+    <div class="sname">Ahnert, Gunnar, Lamb &amp; Barthel<br>Child Development, 2004<br>15개월 영아 70명</div>
+    <div class="sbody">
+      <h3>적응에 쓴 날 수가 애착 결과를 바꿨다</h3>
+      <p>분리기에는 엄마가 떠난 뒤 60분에 걸쳐 타액 코르티솔이 집에서보다 75~100% 올랐습니다.
+         안정애착 아기는 적응기 코르티솔이 뚜렷하게 낮았고 분리기에는 오히려 더 많이 울었습니다.
+         우는 것 자체는 나쁜 신호가 아닙니다. 그리고 <b>엄마가 적응에 더 많은 날을 쓴 아이일수록
+         애착이 안정으로 유지되거나 안정으로 바뀌었습니다.</b>
+         <a href="https://srcd.onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-8624.2004.00698.x">원문</a></p>
+    </div>
+  </div>
+
+  <div class="study">
+    <div class="sname">Frontiers in Psychology, 2023<br>노르웨이 32개 기관<br>유아 113명, 평균 14.6개월</div>
+    <div class="sbody">
+      <h3>스트레스에는 끝이 있고, 대략 3주짜리다</h3>
+      <p>부모 동반 중에는 낮게 유지되다가 분리 첫 2주에 유의하게 올라 <b>9일차 전후 정점</b>,
+         3주차부터 하강해 3개월 뒤 처음 수준으로 복귀했습니다.
+         14개월 미만은 4~6주 뒤에도 오후와 저녁 수치가 더 높았습니다. 어릴수록 더 천천히입니다.
+         <a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2023.1165788/full">원문</a> ·
+         <a href="https://www.tandfonline.com/doi/full/10.1080/1350293X.2021.1895269">관련 연구</a></p>
+    </div>
+  </div>
+
+  <div class="study">
+    <div class="sname">베를린 적응 모델<br>Berliner Eingewöhnungsmodell<br>베를린 자유대, 1984/85~</div>
+    <div class="sbody">
+      <h3>적응을 어떻게 설계하느냐가 결과를 바꾼다</h3>
+      <p>1~3일 부모 동반 1~2시간(2일차부터 부모는 의도적으로 수동적) → 빠르면 4일차에 첫 분리 30분 →
+         점진적 연장 → 보통 3주 내 완료. 최초 연구는 <b>적응 상황의 설계가 애착 교란, 발달,
+         그리고 입소 후 6개월간의 질병 기간과 관련</b>된다는 것을 보였습니다.
+         한국 보육사업안내의 2~4주 적응프로그램도 같은 구조입니다.
+         <a href="https://www.cocon-kids.com/en/2022/07/19/familiarisation-creche-berlin-model/">단계별 해설</a> ·
+         <a href="https://www.moe.go.kr/boardCnts/view.do?boardID=312&boardSeq=100603&lev=0&s=moe&m=0301">보육사업안내</a></p>
+    </div>
+  </div>
+
+  <div class="tools">
+    <button class="btn" type="button" id="reset">체크 전부 지우기</button>
+    <button class="btn" type="button" id="theme">테마 전환</button>
+    <button class="btn" type="button" onclick="window.print()">인쇄</button>
+    <span class="note" id="saved"></span>
+  </div>
+</section>
+
+<!-- ══ 출처 ══ -->
+<section class="block" id="p11" data-phase="출처">
+  <h2 class="sec">출처</h2>
+  <div class="srcs">
+    <h3>논문 · 연구</h3>
+    <ul>
+      <li><a href="https://srcd.onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-8624.2004.00698.x">Ahnert et al. (2004) — Transition to Child Care, <i>Child Development</i></a> · <a href="https://experts.umn.edu/en/publications/transition-to-child-care-associations-with-infant-mother-attachme">요약</a></li>
+      <li><a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2023.1165788/full">Frontiers in Psychology (2023) — 유아 코르티솔과 부모·교사 인식</a></li>
+      <li><a href="https://www.tandfonline.com/doi/full/10.1080/1350293X.2021.1895269">EECERJ (2021) — Toddlers' Stress during Transition to Childcare</a> · <a href="https://eric.ed.gov/?id=EJ1291957">ERIC</a></li>
+      <li><a href="https://www.tandfonline.com/doi/full/10.1080/10888691.2022.2070168">Stress during transition from home to public childcare (2022)</a></li>
+      <li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4098954/">WHISTLER 코호트 — 조기 보육과 상기도감염</a></li>
+      <li><a href="https://journals.asm.org/doi/10.1128/cmr.00253-25">Clinical Microbiology Reviews (2025) — 보육시설의 감염과 면역</a></li>
+      <li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12622847/">보육시설 이용과 항생제 사용 (인구기반 연구)</a></li>
+      <li><a href="https://www.ucl.ac.uk/news/2026/mar/frequent-infections-nursery-help-toddlers-build-immune-systems">UCL (2026) — 잦은 감염과 면역 형성</a></li>
+    </ul>
+
+    <h3>적응 모델 · 공식 자료</h3>
+    <ul>
+      <li><a href="https://www.uni-ulm.de/fileadmin/website_uni_ulm/zuv/zuv.dezIII.abt1/familie/pdf/Kita/Berliner_Eingew%C3%B6hnungsmodell_engl.pdf">베를린 적응 모델 영문 자료 (Uni Ulm)</a></li>
+      <li><a href="https://www.cocon-kids.com/en/2022/07/19/familiarisation-creche-berlin-model/">cocon — 베를린 모델 단계별 해설</a> · <a href="https://www.cocon-kids.com/en/2026/06/17/daycare-settling-in-period-how-to-ensure-a-gentle-start-to-daycare-life/">2026 가이드</a></li>
+      <li><a href="https://www.kita-regenbogen.ch/en/die-eingewoehnung-nach-dem-berliner-modell/">Kita Regenbogen — Familiarisation Phase</a></li>
+      <li><a href="https://www.betzold.at/blog/eingewoehnung-im-kindergarten/">Betzold — 베를린 vs 뮌헨 모델 비교</a></li>
+      <li><a href="https://sproutsschools.com/kindergarten-model-of-soft-transitions-the-attachment-theory-applied/">Sprouts — 애착이론 적용 소프트 전이</a></li>
+      <li><a href="https://www.kietzee.com/blog/kita-eingewoehnung-berlin">Kietzee — Eingewöhnung 실사용 후기</a></li>
+      <li><a href="https://www.moe.go.kr/boardCnts/view.do?boardID=312&boardSeq=100603&lev=0&s=moe&m=0301">교육부 — 2024년 보육사업안내</a></li>
+      <li><a href="https://cnukids.cnu.ac.kr/dept/program/program01.do">충남대학교 어린이집 — 적응프로그램</a></li>
+      <li><a href="https://m.kidkids.net/magazine/view.htm?e_id=10083&cate=33&sub_cate=0">키드키즈 — 신입원아 적응 프로그램</a></li>
+    </ul>
+
+    <h3>분리불안 · 애착인형</h3>
+    <ul>
+      <li><a href="https://www.merckmanuals.com/home/children-s-health-issues/symptoms-in-infants-and-children/separation-anxiety-and-stranger-anxiety">Merck Manual — 분리불안과 낯가림</a></li>
+      <li><a href="https://kidshealth.org/en/parents/sep-anxiety.html">Nemours KidsHealth — Separation Anxiety</a></li>
+      <li><a href="https://www.chop.edu/conditions-diseases/separation-anxiety">CHOP — Separation Anxiety</a></li>
+      <li><a href="https://huckleberrycare.com/blog/separation-anxiety-in-babies-and-toddlers">Huckleberry — 영유아 분리불안</a></li>
+      <li><a href="https://www.healthychildren.org/English/ages-stages/baby/Pages/Transitional-Objects.aspx">AAP HealthyChildren — Transitional Objects</a></li>
+      <li><a href="https://en.wikipedia.org/wiki/Comfort_object">Comfort object — Passman 연구 요약</a></li>
+      <li><a href="https://mother.ly/life/transition-object-security-blanket/">Motherly — 애착물과 독립성</a></li>
+    </ul>
+
+    <h3>드롭오프 · 수유 · 낮잠</h3>
+    <ul>
+      <li><a href="https://www.brighthorizons.com/article/children/tips-for-reducing-separation-anxiety-in-young-children">Bright Horizons — 분리불안 줄이기</a></li>
+      <li><a href="https://www.triplep-parenting.com/us/articles-and-news/post/no-more-tears-parenting-tips-for-easier-drop-offs/">Triple P — 눈물 없는 드롭오프</a></li>
+      <li><a href="https://www.todaysparent.com/kids/daycare-drop-off-routines/">Today's Parent — 드롭오프 루틴</a></li>
+      <li><a href="https://teis-ei.com/blog/big-feelings-at-drop-off-helping-your-toddler-settle-into-child-care/">TEIS — Big Feelings at Drop-Off</a></li>
+      <li><a href="https://recess.care/guides/separation-anxiety-daycare-dropoff">Recess — 드롭오프 분리불안 가이드</a></li>
+      <li><a href="https://lacted.org/iable-breastfeeding-education-handouts/bottle-refusal/">IABLE — Bottle Refusal</a></li>
+      <li><a href="https://meetwillo.app/articles/baby-refusing-bottle-at-daycare-tips-to-help-them-feed/">Willo — 어린이집 젖병 거부</a></li>
+      <li><a href="https://www.thesleepstore.co.nz/sleep-information/babies-9-18-months/articles/tips-on-helping-your-child-nap-well-in-childcare">The Sleep Store — 기관에서 잘 자기</a></li>
+      <li><a href="https://www.takingcarababies.com/blogs/sleep-basics/daycare-baby-sleep">Taking Cara Babies — Daycare &amp; Baby Sleep</a></li>
+      <li><a href="https://www.consumerreports.org/money/daycare/sending-baby-to-day-care-for-the-first-time-a5009773091">Consumer Reports — 첫 등원</a></li>
+      <li><a href="https://huckleberrycare.com/blog/how-to-prepare-baby-for-daycare">Huckleberry — 어린이집 준비하기</a></li>
+    </ul>
+
+    <h3>국내 블로그 · 커뮤니티 · 영상</h3>
+    <ul>
+      <li><a href="https://kko-kkuri.com/daycare-enrollment-preparation-checklist/">꾸리 — 입소 준비 체크리스트</a> · <a href="https://www.kko-kkuri.com/daycare-adaptation-routine-parent-communication/">적응 기간 루틴과 소통법</a></li>
+      <li><a href="https://mom-mom.net/tips/69a105bb4d31de0ec6cf88fc">맘맘 — 등원 전 준비물 체크리스트</a> · <a href="https://mom-mom.net/tips/6627a218f97490ec21dfc7a7">신입원아 꿀팁(투약의뢰서)</a></li>
+      <li><a href="https://bebeheaven.co.kr/%EC%96%B4%EB%A6%B0%EC%9D%B4%EC%A7%91-%EC%A4%80%EB%B9%84%EB%AC%BC/">베베헤븐 — 준비물 리스트</a></li>
+      <li><a href="https://amoomoo0.com/entry/%EC%96%B4%EB%A6%B0%EC%9D%B4%EC%A7%91-%EC%9E%85%EC%86%8C-%EC%A4%80%EB%B9%84%EB%AC%BC-%EB%A6%AC%EC%8A%A4%ED%8A%B8-%ED%8C%81-%EC%B4%9D%EC%A0%95%EB%A6%AC-0%EC%84%B8%EB%B0%98-%EB%8F%8C%EC%A0%84%EC%95%84%EA%B8%B0">0세반 준비물 총정리</a></li>
+      <li><a href="https://beigelog.com/entry/%EC%96%B4%EB%A6%B0%EC%9D%B4%EC%A7%91-%EC%9E%85%EC%86%8C-%EC%A4%80%EB%B9%84%EB%AC%BC-%EB%82%AE%EC%9E%A0%EC%9A%A9%ED%92%88-%EC%9C%84%EC%83%9D%EC%9A%A9%ED%92%88-%EC%8B%9D%EC%82%AC%EB%8F%84%EA%B5%AC">낮잠·위생·식사용품 정리</a></li>
+      <li><a href="https://www.babybilly.app/posts/3607">베이비빌리 — 입학 전 준비물</a></li>
+      <li><a href="https://www.chaisplay.com/stories/3966">차이의 놀이 — 교사가 말하는 만 0~2세 적응 팁</a> · <a href="https://www.chaisplay.com/stories/398-%EC%95%84%EC%9D%B4%EA%B0%80-%EC%96%B4%EB%A6%B0%EC%9D%B4%EC%A7%91-%EB%93%B1%EC%9B%90%EC%9D%84-%EA%B1%B0%EB%B6%80%ED%95%98%EA%B3%A0-%EC%9A%B8%EC%96%B4%EC%9A%94">등원을 거부하고 울어요</a></li>
+      <li><a href="https://doctornow.co.kr/content/qna/27b5e935692e4612bb65394b17f424c9">닥터나우 — 등원 전 우는 이유와 대처</a></li>
+      <li><a href="https://www.medipharmhealth.co.kr/news/article.html?no=119500">『어린이집 적응 100문 100답』 — 현직 교사 인터뷰</a></li>
+      <li><a href="https://www.yugacrew.com/yugawiki/%EC%96%B4%EB%A6%B0%EC%9D%B4%EC%A7%91%20%EC%A0%81%EC%9D%91%EA%B8%B0">육아위키 — 어린이집 적응기</a></li>
+      <li><a href="https://www.youtube.com/shorts/fZ1z1DoleOM">YouTube — 어린이집 첫날 2시간 후기</a> · <a href="https://www.youtube.com/@woorikidss">우리동네 어린이병원</a></li>
+      <li><a href="https://bebememo.us/ko/blog/work-return-parenting-records/">bebememo — 복직 후 육아 기록 활용법</a></li>
+      <li><a href="https://www.momq.co.kr/community/board/158/9075810?boardNo=158&artNo=9075810">맘큐 — 첫 등원 적응법</a></li>
+      <li><a href="https://www.a-ha.io/questions/4069aa208891066197eb340cb4010f11">아하 — 만0세반 입소 준비물</a></li>
+    </ul>
+  </div>
+</section>
+
+</div>
+</main>
+
+<footer class="wrap">
+  <p><strong>이 페이지는 의학적 조언이 아닙니다.</strong> 아이의 건강과 발달에 대한 판단은 소아청소년과 전문의와 상의하세요.
+     준비물과 서류, 적응 일정은 원마다 다르므로 다니게 될 어린이집에서 받은 안내문이 항상 우선합니다.</p>
+  <p style="margin-top:10px">체크한 내용은 이 브라우저에만 저장되고 어디로도 전송되지 않습니다. 정리일 2026년 9월 17일.</p>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var KEY="daycare-prep-v1", AKEY="daycare-prep-age";
+
+  /* ── 저장 ─────────────────────────────────────────── */
+  function load(k,f){ try{ var v=localStorage.getItem(k); return v==null?f:JSON.parse(v); }catch(e){ return f; } }
+  function save(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+
+  var state=load(KEY,{})||{};
+  var boxes=[].slice.call(document.querySelectorAll('.item input[type=checkbox]'));
+  var savedNote=document.getElementById('saved');
+
+  boxes.forEach(function(b){ if(state[b.dataset.k]) b.checked=true; });
+
+  /* ── 구간 진행률 ───────────────────────────────────── */
+  var phases=[].slice.call(document.querySelectorAll('[data-phase]'));
+
+  function tally(sec){
+    var bs=sec.querySelectorAll('.item input[type=checkbox]');
+    var done=0; for(var i=0;i<bs.length;i++) if(bs[i].checked) done++;
+    return {done:done,total:bs.length};
+  }
+
+  function paint(){
+    phases.forEach(function(sec){
+      var t=tally(sec);
+      var bar=sec.querySelector('.bar span'), cnt=sec.querySelector('.cnt');
+      if(bar) bar.style.width=(t.total?(t.done/t.total*100):0)+'%';
+      if(cnt) cnt.textContent=t.total?(t.done+' / '+t.total):'';
+      var tick=document.querySelector('.tick[data-for="'+sec.id+'"]');
+      if(tick&&t.total){
+        tick.classList.toggle('done',t.done===t.total);
+        tick.classList.toggle('some',t.done>0);
+        var p=tick.querySelector('.pct');
+        if(p) p.textContent=t.done+'/'+t.total;
+      }
+    });
+    var all=boxes.filter(function(b){return b.checked;}).length;
+    if(savedNote) savedNote.textContent=all?(all+'개 체크됨 · 이 브라우저에 저장됨'):'';
+  }
+
+  boxes.forEach(function(b){
+    b.addEventListener('change',function(){
+      if(b.checked) state[b.dataset.k]=1; else delete state[b.dataset.k];
+      save(KEY,state); paint();
+    });
+  });
+
+  document.getElementById('reset').addEventListener('click',function(){
+    boxes.forEach(function(b){ b.checked=false; });
+    state={}; save(KEY,state); paint();
+  });
+
+  /* ── 시그니처: 오른쪽으로 갈수록 조여드는 눈금 ─────── */
+  var stops=[
+    {id:'p1', t:'D-4주',  x:0},
+    {id:'p2', t:'D-3주',  x:20},
+    {id:'p3', t:'D-2주',  x:38},
+    {id:'p4', t:'D-1주',  x:54},
+    {id:'p5', t:'며칠',   x:68},
+    {id:'p6', t:'당일',   x:80},
+    {id:'p7', t:'2~4주',  x:90},
+    {id:'p8', t:'준비물', x:100}
+  ];
+  var rail=document.getElementById('rail');
+  stops.forEach(function(s){
+    var b=document.createElement('button');
+    b.type='button'; b.className='tick'; b.style.left=s.x+'%';
+    b.dataset.for=s.id;
+    b.innerHTML='<i></i><b>'+s.t+'</b><span class="pct"></span>';
+    b.addEventListener('click',function(){
+      var el=document.getElementById(s.id);
+      if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+    });
+    rail.appendChild(b);
+  });
+
+  var ticks=[].slice.call(rail.querySelectorAll('.tick'));
+  var tagEl=document.getElementById('ddayTag');
+  function markCurrent(id,label){
+    if(tagEl) tagEl.textContent=label?(' · '+label):'';
+    /* 참고 섹션(출처 등)에는 눈금이 없다. 그럴 땐 마지막 눈금을 그대로 둔다. */
+    if(!rail.querySelector('.tick[data-for="'+id+'"]')) return;
+    ticks.forEach(function(t){ t.setAttribute('aria-current',String(t.dataset.for===id)); });
+    var cur=rail.querySelector('.tick[aria-current="true"]');
+    if(cur&&rail.parentNode.scrollWidth>rail.parentNode.clientWidth){
+      var r=rail.parentNode, want=cur.offsetLeft-r.clientWidth/2;
+      r.scrollTo({left:Math.max(0,want),behavior:'smooth'});
+    }
+  }
+
+  /* ── 월령 필터 ─────────────────────────────────────── */
+  var age=document.getElementById('age'), out=document.getElementById('ageOut');
+  var hints=[].slice.call(document.querySelectorAll('.hint[data-band]'));
+  function band(m){ return m<9?'A':m<12?'B':m<15?'C':m<19?'D':'E'; }
+  function applyAge(){
+    var m=+age.value, b=band(m);
+    out.textContent=m+'개월';
+    hints.forEach(function(h){ h.hidden = h.dataset.band!==b; });
+    save(AKEY,m);
+  }
+  var savedAge=load(AKEY,null);
+  if(savedAge!=null && savedAge>=6 && savedAge<=24) age.value=savedAge;
+  age.addEventListener('input',applyAge);
+  applyAge();
+
+  /* ── 테마 ──────────────────────────────────────────── */
+  var tkey='daycare-prep-theme', tsaved=load(tkey,null);
+  if(tsaved) document.documentElement.setAttribute('data-theme',tsaved);
+  document.getElementById('theme').addEventListener('click',function(){
+    var cur=document.documentElement.getAttribute('data-theme');
+    var isDark = cur ? cur==='dark'
+      : window.matchMedia('(prefers-color-scheme:dark)').matches;
+    var next=isDark?'light':'dark';
+    document.documentElement.setAttribute('data-theme',next);
+    save(tkey,next);
+  });
+
+  /* ── 지금 어느 구간인지 ─────────────────────────────── */
+  if('IntersectionObserver' in window){
+    var spy=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting) markCurrent(e.target.id, e.target.dataset.phase);
+      });
+    },{rootMargin:'-18% 0px -66% 0px'});
+    phases.forEach(function(p){ spy.observe(p); });
+  }
+
+  paint();
+})();
+</script>
