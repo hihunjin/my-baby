@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="10개월 아기가 엄마·아빠를 꼬집을 때, 장기화되기 전에 매번 똑같이 반응하는 법과 예방·상담 기준을 공식 가이드와 발달 연구로 정리했습니다.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#F4EEE8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#17120F" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="아기 꼬집기 대처">
+<meta property="og:description" content="10개월 아기가 엄마·아빠를 꼬집을 때, 장기화되기 전에 매번 똑같이 반응하는 법과 예방·상담 기준을 공식 가이드와 발달 연구로 정리했습니다.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%E2%9C%8B</text></svg>">
+<style>
+  :root{
+    color-scheme:light dark;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  body{margin:0}
+  img{max-width:100%}
+  [hidden]{display:none!important}
+</style>
+<title>아기 꼬집기 대처</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* ── tokens ───────────────────────────────────────────── */
+:root{
+  --ground:#F4EEE8;
+  --surface:#FFFCF9;
+  --surface-2:#F8F1EA;
+  --ink:#2A211C;
+  --ink-2:#5E5048;
+  --ink-3:#7A6A60;
+  --line:#E2D5CA;
+  --line-2:#ECE2D9;
+  --hand:#A4472B;          /* 유일한 강조색: 살구빛 손 */
+  --hand-bright:#E07A55;   /* 그래픽 전용 */
+  --hand-soft:#F6DFD4;
+  --calm:#3D6B5C;
+  --calm-soft:#DCEAE3;
+  --mute:#B9A99D;
+  --shadow:0 1px 2px rgba(42,33,28,.06);
+  --fd:'Gowun Dodum','Apple SD Gothic Neo',sans-serif;
+  --fb:'IBM Plex Sans KR','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
+  --fm:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#17120F;
+    --surface:#211A16;
+    --surface-2:#2A211C;
+    --ink:#F0E7E0;
+    --ink-2:#C9B8AC;
+    --ink-3:#9C8A7E;
+    --line:#3A2F28;
+    --line-2:#2F2621;
+    --hand:#F0956F;
+    --hand-bright:#F0956F;
+    --hand-soft:#3C2219;
+    --calm:#86C2AC;
+    --calm-soft:#1B3029;
+    --mute:#5B4D44;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#17120F;
+  --surface:#211A16;
+  --surface-2:#2A211C;
+  --ink:#F0E7E0;
+  --ink-2:#C9B8AC;
+  --ink-3:#9C8A7E;
+  --line:#3A2F28;
+  --line-2:#2F2621;
+  --hand:#F0956F;
+  --hand-bright:#F0956F;
+  --hand-soft:#3C2219;
+  --calm:#86C2AC;
+  --calm-soft:#1B3029;
+  --mute:#5B4D44;
+  --shadow:0 1px 2px rgba(0,0,0,.4);
+}
+
+/* ── base ─────────────────────────────────────────────── */
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--ground);color:var(--ink);
+  font-family:var(--fb);font-size:16px;line-height:1.75;
+  word-break:keep-all;overflow-wrap:break-word;
+  -webkit-text-size-adjust:100%;
+}
+h1,h2,h3{font-family:var(--fd);font-weight:400;line-height:1.35;text-wrap:balance;margin:0}
+h4{font-weight:700;margin:0}
+p{margin:0}
+ul,ol{margin:0;padding:0;list-style:none}
+strong{font-weight:700}
+a{color:var(--ink);text-decoration:none;border-bottom:1.5px solid var(--hand);padding-bottom:1px}
+a:hover{background:var(--hand-soft)}
+:focus-visible{outline:2px solid var(--hand);outline-offset:3px;border-radius:2px}
+::selection{background:var(--hand-soft)}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:16px;top:16px;background:var(--surface);padding:8px 12px;z-index:10}
+
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+section{padding:56px 0;border-top:1px solid var(--line)}
+.kicker{font-family:var(--fm);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--hand);margin-bottom:10px}
+h2{font-size:clamp(24px,5vw,30px);margin-bottom:14px}
+.intro{color:var(--ink-2);margin-bottom:26px;max-width:60ch}
+
+/* ── masthead ─────────────────────────────────────────── */
+.mast{padding:64px 0 44px}
+.eyebrow{font-family:var(--fm);font-size:13px;color:var(--ink-3);letter-spacing:.06em;margin-bottom:16px}
+.mast h1{font-size:clamp(34px,8vw,52px);margin-bottom:18px}
+.lede{font-size:clamp(17px,3.4vw,19px);color:var(--ink-2);max-width:34em}
+.lede strong{color:var(--ink);background:linear-gradient(transparent 62%,var(--hand-soft) 62%)}
+.mast-meta{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:22px;font-family:var(--fm);font-size:12.5px;color:var(--ink-3)}
+
+/* ── 결론 카드 ────────────────────────────────────────── */
+.verdict{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px 22px;box-shadow:var(--shadow)}
+.verdict p+p{margin-top:12px}
+.verdict .big{font-family:var(--fd);font-size:clamp(20px,4.4vw,24px);line-height:1.45}
+.verdict .big em{font-style:normal;color:var(--hand)}
+
+/* ── 궤적 차트 ────────────────────────────────────────── */
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 14px 14px;margin-top:6px}
+.chart svg{display:block;width:100%;height:auto}
+.c-axis{stroke:var(--line);stroke-width:1.5}
+.c-tick{fill:var(--ink-3);font-family:var(--fm);font-size:15px}
+.c-band{fill:var(--hand-soft)}
+.c-curve{fill:none;stroke:var(--hand-bright);stroke-width:3.5;stroke-linecap:round}
+.c-area{fill:var(--hand-bright);opacity:.12}
+.c-now{stroke:var(--ink);stroke-width:2;stroke-dasharray:4 4}
+.c-dot{fill:var(--ink)}
+.c-mark{stroke:var(--ink-3);stroke-width:1.5;stroke-dasharray:2 4}
+.c-num{fill:var(--surface);stroke:var(--ink-3);stroke-width:1.5}
+.c-numt{fill:var(--ink);font-family:var(--fm);font-size:14px;font-weight:500;text-anchor:middle;dominant-baseline:central}
+.c-nowt{fill:var(--ink);font-family:var(--fb);font-size:16px;font-weight:700}
+.legend{margin-top:16px;display:grid;gap:8px;font-size:14.5px;color:var(--ink-2)}
+.legend li{display:grid;grid-template-columns:26px 1fr;gap:8px;align-items:start}
+.legend b{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--ink-3);font-family:var(--fm);font-size:12px;font-weight:500;color:var(--ink);margin-top:2px}
+.legend .now b{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.chart-note{margin-top:12px;font-size:13px;color:var(--ink-3)}
+
+/* ── 반응 순서 ────────────────────────────────────────── */
+.steps{counter-reset:s;display:grid;gap:12px}
+.step{display:grid;grid-template-columns:44px 1fr;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px 16px 14px}
+.step::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--hand-soft);color:var(--hand);font-family:var(--fm);font-weight:500;font-size:16px}
+.step h3{font-size:19px;margin-bottom:4px}
+.step p{color:var(--ink-2);font-size:15.5px}
+.say{display:inline-block;margin-top:8px;font-family:var(--fd);font-size:17px;color:var(--ink);background:var(--surface-2);border-left:3px solid var(--hand);padding:4px 12px;border-radius:0 6px 6px 0}
+.step.is-praise::before{background:var(--calm-soft);color:var(--calm)}
+.step.is-praise .say{border-left-color:var(--calm)}
+
+/* ── 상황별 탭 ────────────────────────────────────────── */
+.picker{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.tab{appearance:none;font:inherit;font-size:15px;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);padding:8px 14px;border-radius:999px;min-height:40px}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 20px}
+.panel h3{font-size:22px;margin-bottom:6px}
+.panel .sig{color:var(--ink-3);font-size:14.5px;margin-bottom:16px}
+.panel dl{display:grid;gap:14px;margin:0}
+.panel dt{font-family:var(--fm);font-size:12.5px;letter-spacing:.06em;color:var(--hand);text-transform:uppercase}
+.panel dd{margin:2px 0 0}
+
+/* ── 하지 말 것 ───────────────────────────────────────── */
+.donts{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.dont{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.dont h4{font-size:16px;margin-bottom:4px;display:flex;gap:8px;align-items:baseline}
+.dont h4::before{content:"✕";color:var(--hand);font-family:var(--fm);font-weight:500}
+.dont p{font-size:14.5px;color:var(--ink-2)}
+
+/* ── 예방 ─────────────────────────────────────────────── */
+.prev{display:grid;gap:0;border-top:1px solid var(--line)}
+.prev li{display:grid;grid-template-columns:minmax(110px,30%) 1fr;gap:14px;padding:14px 0;border-bottom:1px solid var(--line-2)}
+.prev b{font-weight:700}
+.prev span{color:var(--ink-2);font-size:15.5px}
+@media (max-width:520px){.prev li{grid-template-columns:1fr;gap:2px}}
+
+/* ── 상담 ─────────────────────────────────────────────── */
+.flags{display:grid;gap:8px}
+.flags li{padding:12px 16px;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--hand);border-radius:0 10px 10px 0}
+.tip{margin-top:18px;padding:16px 18px;border-radius:12px;background:var(--calm-soft);color:var(--ink)}
+.tip strong{color:var(--calm)}
+
+/* ── 냉장고 카드 ──────────────────────────────────────── */
+.card{background:var(--surface);border:2px dashed var(--mute);border-radius:16px;padding:22px 22px 20px}
+.card h3{font-size:20px;margin-bottom:12px}
+.card ol{display:grid;gap:6px;counter-reset:c}
+.card ol li{counter-increment:c;display:grid;grid-template-columns:24px 1fr;gap:6px}
+.card ol li::before{content:counter(c);font-family:var(--fm);color:var(--hand);font-weight:500}
+.card .row{margin-top:14px;padding-top:12px;border-top:1px solid var(--line-2);font-size:15px}
+.card .row b{color:var(--calm)}
+.card .row.no b{color:var(--hand)}
+.print{margin-top:14px;appearance:none;font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);padding:8px 14px;border-radius:8px;cursor:pointer}
+
+/* ── 출처 ─────────────────────────────────────────────── */
+.src h4{font-family:var(--fm);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);font-weight:500;margin:22px 0 8px}
+.src li{font-size:14.5px;padding:3px 0;color:var(--ink-2)}
+.foot{font-size:13px;color:var(--ink-3);padding-bottom:72px}
+
+.theme{position:fixed;right:16px;bottom:16px;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer;box-shadow:var(--shadow)}
+
+@media print{
+  body{background:#fff}
+  body *{visibility:hidden}
+  #fridge,#fridge *{visibility:visible}
+  #fridge{position:absolute;left:0;top:0;width:100%}
+  .print,.theme{display:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#steps">대처 순서로 건너뛰기</a>
+
+<div class="wrap">
+  <header class="mast">
+    <p class="eyebrow">10 months · pinching</p>
+    <h1>꼬집는 손,<br>지금 길들이기</h1>
+    <p class="lede">10개월 아기의 꼬집기는 공격이 아니라 실험입니다. 장기화를 막는 건 혼내는 강도가 아니라 <strong>매번 똑같이, 짧고 지루하게</strong> 반응하는 일관성입니다.</p>
+    <p class="mast-meta"><span>2026-11-24 정리</span><span>ZERO TO THREE · AAP · Tusla</span><span>육아정책연구소 · 발달 연구</span></p>
+  </header>
+</div>
+
+<section aria-labelledby="h-why">
+  <div class="wrap">
+    <p class="kicker">먼저 결론</p>
+    <h2 id="h-why">아기는 "꼬집으면 무슨 일이 생기나"를 보는 중</h2>
+    <div class="verdict">
+      <p class="big">9개월 무렵 생긴 <em>집게잡기</em>를 써보고, 꼬집으면 엄마·아빠가 "아야!" 하는 <em>원인과 결과</em>를 확인하는 단계입니다.</p>
+      <p>이 나이는 일부러 아프게 할 사고 능력이 아직 없습니다(ZERO TO THREE). 그래서 꼬집기가 굳어지는 건 아기의 성격 때문이 아니라 <strong>꼬집었을 때 돌아오는 결과</strong> 때문입니다. 큰 웃음, 비명, 긴 설명, 꼬집으면 원하는 걸 얻는 경험이 반복을 부릅니다.</p>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="h-curve">
+  <div class="wrap">
+    <p class="kicker">얼마나 갈까</p>
+    <h2 id="h-curve">지금은 오르막의 입구</h2>
+    <p class="intro">때리기·꼬집기·물기 같은 신체적 공격은 대부분 아이에게 첫돌 전후 시작해 2~3세에 가장 많고, 4세부터 줄어듭니다. 목표는 지금 없애는 게 아니라, <strong>정점기에 더 커지지 않게 길을 들이는 것</strong>입니다.</p>
+
+    <figure class="chart" style="margin:0">
+      <svg viewBox="0 0 640 280" role="img" aria-label="개념도. 가로축은 개월 수 0에서 60. 신체적 공격 빈도는 6개월 무렵부터 오르기 시작해 18개월에서 30개월 사이 정점 구간을 지나 48개월부터 줄어듭니다. 현재 10개월은 오르막 초입에 있습니다.">
+        <!-- 정점 구간 18–30개월 -->
+        <rect class="c-band" x="220" y="20" width="120" height="210" rx="4"/>
+        <!-- 곡선 (개념도) x = 40 + m*10 -->
+        <path class="c-area" d="M100 230 C140 228 160 160 200 95 C230 50 270 40 300 52 C340 70 380 110 440 160 C500 200 560 215 640 222 L640 230 Z"/>
+        <path class="c-curve" d="M100 230 C140 228 160 160 200 95 C230 50 270 40 300 52 C340 70 380 110 440 160 C500 200 560 215 640 222"/>
+        <!-- 축 -->
+        <line class="c-axis" x1="40" y1="230" x2="640" y2="230"/>
+        <text class="c-tick" x="40" y="256" text-anchor="middle">0</text>
+        <text class="c-tick" x="160" y="256" text-anchor="middle">12</text>
+        <text class="c-tick" x="280" y="256" text-anchor="middle">24</text>
+        <text class="c-tick" x="400" y="256" text-anchor="middle">36</text>
+        <text class="c-tick" x="520" y="256" text-anchor="middle">48</text>
+        <text class="c-tick" x="628" y="256" text-anchor="end">개월</text>
+        <!-- 지금 -->
+        <line class="c-now" x1="145" y1="40" x2="145" y2="230"/>
+        <circle class="c-dot" cx="145" cy="208" r="6"/>
+        <text class="c-nowt" x="137" y="34" text-anchor="end">지금</text>
+        <!-- 표식 -->
+        <line class="c-mark" x1="210" y1="80" x2="210" y2="230"/>
+        <circle class="c-num" cx="210" cy="70" r="12"/><text class="c-numt" x="210" y="70">1</text>
+        <circle class="c-num" cx="280" cy="20" r="12"/><text class="c-numt" x="280" y="20">2</text>
+        <line class="c-mark" x1="400" y1="122" x2="400" y2="230"/>
+        <circle class="c-num" cx="400" cy="110" r="12"/><text class="c-numt" x="400" y="110">3</text>
+        <line class="c-mark" x1="520" y1="186" x2="520" y2="230"/>
+        <circle class="c-num" cx="520" cy="174" r="12"/><text class="c-numt" x="520" y="174">4</text>
+      </svg>
+      <ol class="legend">
+        <li class="now"><b>●</b><span><strong>지금, 10개월 무렵.</strong> 탐색으로서의 꼬집기가 막 시작되는 시기. 반응 방식이 가장 잘 먹히는 때입니다.</span></li>
+        <li><b>1</b><span><strong>17개월.</strong> 대부분 아이가 이미 신체적 공격을 시작한 상태 (Tremblay 등 코호트)</span></li>
+        <li><b>2</b><span><strong>18개월~2.5세.</strong> 때리기·물기·잡아당기기가 가장 많은 구간 (Happiest Baby, Alink 2006)</span></li>
+        <li><b>3</b><span><strong>3세.</strong> 대부분 말로 감정을 표현할 수 있게 됨. 이후에도 잦으면 상담 기준 (Illinois Extension)</span></li>
+        <li><b>4</b><span><strong>4세~.</strong> 빈도가 꾸준히 줄어듦 (Tremblay 2018, JAMA Netw Open)</span></li>
+      </ol>
+      <figcaption class="chart-note">개념도입니다. 곡선의 높이는 실측값이 아니라 여러 연구가 보고한 시작·정점·감소 시점을 이어 그린 모양입니다.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="steps" aria-labelledby="h-steps">
+  <div class="wrap">
+    <p class="kicker">꼬집는 순간</p>
+    <h2 id="h-steps">매번 같은 순서, 같은 말</h2>
+    <p class="intro">엄마·아빠·조부모·돌봄 선생님 모두 같은 말과 같은 순서로. 불일치는 학습을 늦춥니다(Tusla).</p>
+    <ol class="steps">
+      <li class="step"><div><h3>차분하게 멈춘다</h3><p>표정은 담담하게, 목소리는 낮고 짧게. 놀라서 크게 반응하면 그게 재미있는 결과가 됩니다.</p><span class="say">"아야. 꼬집으면 아파."</span></div></li>
+      <li class="step"><div><h3>손을 부드럽게 뗀다</h3><p>아기 손을 떼어 잠깐 감싸 쥡니다. 세게 잡거나 털어내지 않습니다.</p><span class="say">"꼬집지 않아."</span></div></li>
+      <li class="step"><div><h3>할 수 있는 걸 준다</h3><p>아기 손으로 내 팔을 살살 쓰다듬게 하거나, 치발기·말랑한 장난감을 쥐여줍니다. 하지 말라는 것만 말하지 말고 대신할 것을 줍니다.</p><span class="say">"살살~ 이렇게."</span></div></li>
+      <li class="step"><div><h3>또 하면, 잠깐 놀이를 멈춘다</h3><p>몇 초간 바닥에 내려놓거나 몸을 돌립니다. 화내지 않고, 길지 않게. "꼬집으면 재미가 끝난다"를 배우게 하는 것이지 벌이 아닙니다.</p></div></li>
+      <li class="step"><div><h3>곧바로 다시 다정하게</h3><p>다시 안고 놀아줍니다. 관계는 그대로라는 신호입니다.</p></div></li>
+      <li class="step is-praise"><div><h3>살살 만지면 크게 칭찬</h3><p>이 단계가 가장 중요합니다. 원하는 행동이 나왔을 때 놓치지 않고 반응해야 그쪽이 늘어납니다.</p><span class="say">"살살 만져줬네! 기분 좋다."</span></div></li>
+    </ol>
+  </div>
+</section>
+
+<section aria-labelledby="h-sit">
+  <div class="wrap">
+    <p class="kicker">언제 꼬집나</p>
+    <h2 id="h-sit">상황마다 원인이 다르다</h2>
+    <p class="intro">2주 정도 언제·어디서·누구에게 꼬집는지 메모해 보세요. 패턴이 보이면 꼬집기 전에 막을 수 있습니다.</p>
+
+    <div class="picker" role="tablist" aria-label="상황 선택">
+      <button class="tab" role="tab" aria-selected="true" aria-controls="s1" id="ts1">신나게 놀다가</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="s2" id="ts2">졸리거나 배고플 때</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="s3" id="ts3">수유·안겨 있을 때</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="s4" id="ts4">내가 딴 일 할 때</button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="s5" id="ts5">싫거나 원할 때</button>
+    </div>
+
+    <div class="panel" role="tabpanel" id="s1" aria-labelledby="ts1">
+      <h3>흥분·과자극</h3>
+      <p class="sig">깔깔 웃으며 꼬집고, 얼굴을 쳐다보며 반응을 기다립니다.</p>
+      <dl>
+        <dt>왜</dt><dd>신이 나서 몸이 먼저 나갑니다. 꼬집었을 때의 반응까지 놀이의 일부로 느낍니다.</dd>
+        <dt>미리</dt><dd>텐션이 오르기 시작하면 템포를 낮춥니다. 조용한 노래, 안아서 천천히 흔들기.</dd>
+        <dt>그 순간</dt><dd>웃음을 참고 담담하게. 이 상황에서 부모가 웃으면 가장 빨리 굳어집니다.</dd>
+      </dl>
+    </div>
+    <div class="panel" role="tabpanel" id="s2" aria-labelledby="ts2" hidden>
+      <h3>졸림·배고픔·이앓이</h3>
+      <p class="sig">잠들기 전, 저녁 시간대, 칭얼거림과 함께 나옵니다.</p>
+      <dl>
+        <dt>왜</dt><dd>불편함을 표현할 방법이 손밖에 없습니다. 이가 나는 중이면 입·손의 감각 욕구도 커집니다.</dd>
+        <dt>미리</dt><dd>잠 신호(눈 비비기, 멍해짐)를 일찍 잡아 재우기. 간식·수유 간격 점검. 차가운 치발기.</dd>
+        <dt>그 순간</dt><dd>반응 순서는 같게, 대신 "졸리구나"처럼 원인을 짚고 바로 원인을 해결해 줍니다.</dd>
+      </dl>
+    </div>
+    <div class="panel" role="tabpanel" id="s3" aria-labelledby="ts3" hidden>
+      <h3>수유 중·안겨 있을 때</h3>
+      <p class="sig">목, 팔 안쪽, 가슴처럼 부드러운 살을 집습니다.</p>
+      <dl>
+        <dt>왜</dt><dd>손이 비어 있고, 집게잡기를 써볼 표적이 바로 앞에 있습니다.</dd>
+        <dt>미리</dt><dd>손에 쥘 것을 먼저 줍니다. 수유 목걸이, 작은 천 인형, 부모 손가락. 목걸이·늘어진 귀걸이는 잠시 빼둡니다. 손톱은 짧게.</dd>
+        <dt>그 순간</dt><dd>손을 떼서 쥘 것으로 옮겨줍니다. 계속되면 수유를 잠깐 멈췄다 다시 시작합니다.</dd>
+      </dl>
+    </div>
+    <div class="panel" role="tabpanel" id="s4" aria-labelledby="ts4" hidden>
+      <h3>관심 끌기</h3>
+      <p class="sig">폰을 보거나, 요리하거나, 다른 사람과 이야기할 때.</p>
+      <dl>
+        <dt>왜</dt><dd>꼬집으면 바로 나를 봐준다는 걸 배웠을 수 있습니다.</dd>
+        <dt>미리</dt><dd>평소에 눈 맞추고 놀아주는 시간을 충분히. 딴 일을 할 땐 먼저 "엄마 이거 하고 올게" 하고 손에 놀잇감을 줍니다.</dd>
+        <dt>그 순간</dt><dd>이 경우엔 관심 빼기(4단계)가 특히 중요합니다. 꼬집기가 관심을 얻는 가장 빠른 길이 되지 않게.</dd>
+      </dl>
+    </div>
+    <div class="panel" role="tabpanel" id="s5" aria-labelledby="ts5" hidden>
+      <h3>싫다·원한다는 표현</h3>
+      <p class="sig">내려달라, 그거 달라, 하기 싫다. 12개월 이후 늘어납니다.</p>
+      <dl>
+        <dt>왜</dt><dd>말이 아직 없어서 손으로 대신 말합니다.</dd>
+        <dt>미리</dt><dd>간단한 손짓·단어를 가르칩니다. "더", "내려", "싫어". 쓰면 바로 들어줍니다.</dd>
+        <dt>그 순간</dt><dd>꼬집어서 원하는 걸 얻게 하지 않습니다. 대신 말을 대신해 줍니다: "내려가고 싶었어? '내려' 하자." 그리고 아기가 비슷하게라도 따라 하면 들어줍니다.</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="h-dont">
+  <div class="wrap">
+    <p class="kicker">하지 말 것</p>
+    <h2 id="h-dont">장기화를 부르는 반응들</h2>
+    <div class="donts">
+      <div class="dont"><h4>크게 웃거나 "아악!"</h4><p>아기에겐 최고의 장난감이 됩니다. 강한 반응은 반복을 부릅니다.</p></div>
+      <div class="dont"><h4>같이 꼬집어 알려주기</h4><p>10개월은 이해하지 못하고, "아프게 해도 된다"는 시범이 됩니다.</p></div>
+      <div class="dont"><h4>화내고 소리 지르기</h4><p>흥분이 흥분을 부릅니다. 부모가 차분할수록 아기도 빨리 가라앉습니다.</p></div>
+      <div class="dont"><h4>긴 설명</h4><p>이 나이엔 말의 내용이 아니라 반응의 크기만 전달됩니다.</p></div>
+      <div class="dont"><h4>어른마다 다른 반응</h4><p>누구는 웃고 누구는 혼내면 배우는 데 훨씬 오래 걸립니다.</p></div>
+      <div class="dont"><h4>꼬집으면 원하는 걸 주기</h4><p>공격으로 목적을 이룬 경험은 공격성을 강화합니다 (육아정책연구소).</p></div>
+      <div class="dont"><h4>"꼬집쟁이" 별명</h4><p>라벨은 아이의 자기 이미지가 됩니다 (NAEYC).</p></div>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="h-prev">
+  <div class="wrap">
+    <p class="kicker">꼬집기 전에</p>
+    <h2 id="h-prev">손을 바쁘게, 표적은 적게</h2>
+    <ul class="prev">
+      <li><b>집게 놀이</b><span>집게잡기 욕구를 채워줍니다. 스티커 떼기, 뚜껑 열기, 손잡이 퍼즐, 작은 핑거푸드 집기.</span></li>
+      <li><b>"살살" 놀이</b><span>인형을 쓰다듬기, 부모 얼굴을 살살 만지기. 될 때마다 "살살 잘한다!"</span></li>
+      <li><b>한 손엔 장난감</b><span>안을 때, 수유할 때 손을 먼저 채워둡니다.</span></li>
+      <li><b>표적 줄이기</b><span>목걸이·늘어진 귀걸이 빼기, 손톱 짧게. 꼬집기는 못 막아도 상처는 줄입니다.</span></li>
+      <li><b>컨디션 관리</b><span>꼬집기가 몰리는 시간대(졸릴 때, 배고플 때)를 미리 피해 갑니다.</span></li>
+      <li><b>평소의 관심</b><span>꼬집어야 봐주는 구조가 되지 않게, 눈 맞추고 노는 시간을 따로 확보합니다.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section aria-labelledby="h-help">
+  <div class="wrap">
+    <p class="kicker">상담이 필요할 때</p>
+    <h2 id="h-help">대부분은 지나가지만, 이럴 땐 물어보세요</h2>
+    <ul class="flags">
+      <li>3세 이후에도 자주, 세게 반복된다</li>
+      <li>말·눈맞춤·이름 불렀을 때 반응 등 다른 발달이 함께 걱정된다</li>
+      <li>자기 몸을 꼬집거나 다치게 한다</li>
+      <li>부모가 지치고 화가 나서 일상이 힘들다 — 이것도 충분한 상담 이유입니다 (Tusla)</li>
+    </ul>
+    <p class="tip"><strong>다음 영유아건강검진</strong>(3차 9~12개월, 4차 18~24개월) 때 소아청소년과에 물어보기 좋은 주제입니다. 지역 육아종합지원센터에도 영아 행동 상담이 있습니다.</p>
+  </div>
+</section>
+
+<section aria-labelledby="h-card">
+  <div class="wrap">
+    <p class="kicker">냉장고용</p>
+    <h2 id="h-card">한 장 요약</h2>
+    <div class="card" id="fridge">
+      <h3>꼬집으면</h3>
+      <ol>
+        <li>차분한 얼굴, 낮은 목소리: "아야. 아파."</li>
+        <li>손 떼서 감싸 쥐기</li>
+        <li>"살살~" 쓰다듬기 / 쥘 것 주기</li>
+        <li>또 하면 몇 초 내려놓기 → 다시 다정하게</li>
+      </ol>
+      <p class="row"><b>살살 만지면</b> → 바로 칭찬 "살살 만져줬네!"</p>
+      <p class="row no"><b>하지 않기</b> 웃기 · 같이 꼬집기 · 화내기 · 어른마다 다르게</p>
+    </div>
+    <button class="print" id="printBtn" type="button">이 카드만 인쇄</button>
+  </div>
+</section>
+
+<section class="src" aria-labelledby="h-src">
+  <div class="wrap">
+    <p class="kicker">출처</p>
+    <h2 id="h-src">참고한 자료</h2>
+    <h4>공식·전문기관</h4>
+    <ul>
+      <li><a href="https://www.zerotothree.org/resource/coping-with-aggression-and-teaching-self-control/">ZERO TO THREE — Coping With Aggression and Teaching Self-Control</a></li>
+      <li><a href="https://raisingchildren.net.au/babies/behaviour/common-concerns/biting-pinching-hair-pulling">Raising Children Network — Biting, pinching and hair-pulling</a></li>
+      <li><a href="https://www.tusla.ie/parenting-24-seven/biting-pinching-and-hair-pulling/">Tusla — Biting, pinching and hair pulling</a></li>
+      <li><a href="https://www.healthychildren.org/English/ages-stages/toddler/pages/Aggressive-Behavior.aspx">AAP HealthyChildren — Aggressive Behavior</a></li>
+      <li><a href="https://naeyc.org/our-work/families/understanding-and-responding-children-who-bite">NAEYC — Understanding and Responding to Children Who Bite</a></li>
+      <li><a href="https://kidshealth.org/CHW/en/parents/stop-biting.html">KidsHealth — Stop biting</a></li>
+      <li><a href="https://www.aacap.org/aacap/families_and_youth/facts_for_families/fff-guide/Fighting-And-Biting-081.aspx">AACAP — Fighting and Biting</a></li>
+      <li><a href="https://ieltesting.web.illinois.edu/tipsheets/biting/">Illinois Extension — Biting tip sheet</a></li>
+      <li><a href="https://pathways.org/what-to-do-if-baby-is-pinching-scratching-or-biting-during-breastfeeding">Pathways.org — Pinching during breastfeeding</a></li>
+    </ul>
+    <h4>국내</h4>
+    <ul>
+      <li><a href="https://www.yugacrew.com/crewletter/baby-pinching-scratching">육아크루 — 꼬집고 할퀴는 아기</a> (경기북부육아종합지원센터 안내서 2023, 육아정책연구소 지침서 2013 재구성)</li>
+    </ul>
+    <h4>연구</h4>
+    <ul>
+      <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3283570">Tremblay 등 — 5~42개월 신체적 공격 궤적 (PMC)</a></li>
+      <li><a href="https://research.vu.nl/ws/files/2179702/Alink%20Child%20Development%2077(4)%202006%20u.pdf">Alink 등 (2006), Child Development — 영아기 신체적 공격의 발달</a></li>
+      <li><a href="https://www.eurekalert.org/pub_releases/2018-12/jn-sed122718.php">Tremblay 등 (2018), JAMA Network Open — EurekAlert 보도</a></li>
+    </ul>
+    <h4>블로그·커뮤니티</h4>
+    <ul>
+      <li><a href="https://www.happiestbaby.com/blogs/baby/biting-pinching-pulling-hair">Happiest Baby — Biting, pinching, pulling hair</a></li>
+      <li><a href="https://www.mumsnet.com/talk/parenting/5338217-1-year-old-pinching-constantly">Mumsnet — 1 year old pinching constantly</a> (일화)</li>
+      <li><a href="https://www.berkeleyparentsnetwork.org/advice/worries/pinching">Berkeley Parents Network — Children pinching</a> (일화)</li>
+    </ul>
+  </div>
+</section>
+
+<div class="wrap">
+  <p class="foot">공개 자료를 정리한 것이며 진료를 대신하지 않습니다. 월령은 대략적인 기준이고, 아이마다 시작과 끝나는 시점이 다릅니다.</p>
+</div>
+
+<button class="theme" id="themeBtn" type="button" aria-label="밝기 전환">◐</button>
+
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  var panels=tabs.map(function(t){return document.getElementById(t.getAttribute('aria-controls'));});
+  function show(i){
+    tabs.forEach(function(t,n){
+      t.setAttribute('aria-selected',n===i?'true':'false');
+      t.tabIndex=n===i?0:-1;
+      panels[n].hidden=n!==i;
+    });
+    try{sessionStorage.setItem('pinch-sit',String(i));}catch(e){}
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){show(i);});
+    t.addEventListener('keydown',function(e){
+      var d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+      if(!d)return;
+      e.preventDefault();
+      var n=(i+d+tabs.length)%tabs.length;
+      tabs[n].focus();show(n);
+    });
+  });
+  var saved=0;
+  try{saved=parseInt(sessionStorage.getItem('pinch-sit'),10)||0;}catch(e){}
+  show(saved>=0&&saved<tabs.length?saved:0);
+
+  document.getElementById('printBtn').addEventListener('click',function(){window.print();});
+
+  var btn=document.getElementById('themeBtn');
+  try{var s=localStorage.getItem('pinch-theme'); if(s)document.documentElement.dataset.theme=s;}catch(e){}
+  btn.addEventListener('click',function(){
+    var cur=document.documentElement.dataset.theme;
+    if(!cur)cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+    var next=cur==='dark'?'light':'dark';
+    document.documentElement.dataset.theme=next;
+    try{localStorage.setItem('pinch-theme',next);}catch(e){}
+  });
+})();
+</script>
+</body>
+</html>
